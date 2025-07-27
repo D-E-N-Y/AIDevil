@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2485952010932183782}
   - component: {fileID: 4849059206290732019}
   - component: {fileID: 247086090397704565}
-  - component: {fileID: 1105977117399833012}
+  - component: {fileID: 4630377617600122618}
   m_Layer: 5
   m_Name: Boss HP Indicator
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1105977117399833012
+--- !u!114 &4630377617600122618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,11 +112,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 758570806154135911}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e36f1138325b0f418ed1593bb5b366c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2950d3297152159b5b787287094aee81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ui_hpSlider: {fileID: 5705840247015071702}
-  unit: {fileID: 0}
+  boss: {fileID: 0}
 --- !u!1 &2069413490896066898
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class B_Melee : Boss
     {
         base.Initialize();
 
+        meleeBossAttack.EndAttack();
         meleeBossAttack.isSuccessfulAttack += SuccessfulAttack;
     }
 
