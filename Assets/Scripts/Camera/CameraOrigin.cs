@@ -6,7 +6,7 @@ public class CameraOrigin : MonoBehaviour
     [SerializeField, Range(1.0f, 10.0f)] private float _speed;
 
     private Transform target;
-
+ 
     public void Initialize(Transform target)
     {
         this.target = target;
