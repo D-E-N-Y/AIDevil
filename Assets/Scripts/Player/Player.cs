@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_joystick == null) return;
+
         _rigidbody.velocity = new Vector3(
             _joystick.Horizontal * _moveSpeed,
             _rigidbody.velocity.y,
