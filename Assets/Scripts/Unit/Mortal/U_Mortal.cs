@@ -25,4 +25,7 @@ public class U_Mortal : Unit
     {
         gameObject.SetActive(false);
     }
+
+    public float GetMaxHP() => maxHP;
+    public float GetCurrentHP() => currentHP;
 }
