@@ -1,11 +1,20 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : U_Mortal
 {
-    [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private FixedJoystick _joystick;
+    private Rigidbody _rigidbody;
+    private FixedJoystick _joystick;
 
     [SerializeField] private float _moveSpeed;
+
+    public virtual void Initialize(FixedJoystick _joystick)
+    {
+        Initialize();
+
+        this._joystick = _joystick;
+        _rigidbody = GetComponent<Rigidbody>();
+    }
 
     private void FixedUpdate()
     {
