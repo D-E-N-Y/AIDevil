@@ -6,6 +6,11 @@ public class B_Melee : Boss
     [SerializeField] private MeleeBossAttack meleeBossAttack;
     private Coroutine attacking;
 
+    private void Start()
+    {
+        Initialize();
+    }
+
     public override void Initialize()
     {
         base.Initialize();
