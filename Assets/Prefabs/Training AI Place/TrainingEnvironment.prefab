@@ -184,6 +184,59 @@ Transform:
   - {fileID: 6712760931765753949}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4037335638217687099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1412816787671817061}
+  - component: {fileID: 152288239810915989}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1412816787671817061
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4037335638217687099}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6712760931765753949}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &152288239810915989
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4037335638217687099}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 18.472618, y: 0, z: 20.452675}
+  m_Center: {x: -0.31394958, y: 0.49999994, z: 0.22098684}
 --- !u!1 &6347173099171619436
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,6 +762,7 @@ Transform:
   m_Children:
   - {fileID: 8677828034556422203}
   - {fileID: 147840347509077897}
+  - {fileID: 1412816787671817061}
   m_Father: {fileID: 2513432834575671274}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &236047989862341923
@@ -759,10 +813,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3653491570923773787, guid: c49f1484512f633d4b4d3813e975f991, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3653491570923773787, guid: c49f1484512f633d4b4d3813e975f991, type: 3}
+      propertyPath: m_InferenceDevice
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5172711098324208087, guid: c49f1484512f633d4b4d3813e975f991, type: 3}
       propertyPath: m_Name
       value: AI Unit
       objectReference: {fileID: 0}
+    - target: {fileID: 5914822896065290225, guid: c49f1484512f633d4b4d3813e975f991, type: 3}
+      propertyPath: MaxStep
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914822896065290225, guid: c49f1484512f633d4b4d3813e975f991, type: 3}
+      propertyPath: spawnArea
+      value: 
+      objectReference: {fileID: 152288239810915989}
     - target: {fileID: 5914822896065290225, guid: c49f1484512f633d4b4d3813e975f991, type: 3}
       propertyPath: winMaterial
       value: 

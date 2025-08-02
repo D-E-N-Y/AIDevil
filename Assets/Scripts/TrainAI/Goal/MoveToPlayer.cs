@@ -13,16 +13,24 @@ public class MoveToPlayer : Agent
     [SerializeField] private Material loseMaterial;
     [SerializeField] private MeshRenderer floorMeshRenderer;
 
+    [SerializeField] private BoxCollider spawnArea;
+
+    private Vector3 oldPosition, newPosition;
+
+
+
     private Vector3 startPosition;
 
     void Start()
     {
         startPosition = transform.localPosition;
-    } 
+        oldPosition = transform.localPosition;
+    }
 
     public override void OnEpisodeBegin()
     {
-        transform.localPosition = Vector3.zero;
+        transform.localPosition = new Vector3(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x), 1, Random.Range(spawnArea.bounds.min.z, spawnArea.bounds.max.z));
+        targetTransform.localPosition = new Vector3(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x), 1, Random.Range(spawnArea.bounds.min.z, spawnArea.bounds.max.z));
         //base.OnEpisodeBegin();
     }
     public override void CollectObservations(VectorSensor sensor)
@@ -41,6 +49,16 @@ public class MoveToPlayer : Agent
 
         transform.localPosition += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
 
+        newPosition = transform.localPosition;
+
+        if (Vector3.Distance(oldPosition, targetTransform.localPosition) < Vector3.Distance(newPosition, targetTransform.localPosition))
+        {
+            SetReward(+0.1f);
+        }
+        else SetReward(-0.1f);
+
+        oldPosition = newPosition;
+
         //base.OnActionReceived(actions);
     }
 
@@ -52,18 +70,20 @@ public class MoveToPlayer : Agent
         //base.Heuristic(actionsOut);
     }
 
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Player>(out Player player))
         {
-            SetReward(+1f);
+            SetReward(+100f);
             EndEpisode();
             floorMeshRenderer.material = winMaterial;
         }
         if (other.TryGetComponent<Wall>(out Wall wall))
         {
             floorMeshRenderer.material = loseMaterial;
-            SetReward(-1f);
+            SetReward(-100f);
             EndEpisode();
         }
 
