@@ -1,0 +1,47 @@
+{
+    "B_Melee": {
+        "checkpoints": [
+            {
+                "steps": 5478,
+                "file_path": "results\\TestMeleeAttack2\\B_Melee\\B_Melee-5478.onnx",
+                "reward": null,
+                "creation_time": 1754828700.3310678,
+                "auxillary_file_paths": [
+                    "results\\TestMeleeAttack2\\B_Melee\\B_Melee-5478.pt"
+                ]
+            },
+            {
+                "steps": 12164,
+                "file_path": "results\\TestMeleeAttack2\\B_Melee\\B_Melee-12164.onnx",
+                "reward": null,
+                "creation_time": 1754828852.49809,
+                "auxillary_file_paths": [
+                    "results\\TestMeleeAttack2\\B_Melee\\B_Melee-12164.pt"
+                ]
+            },
+            {
+                "steps": 44938,
+                "file_path": "results\\TestMeleeAttack2\\B_Melee\\B_Melee-44938.onnx",
+                "reward": null,
+                "creation_time": 1754829538.5147376,
+                "auxillary_file_paths": [
+                    "results\\TestMeleeAttack2\\B_Melee\\B_Melee-44938.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 44938,
+            "file_path": "results\\TestMeleeAttack2\\B_Melee.onnx",
+            "reward": null,
+            "creation_time": 1754829538.5147376,
+            "auxillary_file_paths": [
+                "results\\TestMeleeAttack2\\B_Melee\\B_Melee-44938.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.7.1+cpu"
+    }
+}

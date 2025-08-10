@@ -44,6 +44,7 @@ public class MoveToPlayer : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        Debug.Log("1");
         sensor.AddObservation(transform.localPosition);
         sensor.AddObservation(targetTransform.localPosition);
         //base.CollectObservations(sensor);

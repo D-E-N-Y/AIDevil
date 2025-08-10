@@ -2,49 +2,49 @@
     "name": "root",
     "metadata": {
         "timer_format_version": "0.1.0",
-        "start_time_seconds": "1754148556",
+        "start_time_seconds": "1754821790",
         "python_version": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]",
-        "command_line_arguments": "D:\\ProgramFiles\\Unity\\Projects\\Diplom\\venv\\Scripts\\mlagents-learn config/MoveToGoal.yaml --resume --run-id=TestDistanceReward",
+        "command_line_arguments": "D:\\ProgramFiles\\Unity\\Projects\\Diplom\\venv\\Scripts\\mlagents-learn config/moveToGoal.yaml --resume --run-id=TestDistanceReward",
         "mlagents_version": "1.1.0",
         "mlagents_envs_version": "1.1.0",
         "communication_protocol_version": "1.5.0",
         "pytorch_version": "2.7.1+cpu",
         "numpy_version": "1.23.5",
-        "end_time_seconds": "1754148566"
+        "end_time_seconds": "1754821801"
     },
-    "total": 10.807477899998048,
+    "total": 10.876091899999665,
     "count": 1,
-    "self": 0.007564199997432297,
+    "self": 0.007439700000759331,
     "children": {
         "run_training.setup": {
-            "total": 0.12650209999992512,
+            "total": 0.13880219999919063,
             "count": 1,
-            "self": 0.12650209999992512
+            "self": 0.13880219999919063
         },
         "TrainerController.start_learning": {
-            "total": 10.67341160000069,
+            "total": 10.729849999999715,
             "count": 1,
-            "self": 0.00013970000145491213,
+            "self": 0.00015660000099160243,
             "children": {
                 "TrainerController._reset_env": {
-                    "total": 10.585000999999465,
+                    "total": 10.645878600000287,
                     "count": 1,
-                    "self": 10.585000999999465
+                    "self": 10.645878600000287
                 },
                 "trainer_threads": {
-                    "total": 8.999995770864189e-07,
+                    "total": 9.999985195463523e-07,
                     "count": 1,
-                    "self": 8.999995770864189e-07
+                    "self": 9.999985195463523e-07
                 },
                 "TrainerController._save_models": {
-                    "total": 0.08827000000019325,
+                    "total": 0.08381379999991623,
                     "count": 1,
-                    "self": 0.0015599000034853816,
+                    "self": 0.00024950000079115853,
                     "children": {
                         "RLTrainer._checkpoint": {
-                            "total": 0.08671009999670787,
+                            "total": 0.08356429999912507,
                             "count": 1,
-                            "self": 0.08671009999670787
+                            "self": 0.08356429999912507
                         }
                     }
                 }

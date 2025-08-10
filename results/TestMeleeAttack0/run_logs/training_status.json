@@ -1,0 +1,47 @@
+{
+    "MoveToPlayer": {
+        "checkpoints": [
+            {
+                "steps": 2256,
+                "file_path": "results\\TestMeleeAttack0\\MoveToPlayer\\MoveToPlayer-2256.onnx",
+                "reward": 0.0,
+                "creation_time": 1754826515.7776597,
+                "auxillary_file_paths": [
+                    "results\\TestMeleeAttack0\\MoveToPlayer\\MoveToPlayer-2256.pt"
+                ]
+            },
+            {
+                "steps": 5392,
+                "file_path": "results\\TestMeleeAttack0\\MoveToPlayer\\MoveToPlayer-5392.onnx",
+                "reward": null,
+                "creation_time": 1754826758.0672863,
+                "auxillary_file_paths": [
+                    "results\\TestMeleeAttack0\\MoveToPlayer\\MoveToPlayer-5392.pt"
+                ]
+            },
+            {
+                "steps": 7056,
+                "file_path": "results\\TestMeleeAttack0\\MoveToPlayer\\MoveToPlayer-7056.onnx",
+                "reward": null,
+                "creation_time": 1754827121.5746918,
+                "auxillary_file_paths": [
+                    "results\\TestMeleeAttack0\\MoveToPlayer\\MoveToPlayer-7056.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 7056,
+            "file_path": "results\\TestMeleeAttack0\\MoveToPlayer.onnx",
+            "reward": null,
+            "creation_time": 1754827121.5746918,
+            "auxillary_file_paths": [
+                "results\\TestMeleeAttack0\\MoveToPlayer\\MoveToPlayer-7056.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.7.1+cpu"
+    }
+}

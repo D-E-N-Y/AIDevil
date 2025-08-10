@@ -14,9 +14,9 @@ public class UI_UnitHPIndicator : UI_Panel
 
     private void Update()
     {
+        if (ui_hpSlider != null || unit != null) ui_hpSlider.value = unit.GetCurrentHP() / unit.GetMaxHP();;
         if (ui_hpSlider == null || unit == null || _camera == null) return;
 
         transform.rotation = _camera.transform.rotation;
-        ui_hpSlider.value = unit.GetCurrentHP() / unit.GetMaxHP();
     }
 }

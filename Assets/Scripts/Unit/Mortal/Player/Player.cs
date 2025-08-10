@@ -7,12 +7,23 @@ public class Player : U_Mortal
 
     [SerializeField] private float _moveSpeed;
 
+    void Start()
+    {
+        Initialize();
+    }
+
     public virtual void Initialize(FixedJoystick _joystick)
     {
         Initialize();
 
         this._joystick = _joystick;
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        gameObject.SetActive(true);
     }
 
     private void FixedUpdate()

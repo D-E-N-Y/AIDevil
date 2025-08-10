@@ -1,0 +1,60 @@
+{
+    "MoveToPlayer": {
+        "checkpoints": [
+            {
+                "steps": 3280,
+                "file_path": "results\\TestMeleeAttack\\MoveToPlayer\\MoveToPlayer-3280.onnx",
+                "reward": null,
+                "creation_time": 1754826111.8790994,
+                "auxillary_file_paths": [
+                    "results\\TestMeleeAttack\\MoveToPlayer\\MoveToPlayer-3280.pt"
+                ]
+            },
+            {
+                "steps": 5648,
+                "file_path": "results\\TestMeleeAttack\\MoveToPlayer\\MoveToPlayer-5648.onnx",
+                "reward": null,
+                "creation_time": 1754826353.915686,
+                "auxillary_file_paths": [
+                    "results\\TestMeleeAttack\\MoveToPlayer\\MoveToPlayer-5648.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 5648,
+            "file_path": "results\\TestMeleeAttack\\MoveToPlayer.onnx",
+            "reward": null,
+            "creation_time": 1754826353.915686,
+            "auxillary_file_paths": [
+                "results\\TestMeleeAttack\\MoveToPlayer\\MoveToPlayer-5648.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.7.1+cpu"
+    },
+    "B_Melee": {
+        "checkpoints": [
+            {
+                "steps": 0,
+                "file_path": "results\\TestMeleeAttack\\B_Melee\\B_Melee-0.onnx",
+                "reward": null,
+                "creation_time": 1754828319.8077269,
+                "auxillary_file_paths": [
+                    "results\\TestMeleeAttack\\B_Melee\\B_Melee-0.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 0,
+            "file_path": "results\\TestMeleeAttack\\B_Melee.onnx",
+            "reward": null,
+            "creation_time": 1754828319.8077269,
+            "auxillary_file_paths": [
+                "results\\TestMeleeAttack\\B_Melee\\B_Melee-0.pt"
+            ]
+        }
+    }
+}

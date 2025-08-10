@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e5795a4d80cba6269375499506cbad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 5.2
 --- !u!1 &7563806881094089339
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,8 +81,8 @@ GameObject:
   - component: {fileID: 2594301857078117837}
   - component: {fileID: 7309190322725737650}
   - component: {fileID: 5734965064301067525}
-  - component: {fileID: 3737711010321703732}
-  - component: {fileID: 5547228786729690598}
+  - component: {fileID: 4675481426014357347}
+  - component: {fileID: 5182228848180049584}
   m_Layer: 0
   m_Name: Melee Boss
   m_TagString: Untagged
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_ObservableAttributeHandling: 0
---- !u!114 &3737711010321703732
+--- !u!114 &4675481426014357347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,17 +244,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 7563806881094089339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c5a8d4f8bb787140b9da446d671568d, type: 3}
+  m_Script: {fileID: 11500000, guid: 54c339400090340308825dbd7414381c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
-  maxHP: 1000
-  moveSpeed: 10
-  target: {fileID: 0}
---- !u!114 &5547228786729690598
+  MaxStep: 0
+  maxHP: 0
+  winMaterial: {fileID: 0}
+  loseMaterial: {fileID: 0}
+  floorMeshRenderer: {fileID: 0}
+  moveSpeed: 0
+  spawnArea: {fileID: 0}
+  player: {fileID: 0}
+  meleeBossAttack: {fileID: 8535252893177556345}
+--- !u!114 &5182228848180049584
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,10 +285,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss HP Indicator
       objectReference: {fileID: 0}
-    - target: {fileID: 4630377617600122618, guid: 8263e38c174cfba5b91d062901866c16, type: 3}
-      propertyPath: boss
-      value: 
-      objectReference: {fileID: 3737711010321703732}
     - target: {fileID: 6304654320758852536, guid: 8263e38c174cfba5b91d062901866c16, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
