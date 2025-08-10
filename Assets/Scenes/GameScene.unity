@@ -605,7 +605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
-  m_CollectObjects: 0
+  m_CollectObjects: 2
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
@@ -676,7 +676,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 200, y: 10, z: 200}
+  m_Size: {x: 250, y: 10, z: 250}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &482309627
 MonoBehaviour:
@@ -691,6 +691,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   returnPostion: {fileID: 141904572}
+--- !u!4 &504041714 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4540356905136908823, guid: 09f210861b2b59a9c8e996e3c1c3bc55, type: 3}
+  m_PrefabInstance: {fileID: 6924529622282268468}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &508716799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,7 +1149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1136977181
 Transform:
   m_ObjectHideFlags: 0
@@ -1157,7 +1162,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 504041714}
   m_Father: {fileID: 2097442329}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1606015704
@@ -1800,11 +1806,11 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1136977181}
     m_Modifications:
     - target: {fileID: 2454822435813753638, guid: 09f210861b2b59a9c8e996e3c1c3bc55, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3737711010321703732, guid: 09f210861b2b59a9c8e996e3c1c3bc55, type: 3}
       propertyPath: target
@@ -1880,4 +1886,3 @@ SceneRoots:
   - {fileID: 1973210672}
   - {fileID: 351324614}
   - {fileID: 1606015705}
-  - {fileID: 6924529622282268468}

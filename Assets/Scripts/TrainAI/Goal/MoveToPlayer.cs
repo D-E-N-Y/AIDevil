@@ -23,16 +23,25 @@ public class MoveToPlayer : Agent
 
     void Start()
     {
-        startPosition = transform.localPosition;
-        oldPosition = transform.localPosition;
+        startPosition = transform.position;
+        oldPosition = transform.position;
     }
 
     public override void OnEpisodeBegin()
     {
-        transform.localPosition = new Vector3(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x), 1, Random.Range(spawnArea.bounds.min.z, spawnArea.bounds.max.z));
-        targetTransform.localPosition = new Vector3(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x), 1, Random.Range(spawnArea.bounds.min.z, spawnArea.bounds.max.z));
+        transform.position = GetRandomSpawnPosition();
+        targetTransform.position = GetRandomSpawnPosition();
         //base.OnEpisodeBegin();
     }
+
+    private Vector3 GetRandomSpawnPosition()
+    {
+        return new Vector3(
+            Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x),
+            spawnArea.transform.position.y,
+            Random.Range(spawnArea.bounds.min.z, spawnArea.bounds.max.z));
+    }
+
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.localPosition);
@@ -47,11 +56,11 @@ public class MoveToPlayer : Agent
 
         float moveSpeed = 2f;
 
-        transform.localPosition += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
+        transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
 
-        newPosition = transform.localPosition;
+        newPosition = transform.position;
 
-        if (Vector3.Distance(oldPosition, targetTransform.localPosition) < Vector3.Distance(newPosition, targetTransform.localPosition))
+        if (Vector3.Distance(oldPosition, targetTransform.position) < Vector3.Distance(newPosition, targetTransform.position))
         {
             SetReward(+0.1f);
         }
