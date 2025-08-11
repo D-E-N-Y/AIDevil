@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Unity.MLAgents;
 
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -27,13 +25,16 @@ public class B_Melee : Boss
 
         meleeBossAttack.EndAttack();
         meleeBossAttack.isSuccessfulAttack += SuccessfulAttack;
+
+        player.onDead += SuccessfulKill;
     }
 
     public override void OnEpisodeBegin()
     {
-        transform.position = GetRandomSpawnPosition();
-        player.transform.position = GetRandomSpawnPosition();
+        player.transform.position = environment.GetRandomSpawnPosition();
         player.Initialize();
+
+        transform.position = environment.GetRandomSpawnPosition();
         canDetectTouch = false;
         isTouchingPlayer = false;
         StartCoroutine(EnableTouchDetectionAfterDelay());
@@ -84,7 +85,7 @@ public class B_Melee : Boss
         oldPosition = newPosition;
 
     }
-    
+
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
@@ -106,7 +107,7 @@ public class B_Melee : Boss
         }
         if (other.TryGetComponent<Wall>(out Wall wall))
         {
-            floorMeshRenderer.material = loseMaterial;
+            environment.Lose();
             SetReward(-100f);
             EndEpisode();
         }
@@ -148,15 +149,15 @@ public class B_Melee : Boss
 
     private void SuccessfulAttack()
     {
-        floorMeshRenderer.material = attackingMaterial;
+        environment.Attacking();
         SetReward(+0.5f);
-        if (player.GetCurrentHP() <= 0)
-            {
-                floorMeshRenderer.material = winMaterial;
-                isTouchingPlayer = false;   
-                SetReward(+100f);
-                EndEpisode();
-            }
+    }
 
+    private void SuccessfulKill()
+    {
+        environment.Win();
+        isTouchingPlayer = false;
+        SetReward(+100f);
+        EndEpisode();
     }
 }

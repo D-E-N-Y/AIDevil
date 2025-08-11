@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Player : U_Mortal
 {
+    public Action onDead;
+
     private Rigidbody _rigidbody;
     private FixedJoystick _joystick;
 
@@ -35,5 +38,11 @@ public class Player : U_Mortal
             _rigidbody.velocity.y,
             _joystick.Vertical * _moveSpeed
         );
+    }
+
+    public override void Death()
+    {
+        onDead.Invoke();
+        base.Death();
     }
 }

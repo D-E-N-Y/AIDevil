@@ -11,19 +11,12 @@ public class Boss : Agent
     [SerializeField, Range(1, 9999)] private float maxHP;
     private float currentHP;
 
-    [SerializeField] protected Material winMaterial;
-    [SerializeField] protected Material loseMaterial;
-    [SerializeField] protected Material attackingMaterial;
-
-    [SerializeField] protected MeshRenderer floorMeshRenderer;
-
     [SerializeField, Range(1f, 100f)] protected float moveSpeed;
-
-    [SerializeField] private BoxCollider spawnArea;
 
     protected Vector3 oldPosition, newPosition;
 
     [SerializeField] protected Player player;
+    [SerializeField] protected TrainAIEnvironment environment;
 
     public override void Initialize()
     {
@@ -46,20 +39,12 @@ public class Boss : Agent
         gameObject.SetActive(false);
     }
 
-    public override void OnEpisodeBegin()
-    {
-        transform.position = GetRandomSpawnPosition();
-        player.transform.position = GetRandomSpawnPosition();
-        //base.OnEpisodeBegin();
-    }
-
-    protected Vector3 GetRandomSpawnPosition()
-    {
-        return new Vector3(
-            Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x),
-            spawnArea.transform.position.y,
-            Random.Range(spawnArea.bounds.min.z, spawnArea.bounds.max.z));
-    }
+    // public override void OnEpisodeBegin()
+    // {
+    //     transform.position = environment.GetRandomSpawnPosition();
+    //     player.transform.position = environment.GetRandomSpawnPosition();
+    //     //base.OnEpisodeBegin();
+    // }
 
     // public override void CollectObservations(VectorSensor sensor)
     // {
