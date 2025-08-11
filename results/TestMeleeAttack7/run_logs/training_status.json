@@ -2,15 +2,6 @@
     "B_Melee": {
         "checkpoints": [
             {
-                "steps": 63731,
-                "file_path": "results\\TestMeleeAttack7\\B_Melee\\B_Melee-63731.onnx",
-                "reward": null,
-                "creation_time": 1754831943.524864,
-                "auxillary_file_paths": [
-                    "results\\TestMeleeAttack7\\B_Melee\\B_Melee-63731.pt"
-                ]
-            },
-            {
                 "steps": 68274,
                 "file_path": "results\\TestMeleeAttack7\\B_Melee\\B_Melee-68274.onnx",
                 "reward": null,
@@ -45,15 +36,24 @@
                 "auxillary_file_paths": [
                     "results\\TestMeleeAttack7\\B_Melee\\B_Melee-82612.pt"
                 ]
+            },
+            {
+                "steps": 201786,
+                "file_path": "results\\TestMeleeAttack7\\B_Melee\\B_Melee-201786.onnx",
+                "reward": null,
+                "creation_time": 1754902311.0991654,
+                "auxillary_file_paths": [
+                    "results\\TestMeleeAttack7\\B_Melee\\B_Melee-201786.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 82612,
+            "steps": 201786,
             "file_path": "results\\TestMeleeAttack7\\B_Melee.onnx",
             "reward": null,
-            "creation_time": 1754832735.9514089,
+            "creation_time": 1754902311.0991654,
             "auxillary_file_paths": [
-                "results\\TestMeleeAttack7\\B_Melee\\B_Melee-82612.pt"
+                "results\\TestMeleeAttack7\\B_Melee\\B_Melee-201786.pt"
             ]
         }
     },

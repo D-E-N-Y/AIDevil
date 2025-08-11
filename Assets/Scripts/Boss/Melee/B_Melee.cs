@@ -12,7 +12,8 @@ public class B_Melee : Boss
     private Coroutine attacking;
 
     private bool isTouchingPlayer;
-    private bool fuckingNotTouchingPlayer;
+
+    private bool canDetectTouch;
 
     private void Start()
     {
@@ -30,31 +31,43 @@ public class B_Melee : Boss
 
     public override void OnEpisodeBegin()
     {
-        Debug.Log("Episode Begin");
         transform.position = GetRandomSpawnPosition();
         player.transform.position = GetRandomSpawnPosition();
         player.Initialize();
-        if (isTouchingPlayer) {
-            Debug.Log("NOT FUCKING TOUCHING PLAYER (EPISODE BEGIN)");
-            isTouchingPlayer = false;
-        } 
+        canDetectTouch = false;
+        isTouchingPlayer = false;
+        StartCoroutine(EnableTouchDetectionAfterDelay());
         //base.OnEpisodeBegin();
+    }
+
+    private IEnumerator EnableTouchDetectionAfterDelay()
+    {
+        yield return null;
+        canDetectTouch = true;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        
-        sensor.AddObservation(transform.position);
-        sensor.AddObservation(player.transform.position);
+
+        if (!isTouchingPlayer)
+        {
+            sensor.AddObservation(transform.position);
+            sensor.AddObservation(player.transform.position);
+        }
+        else
+        {
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
+        }
+
         //base.CollectObservations(sensor);
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        Debug.Log("isTouchingPlayer:" + isTouchingPlayer);
-        if (!fuckingNotTouchingPlayer)
-        {
-            if (isTouchingPlayer) return;
-        }
         float moveX = actions.ContinuousActions[0];
         float moveZ = actions.ContinuousActions[1];
 
@@ -70,7 +83,6 @@ public class B_Melee : Boss
 
         oldPosition = newPosition;
 
-        //base.OnActionReceived(actions);
     }
     
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -83,12 +95,12 @@ public class B_Melee : Boss
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!canDetectTouch) return;
         if (other.TryGetComponent<Player>(out Player _player))
         {
             if (_player == player)
             {
                 Attack();
-                fuckingNotTouchingPlayer = false;
                 isTouchingPlayer = true;
             }
         }
@@ -141,14 +153,8 @@ public class B_Melee : Boss
         if (player.GetCurrentHP() <= 0)
             {
                 floorMeshRenderer.material = winMaterial;
-            if (isTouchingPlayer)
-            {
-                Debug.Log("NOT FUCKING TOUCHING PLAYER");
-                    isTouchingPlayer = false;
-                    fuckingNotTouchingPlayer = true;
-                }    
+                isTouchingPlayer = false;   
                 SetReward(+100f);
-                Debug.Log("Episode End");
                 EndEpisode();
             }
 

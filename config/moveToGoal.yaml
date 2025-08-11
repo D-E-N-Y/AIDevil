@@ -20,6 +20,13 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
+      gail:
+        strength: 0.5
+        gamma: 0.99
+        demo_path: Assets/Demonstrations/MeleeAttackDemo.demo
+    behavioral_cloning:
+        strength: 0.5
+        demo_path: Assets/Demonstrations/MeleeAttackDemo.demo
     max_steps: 500000
     time_horizon: 64
     summary_freq: 10000
