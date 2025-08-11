@@ -31,14 +31,13 @@ public class B_Melee : Boss
 
     public override void OnEpisodeBegin()
     {
-        player.transform.position = environment.GetRandomSpawnPosition();
-        player.Initialize();
-
         transform.position = environment.GetRandomSpawnPosition();
         canDetectTouch = false;
         isTouchingPlayer = false;
         StartCoroutine(EnableTouchDetectionAfterDelay());
         //base.OnEpisodeBegin();
+        player.transform.position = environment.GetRandomSpawnPosition();
+        player.Initialize();
     }
 
     private IEnumerator EnableTouchDetectionAfterDelay()
@@ -101,9 +100,8 @@ public class B_Melee : Boss
         {
             if (_player == player)
             {
-                environment.Attacking();
-
                 Attack();
+                environment.Attacking();
                 isTouchingPlayer = true;
             }
         }

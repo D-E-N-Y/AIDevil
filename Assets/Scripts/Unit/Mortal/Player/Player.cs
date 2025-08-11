@@ -42,7 +42,7 @@ public class Player : U_Mortal
 
     public override void Death()
     {
-        onDead.Invoke();
         base.Death();
+        onDead.Invoke();
     }
 }
