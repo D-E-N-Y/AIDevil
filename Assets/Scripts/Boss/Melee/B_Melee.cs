@@ -101,6 +101,8 @@ public class B_Melee : Boss
         {
             if (_player == player)
             {
+                environment.Attacking();
+
                 Attack();
                 isTouchingPlayer = true;
             }
@@ -149,7 +151,6 @@ public class B_Melee : Boss
 
     private void SuccessfulAttack()
     {
-        environment.Attacking();
         SetReward(+0.5f);
     }
 
