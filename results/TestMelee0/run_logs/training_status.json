@@ -1,0 +1,29 @@
+{
+    "B_Melee": {
+        "checkpoints": [
+            {
+                "steps": 4748,
+                "file_path": "results\\TestMelee0\\B_Melee\\B_Melee-4748.onnx",
+                "reward": null,
+                "creation_time": 1754908057.8033674,
+                "auxillary_file_paths": [
+                    "results\\TestMelee0\\B_Melee\\B_Melee-4748.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 4748,
+            "file_path": "results\\TestMelee0\\B_Melee.onnx",
+            "reward": null,
+            "creation_time": 1754908057.8033674,
+            "auxillary_file_paths": [
+                "results\\TestMelee0\\B_Melee\\B_Melee-4748.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.7.1+cpu"
+    }
+}
