@@ -4,19 +4,22 @@ using UnityEngine.UI;
 public class UI_UnitHPIndicator : UI_Panel
 {
     [SerializeField] private Slider ui_hpSlider;
-    [SerializeField] private U_Mortal unit;
+    private IHealth unit;
     private Camera _camera;
 
-    void Start()
+
+    public void Initialize(IHealth unit)
     {
+        this.unit = unit;
         _camera = Camera.main;
     }
 
     private void Update()
     {
-        if (ui_hpSlider != null || unit != null) ui_hpSlider.value = unit.GetCurrentHP() / unit.GetMaxHP();;
-        if (ui_hpSlider == null || unit == null || _camera == null) return;
+        // has unit to show HP
+        if (ui_hpSlider != null || unit != null) ui_hpSlider.value = unit.GetCurrentHP() / unit.GetMaxHP(); ;
 
-        transform.rotation = _camera.transform.rotation;
+        // has camera to corrent show UI
+        if (_camera != null) transform.rotation = _camera.transform.rotation;
     }
 }

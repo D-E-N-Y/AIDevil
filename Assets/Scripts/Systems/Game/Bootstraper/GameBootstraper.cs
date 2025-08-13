@@ -5,20 +5,21 @@ public class GameBootstraper : MonoBehaviour
 {
     [SerializeField] private GameUICanvas gameUICanvas;
 
-    [SerializeField] private Player player;
+    [SerializeField] private P_User player;
     [SerializeField] private CameraOrigin cameraOrigin;
 
-    [SerializeField] private List<EMM_Melee> meleeEnemies;
+    [SerializeField] private List<EM_Melee> meleeEnemies;
 
     private void Start()
     {
-        player.Initialize(gameUICanvas.GetUIFixedJoystick());
+        player.Initialize();
+        player.SetControlers(gameUICanvas.GetUIFixedJoystick());
         cameraOrigin.Initialize(player.transform);
 
-        foreach (EMM_Melee enemy in meleeEnemies)
+        foreach (EM_Melee enemy in meleeEnemies)
         {
             enemy.Initialize();
-            enemy.SetTarget(player.transform);
+            enemy.SetPlayerTarget(player);
         }
     }
 }
