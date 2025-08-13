@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour, IHealth
 
     [SerializeField] protected Player playerTarget;
 
-    public Action onDead;
+    public Action<Enemy> onDead;
 
     public virtual void Initialize()
     {
@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour, IHealth
     public virtual void Death()
     {
         gameObject.SetActive(false);
-        onDead.Invoke();
+        onDead?.Invoke(this);
     }
 
     public virtual void SetPlayerTarget(Player playerTarget) => this.playerTarget = playerTarget;

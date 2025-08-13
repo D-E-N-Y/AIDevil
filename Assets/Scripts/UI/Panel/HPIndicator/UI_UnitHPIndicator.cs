@@ -17,7 +17,7 @@ public class UI_UnitHPIndicator : UI_Panel
     private void Update()
     {
         // has unit to show HP
-        if (ui_hpSlider != null || unit != null) ui_hpSlider.value = unit.GetCurrentHP() / unit.GetMaxHP(); ;
+        if (ui_hpSlider != null || unit != null) ui_hpSlider.value = (float)unit.GetCurrentHP() / (float)unit.GetMaxHP();
 
         // has camera to corrent show UI
         if (_camera != null) transform.rotation = _camera.transform.rotation;

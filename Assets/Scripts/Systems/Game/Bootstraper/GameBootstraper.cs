@@ -5,7 +5,7 @@ public class GameBootstraper : MonoBehaviour
 {
     [SerializeField] private GameUICanvas gameUICanvas;
 
-    [SerializeField] private P_User player;
+    [SerializeField] private Player player;
     [SerializeField] private CameraOrigin cameraOrigin;
 
     [SerializeField] private WaveSystem waveSystem;
