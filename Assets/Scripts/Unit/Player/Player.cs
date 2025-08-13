@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour, IHealth
 {
     public Action onDead;
@@ -17,6 +19,7 @@ public class Player : MonoBehaviour, IHealth
 
     private Rigidbody _rigidbody;
     private FixedJoystick _joystick;
+    private Button melleAttackButton;
 
     public virtual void Initialize()
     {
@@ -24,15 +27,25 @@ public class Player : MonoBehaviour, IHealth
 
         ui_unitHPIndicator.Initialize(this);
 
-        spells.ForEach(x => x.Initialize());
+        foreach (Spell spell in spells)
+        {
+            spell.Initialize();
+
+            if (spell is SpellMelee)
+            {
+                ((SpellMelee)spell).SetController(melleAttackButton);
+            }
+        }
+
+        _rigidbody = GetComponent<Rigidbody>();
 
         gameObject.SetActive(true);
     }
 
-    public void SetControlers(FixedJoystick _joystick)
+    public void SetControlers(FixedJoystick _joystick, Button melleAttackButton)
     {
         this._joystick = _joystick;
-        _rigidbody = GetComponent<Rigidbody>();
+        this.melleAttackButton = melleAttackButton;
     }
 
     private void FixedUpdate()

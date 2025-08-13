@@ -12,8 +12,8 @@ public class GameBootstraper : MonoBehaviour
 
     private void Start()
     {
+        player.SetControlers(gameUICanvas.GetUIFixedJoystick(), gameUICanvas.GetMelleAttackButton());
         player.Initialize();
-        player.SetControlers(gameUICanvas.GetUIFixedJoystick());
         cameraOrigin.Initialize(player.transform);
 
         waveSystem.Initialize(player);
