@@ -8,7 +8,7 @@ public class GameBootstraper : MonoBehaviour
     [SerializeField] private P_User player;
     [SerializeField] private CameraOrigin cameraOrigin;
 
-    [SerializeField] private List<EM_Melee> meleeEnemies;
+    [SerializeField] private WaveSystem waveSystem;
 
     private void Start()
     {
@@ -16,10 +16,7 @@ public class GameBootstraper : MonoBehaviour
         player.SetControlers(gameUICanvas.GetUIFixedJoystick());
         cameraOrigin.Initialize(player.transform);
 
-        foreach (EM_Melee enemy in meleeEnemies)
-        {
-            enemy.Initialize();
-            enemy.SetPlayerTarget(player);
-        }
+        waveSystem.Initialize(player);
+        waveSystem.StartWave();
     }
 }

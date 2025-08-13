@@ -1,0 +1,102 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class WaveSystem : MonoBehaviour
+{
+    [SerializeField, Range(1f, 50f)] private float minSpawnRadius;
+    [SerializeField, Range(1f, 50f)] private float maxSpawnRadius;
+    [SerializeField, Range(0.1f, 10f)] private float spawnSpeed;
+    [SerializeField, Range(0.1f, 10f)] private float timeBetweenWaves;
+    [SerializeField] List<WaveData> waves;
+    private int currentWave;
+    private Coroutine spawningEnemies;
+    int countWaveEnemies;
+
+    private Player playerTarget;
+
+    public void Initialize(Player playerTarget)
+    {
+        this.playerTarget = playerTarget;
+
+        currentWave = 0;
+    }
+
+    public void StartWave()
+    {
+        spawningEnemies = StartCoroutine(nameof(SpawningEnemies));
+    }
+
+    private IEnumerator SpawningEnemies()
+    {
+        int countEnemies = 0;
+        waves[currentWave].enemies.ForEach(x => countEnemies += x.count);
+
+        foreach (WaveEnemyData enemies in waves[currentWave].enemies)
+        {
+            for (int i = 0; i < enemies.count; i++)
+            {
+                Vector3 _spawnPosition = GetSpawnPosition();
+                Enemy _enemy = Instantiate(enemies.enemy, _spawnPosition, GetSpawnRotation(_spawnPosition));
+
+                _enemy.Initialize();
+                _enemy.SetPlayerTarget(playerTarget);
+
+                _enemy.onDead += DeathEnemy;
+
+                yield return new WaitForSeconds(spawnSpeed);
+            }
+        }
+    }
+
+    public void StopWave()
+    {
+        StopCoroutine(spawningEnemies);
+    }
+
+    public void CompleteWave()
+    {
+        currentWave++;
+    }
+
+    private Vector3 GetSpawnPosition()
+    {
+        for (int attempt = 0; attempt < 100; attempt++)
+        {
+            Vector3 _position = GetRandomPointInDonut(playerTarget.transform.position);
+
+            if (NavMesh.SamplePosition(_position, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+                return hit.position;
+        }
+
+        return Vector3.zero;
+    }
+
+    private Vector3 GetRandomPointInDonut(Vector3 _center)
+    {
+        float angle = Random.Range(0f, Mathf.PI * 2f);
+        float radius = Random.Range(minSpawnRadius, maxSpawnRadius);
+
+        float x = _center.x + Mathf.Cos(angle) * radius;
+        float z = _center.z + Mathf.Sin(angle) * radius;
+
+        return new Vector3(x, 1f, z);
+    }
+
+    private Quaternion GetSpawnRotation(Vector3 _spawnPosition)
+    {
+        Vector3 direction = playerTarget.transform.position - _spawnPosition;
+        return Quaternion.LookRotation(direction, Vector3.up);
+    }
+
+    private void DeathEnemy()
+    {
+        countWaveEnemies--;
+
+        if (countWaveEnemies <= 0)
+        {
+            CompleteWave();
+        }
+    }
+}
