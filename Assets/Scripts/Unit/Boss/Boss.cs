@@ -2,9 +2,13 @@ using UnityEngine;
 using Unity.MLAgents;
 
 using Unity.MLAgents.Actuators;
+using System;
 
 public class Boss : Agent, IHealth
 {
+    public Action<IHealth> onDead { get; set; }
+    public Action onChangeHP { get; set; }
+
     [SerializeField, Range(1, 9999)] private int maxHP;
     private int currentHP;
 
@@ -27,8 +31,10 @@ public class Boss : Agent, IHealth
     public virtual void TakeDamage(int damage)
     {
         damage = Mathf.Max(0, damage);
-
         currentHP -= damage;
+
+        onChangeHP?.Invoke();
+
         if (currentHP <= 0)
         {
             Death();

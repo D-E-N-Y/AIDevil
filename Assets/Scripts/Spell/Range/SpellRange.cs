@@ -12,12 +12,12 @@ public class SpellRange : Spell
 
     private SphereCollider triggerCollider;
 
-    protected List<Enemy> enemies;
+    protected List<IHealth> units;
 
     public override void Initialize()
     {
         projectiles = new List<Projectile>();
-        enemies = new List<Enemy>();
+        units = new List<IHealth>();
 
         triggerCollider = GetComponent<SphereCollider>();
         triggerCollider.radius = attackRadius;
@@ -34,7 +34,7 @@ public class SpellRange : Spell
         }
 
         _projectile.Initialize(transform.position);
-        _projectile.Fire(GetNearbyEnemyPosition());
+        _projectile.Fire(targetLayer, GetNearbyEnemyPosition());
     }
 
     private Projectile GetAvaliableProjectile()
@@ -48,10 +48,14 @@ public class SpellRange : Spell
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Enemy>(out Enemy _enemy) && !enemies.Contains(_enemy))
+        if (IsCorrentTarget(other.gameObject) &&
+            other.gameObject.TryGetComponent(out MonoBehaviour comp) &&
+            comp is IHealth _unit &&
+            !units.Contains(_unit))
         {
-            enemies.Add(_enemy);
-            _enemy.onDead += RemoveTargetEnemy;
+
+            units.Add(_unit);
+            _unit.onDead += RemoveTargetUnit;
 
             if (attacking == null)
             {
@@ -62,23 +66,26 @@ public class SpellRange : Spell
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Enemy>(out Enemy _enemy) && enemies.Contains(_enemy))
+        if (IsCorrentTarget(other.gameObject) &&
+            other.gameObject.TryGetComponent(out MonoBehaviour comp) &&
+            comp is IHealth _unit &&
+            units.Contains(_unit))
         {
-            RemoveTargetEnemy(_enemy);
+            RemoveTargetUnit(_unit);
         }
     }
 
-    private void RemoveTargetEnemy(Enemy _enemy)
+    private void RemoveTargetUnit(IHealth _unit)
     {
-        enemies.Remove(_enemy);
-        _enemy.onDead -= RemoveTargetEnemy;
+        units.Remove(_unit);
+        _unit.onDead -= RemoveTargetUnit;
     }
 
     protected Vector3 GetNearbyEnemyPosition()
     {
-        Vector3 _nearbyEnemyPosition = enemies
-            .OrderBy(x => Vector3.Distance(transform.position, x.transform.position))
-            .Select(x => x.transform.position)
+        Vector3 _nearbyEnemyPosition = units
+            .OrderBy(x => Vector3.Distance(transform.position, ((MonoBehaviour)x).transform.position))
+            .Select(x => ((MonoBehaviour)x).transform.position)
             .FirstOrDefault();
 
         return _nearbyEnemyPosition;
@@ -86,7 +93,7 @@ public class SpellRange : Spell
 
     private IEnumerator Attacking()
     {
-        while (enemies.Count > 0)
+        while (units.Count > 0)
         {
             Cast();
 

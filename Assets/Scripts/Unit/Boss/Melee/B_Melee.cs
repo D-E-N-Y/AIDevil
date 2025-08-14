@@ -152,7 +152,7 @@ public class B_Melee : Boss
         SetReward(+0.5f);
     }
 
-    private void SuccessfulKill()
+    private void SuccessfulKill(IHealth unit)
     {
         environment.Win();
         isTouchingPlayer = false;

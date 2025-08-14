@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IHealth
 {
+    public Action<IHealth> onDead { get; set; }
+    public Action onChangeHP { get; set; }
+
     [SerializeField, Range(1, 1000)] protected int maxHP;
     protected int currentHP;
 
@@ -12,13 +16,15 @@ public class Enemy : MonoBehaviour, IHealth
 
     [SerializeField] protected Player playerTarget;
 
-    public Action<Enemy> onDead;
+    [SerializeField] protected List<Spell> spells;    
 
     public virtual void Initialize()
     {
         currentHP = maxHP;
 
         ui_unitHPIndicator.Initialize(this);
+
+        spells.ForEach(x => x.Initialize());
 
         gameObject.SetActive(true);
     }
@@ -27,6 +33,8 @@ public class Enemy : MonoBehaviour, IHealth
     {
         value = Math.Max(0, value);
         currentHP -= value;
+
+        onChangeHP?.Invoke();
 
         if (currentHP <= 0)
         {

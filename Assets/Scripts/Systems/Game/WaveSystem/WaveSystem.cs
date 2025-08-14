@@ -90,7 +90,7 @@ public class WaveSystem : MonoBehaviour
         return Quaternion.LookRotation(direction, Vector3.up);
     }
 
-    private void DeathEnemy(Enemy _enemy)
+    private void DeathEnemy(IHealth _enemy)
     {
         countWaveEnemies--;
 

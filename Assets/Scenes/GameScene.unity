@@ -986,7 +986,9 @@ MonoBehaviour:
   waves:
   - enemies:
     - enemy: {fileID: 2679192823051928832, guid: c07d1997ec059689f850875941932df9, type: 3}
-      count: 25
+      count: 5
+    - enemy: {fileID: 8108851722937174460, guid: ceee74e86c3a312e8a2c2022005581c2, type: 3}
+      count: 5
   - enemies:
     - enemy: {fileID: 2679192823051928832, guid: c07d1997ec059689f850875941932df9, type: 3}
       count: 15
@@ -1280,6 +1282,10 @@ PrefabInstance:
     - target: {fileID: 652303543126314879, guid: 82d1eb2f14a08859a9799e2b4dde7e30, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2456687205013556283, guid: 82d1eb2f14a08859a9799e2b4dde7e30, type: 3}
+      propertyPath: targetLayer.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 7920392475786560525, guid: 82d1eb2f14a08859a9799e2b4dde7e30, type: 3}
       propertyPath: m_AnchorMax.y

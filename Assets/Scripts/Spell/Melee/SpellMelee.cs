@@ -1,6 +1,5 @@
 using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine; 
 
 [RequireComponent(typeof(SphereCollider))]
 public class SpellMelee : Spell
@@ -16,14 +15,6 @@ public class SpellMelee : Spell
         damageCollider.enabled = false;
 
         blown.Stop();
-    }
-
-    public void SetController(Button button)
-    {
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(() => Cast());
-
-        button.gameObject.SetActive(true);
     }
 
     public override void Cast()
@@ -49,9 +40,10 @@ public class SpellMelee : Spell
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Enemy>(out Enemy _enemy))
+        if (IsCorrentTarget(other.gameObject))
         {
-            _enemy.TakeDamage(damage);
+            IHealth unit = other.gameObject.GetComponent<IHealth>();
+            unit.TakeDamage(damage);
         }
     }
 }

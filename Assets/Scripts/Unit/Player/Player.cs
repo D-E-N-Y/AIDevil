@@ -6,7 +6,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour, IHealth
 {
-    public Action onDead;
+    public Action<IHealth> onDead { get; set; }
+    public Action onChangeHP { get; set; }
 
     [SerializeField, Range(1, 1000)] protected int maxHP;
     protected int currentHP;
@@ -33,7 +34,7 @@ public class Player : MonoBehaviour, IHealth
 
             if (spell is SpellMelee)
             {
-                ((SpellMelee)spell).SetController(melleAttackButton);
+                SetMeleeSpellController((SpellMelee)spell);
             }
         }
 
@@ -46,6 +47,14 @@ public class Player : MonoBehaviour, IHealth
     {
         this._joystick = _joystick;
         this.melleAttackButton = melleAttackButton;
+    }
+
+    public void SetMeleeSpellController(SpellMelee spell)
+    {
+        melleAttackButton.onClick.RemoveAllListeners();
+        melleAttackButton.onClick.AddListener(() => spell.Cast());
+
+        melleAttackButton.gameObject.SetActive(true);
     }
 
     private void FixedUpdate()
@@ -64,6 +73,8 @@ public class Player : MonoBehaviour, IHealth
         value = Math.Max(0, value);
         currentHP -= value;
 
+        onChangeHP?.Invoke();
+
         if (currentHP <= 0)
         {
             Death();
@@ -73,7 +84,7 @@ public class Player : MonoBehaviour, IHealth
     public virtual void Death()
     {
         gameObject.SetActive(false);
-        onDead?.Invoke();
+        onDead?.Invoke(this);
     }
 
     public int GetCurrentHP() => currentHP;
