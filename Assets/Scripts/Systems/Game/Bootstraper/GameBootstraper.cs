@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameBootstraper : MonoBehaviour 
@@ -12,6 +11,9 @@ public class GameBootstraper : MonoBehaviour
 
     private void Start()
     {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 120;
+
         player.SetControlers(gameUICanvas.GetUIFixedJoystick(), gameUICanvas.GetMelleAttackButton());
         player.Initialize();
         cameraOrigin.Initialize(player.transform);
