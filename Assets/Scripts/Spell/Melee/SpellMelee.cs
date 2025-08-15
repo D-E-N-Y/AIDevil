@@ -40,10 +40,11 @@ public class SpellMelee : Spell
 
     void OnTriggerEnter(Collider other)
     {
-        if (IsCorrentTarget(other.gameObject))
+        if (IsCorrentTarget(other.gameObject) &&
+            other.gameObject.TryGetComponent(out MonoBehaviour comp) &&
+            comp is IHealth _unit)
         {
-            IHealth unit = other.gameObject.GetComponent<IHealth>();
-            unit.TakeDamage(damage);
+            _unit.TakeDamage(damage);
         }
     }
 }

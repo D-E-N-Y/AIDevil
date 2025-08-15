@@ -17,6 +17,7 @@ public class Player : MonoBehaviour, IHealth
     [SerializeField, Range(1f, 100f)] protected int moveSpeed;
 
     [SerializeField] private List<Spell> spells;
+    private List<SpellMelee> meleeSpells;
 
     private Rigidbody _rigidbody;
     private FixedJoystick _joystick;
@@ -28,13 +29,19 @@ public class Player : MonoBehaviour, IHealth
 
         ui_unitHPIndicator.Initialize(this);
 
+        meleeSpells = new List<SpellMelee>();
         foreach (Spell spell in spells)
         {
             spell.Initialize();
 
-            if (spell is SpellMelee)
+            if (spell is SpellMelee _meleeSpell)
             {
-                SetMeleeSpellController((SpellMelee)spell);
+                if (melleAttackButton != null)
+                {
+                    SetMeleeSpellController(_meleeSpell);
+                }
+
+                meleeSpells.Add(_meleeSpell);
             }
         }
 
@@ -55,6 +62,11 @@ public class Player : MonoBehaviour, IHealth
         melleAttackButton.onClick.AddListener(() => spell.Cast());
 
         melleAttackButton.gameObject.SetActive(true);
+    }
+
+    public void CastRandomMeleeSpell()
+    {
+        meleeSpells[UnityEngine.Random.Range(0, meleeSpells.Count)].Cast();
     }
 
     private void FixedUpdate()
