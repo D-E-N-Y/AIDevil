@@ -29,6 +29,8 @@ public class SpellRange : Spell
         {
             _projectile = Instantiate(projectile);
             projectiles.Add(_projectile);
+
+            _projectile.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
         }
 
         _projectile.Initialize(_originLayer, transform.position);

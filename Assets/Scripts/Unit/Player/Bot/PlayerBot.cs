@@ -27,7 +27,7 @@ public class PlayerBot : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _player.GetMoveSpeed();
 
-        // meleeSensor.Initialize();
+        meleeSensor.Initialize("Player", 2f);
     }
 
     protected virtual void MoveToPosition(Vector3 _position)

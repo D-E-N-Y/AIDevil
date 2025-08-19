@@ -11,6 +11,8 @@ public class SpellMelee : Spell
 
         meleeWeapon.Initialize(_originLayer);
         meleeWeapon.FinishAttack();
+
+        meleeWeapon.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
     }
 
     public override void Cast()

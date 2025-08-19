@@ -3,6 +3,7 @@ using Unity.MLAgents;
 
 using Unity.MLAgents.Actuators;
 using System;
+using System.Collections.Generic;
 
 public class Boss : Agent, IHealth
 {
@@ -21,11 +22,33 @@ public class Boss : Agent, IHealth
     [SerializeField] protected Player playerTarger;
     [SerializeField] protected TrainAIEnvironment environment;
 
+    [SerializeField] protected List<Spell> spells;
+    protected List<SpellMelee> meleeSpells;
+
+    protected string _originLayer;
+
     public override void Initialize()
     {
+        _originLayer = "Enemy";
+        gameObject.layer = LayerMask.NameToLayer(_originLayer);
+
         currentHP = maxHP;
 
         ui_unitHPIndicator.Initialize(this);
+
+        meleeSpells = new List<SpellMelee>();
+        foreach (Spell spell in spells)
+        {
+            spell.Initialize(_originLayer);
+            spell.onSuccessfulAttack += SuccessfulAttack;
+
+            if (spell is SpellMelee _meleeSpell)
+            {
+                meleeSpells.Add(_meleeSpell);
+            }
+        }
+
+        playerTarger.onDead += SuccessfulKill;
     }
 
     public virtual void TakeDamage(int damage)
@@ -52,6 +75,18 @@ public class Boss : Agent, IHealth
         continuousActions[0] = Input.GetAxisRaw("Horizontal");
         continuousActions[1] = Input.GetAxisRaw("Vertical");
         //base.Heuristic(actionsOut);
+    }
+
+    protected virtual void SuccessfulAttack()
+    {
+        SetReward(+0.5f);
+    }
+
+    protected virtual void SuccessfulKill(IHealth unit)
+    {
+        environment.Win();
+        SetReward(+100f);
+        EndEpisode();
     }
 
     public void SetPlayerTarget(Player playerTarger) => this.playerTarger = playerTarger;

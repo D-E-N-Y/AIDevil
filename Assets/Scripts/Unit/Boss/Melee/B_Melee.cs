@@ -6,7 +6,8 @@ using Unity.MLAgents.Sensors;
 
 public class B_Melee : Boss
 {
-    [SerializeField] private MeleeBossAttack meleeBossAttack;
+    [SerializeField] protected Sensor meleeSensor;
+
     private Coroutine attacking;
 
     private bool isTouchingPlayer;
@@ -23,10 +24,9 @@ public class B_Melee : Boss
         isTouchingPlayer = false;
         base.Initialize();
 
-        meleeBossAttack.EndAttack();
-        meleeBossAttack.isSuccessfulAttack += SuccessfulAttack;
-
-        playerTarger.onDead += SuccessfulKill;
+        meleeSensor.Initialize(_originLayer, 2f);
+        meleeSensor.onEnterUnit += AttackRangeEnter;
+        meleeSensor.onExitUnit += AttackRangeExit;
     }
 
     public override void OnEpisodeBegin()
@@ -93,36 +93,22 @@ public class B_Melee : Boss
         //base.Heuristic(actionsOut);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void AttackRangeEnter()
     {
         if (!canDetectTouch) return;
-        if (other.TryGetComponent<Player>(out Player _player))
-        {
-            if (_player == playerTarger)
-            {
-                Attack();
-                environment.Attacking();
-                isTouchingPlayer = true;
-            }
-        }
-        if (other.TryGetComponent<Wall>(out Wall wall))
-        {
-            environment.Lose();
-            SetReward(-100f);
-            EndEpisode();
-        }
 
+        Attack();
+        environment.Attacking();
+        isTouchingPlayer = true;
     }
-    private void OnTriggerExit(Collider other)
+
+    private void AttackRangeExit()
     {
-        if (other.TryGetComponent<Player>(out Player player))
+        isTouchingPlayer = false;
+        if (attacking != null)
         {
-            isTouchingPlayer = false;
-            if (attacking != null)
-            {
-                meleeBossAttack.EndAttack();
-                StopCoroutine(attacking);
-            }
+            StopCoroutine(attacking);
+            attacking = null;
         }
     }
 
@@ -137,26 +123,17 @@ public class B_Melee : Boss
 
     private IEnumerator Attaking()
     {
-        while (true)
+        while (meleeSensor.IsHasUnits())
         {
-            meleeBossAttack.StartAttack();
+            meleeSpells[Random.Range(0, meleeSpells.Count)].Cast();
 
-            yield return new WaitForSeconds(0.05f);
-
-            meleeBossAttack.EndAttack();
+            yield return null;
         }
     }
 
-    private void SuccessfulAttack()
+    protected override void SuccessfulKill(IHealth unit)
     {
-        SetReward(+0.5f);
-    }
-
-    private void SuccessfulKill(IHealth unit)
-    {
-        environment.Win();
+        base.SuccessfulKill(unit);
         isTouchingPlayer = false;
-        SetReward(+100f);
-        EndEpisode();
     }
 }

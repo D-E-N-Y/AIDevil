@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
 {
+    public Action onSuccessfulAttack;
+
     [SerializeField, Range(1, 100)] protected int damage;
     protected string _originLayer;
 
@@ -27,6 +30,7 @@ public class MeleeWeapon : MonoBehaviour
             comp is IHealth unit)
         {
             unit.TakeDamage(damage);
+            onSuccessfulAttack?.Invoke();
         }
     }
 }

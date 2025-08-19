@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public Action onSuccessfulAttack;
+
     [SerializeField, Range(1, 100)] protected int damage;
     [SerializeField, Range(1f, 100f)] protected float moveSpeed;
     protected string _originLayer;
@@ -39,6 +42,7 @@ public class Projectile : MonoBehaviour
             comp is IHealth _unit)
         {
             _unit.TakeDamage(damage);
+            onSuccessfulAttack?.Invoke();
         }
 
         isAvaliable = true;

@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 public abstract class Spell : MonoBehaviour
 {
-    // [SerializeField] protected LayerMask targetLayer;
+    public Action onSuccessfulAttack;
+
     protected string _originLayer;
     [SerializeField, Range(0.1f, 15f)] protected float cooldown;
     protected Coroutine attacking;
