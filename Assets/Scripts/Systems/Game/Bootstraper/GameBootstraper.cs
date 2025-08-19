@@ -12,8 +12,8 @@ public class GameBootstraper : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 120;
+        // QualitySettings.vSyncCount = 0;
+        // Application.targetFrameRate = 120; 
 
         player.SetControlers(gameUICanvas.GetUIFixedJoystick(), gameUICanvas.GetMelleAttackButton());
         player.Initialize();

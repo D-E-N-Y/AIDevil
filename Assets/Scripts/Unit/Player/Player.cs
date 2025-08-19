@@ -23,8 +23,13 @@ public class Player : MonoBehaviour, IHealth
     private FixedJoystick _joystick;
     private Button melleAttackButton;
 
+    protected string _originLayer;
+
     public virtual void Initialize()
     {
+        _originLayer = "Player";
+        gameObject.layer = LayerMask.NameToLayer(_originLayer);
+
         currentHP = maxHP;
 
         ui_unitHPIndicator.Initialize(this);
@@ -32,7 +37,7 @@ public class Player : MonoBehaviour, IHealth
         meleeSpells = new List<SpellMelee>();
         foreach (Spell spell in spells)
         {
-            spell.Initialize();
+            spell.Initialize(_originLayer);
 
             if (spell is SpellMelee _meleeSpell)
             {

@@ -16,15 +16,20 @@ public class Enemy : MonoBehaviour, IHealth
 
     [SerializeField] protected Player playerTarget;
 
-    [SerializeField] protected List<Spell> spells;    
+    [SerializeField] protected List<Spell> spells;
+
+    protected string _originLayer;
 
     public virtual void Initialize()
     {
+        _originLayer = "Enemy";
+        gameObject.layer = LayerMask.NameToLayer(_originLayer);
+
         currentHP = maxHP;
 
         ui_unitHPIndicator.Initialize(this);
 
-        spells.ForEach(x => x.Initialize());
+        spells.ForEach(x => x.Initialize(_originLayer));
 
         gameObject.SetActive(true);
     }

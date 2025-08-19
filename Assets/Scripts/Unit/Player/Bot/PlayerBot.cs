@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class PlayerBot : MonoBehaviour
 {
     [SerializeField, Range(1f, 15f)] private float maxDistanceToMove;
-    [SerializeField] private BotSensor meleeSensor;
+    [SerializeField] private Sensor meleeSensor;
 
     private Player _player;
     private NavMeshAgent _agent;
@@ -27,7 +27,7 @@ public class PlayerBot : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _player.GetMoveSpeed();
 
-        meleeSensor.Initialize();
+        // meleeSensor.Initialize();
     }
 
     protected virtual void MoveToPosition(Vector3 _position)

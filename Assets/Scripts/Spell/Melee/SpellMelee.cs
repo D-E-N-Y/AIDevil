@@ -1,20 +1,16 @@
 using System.Collections;
 using UnityEngine; 
 
-[RequireComponent(typeof(SphereCollider))]
 public class SpellMelee : Spell
 {
-    [SerializeField, Range(1, 100)] private int damage;
-    private SphereCollider damageCollider;
+    [SerializeField] protected MeleeWeapon meleeWeapon;
 
-    [SerializeField] private ParticleSystem blown;
-
-    public override void Initialize()
+    public override void Initialize(string originLayer)
     {
-        damageCollider = GetComponent<SphereCollider>();
-        damageCollider.enabled = false;
+        _originLayer = originLayer;
 
-        blown.Stop();
+        meleeWeapon.Initialize(_originLayer);
+        meleeWeapon.FinishAttack();
     }
 
     public override void Cast()
@@ -25,26 +21,8 @@ public class SpellMelee : Spell
         }
     }
 
-    private IEnumerator Attacking()
+    protected virtual IEnumerator Attacking()
     {
-        blown.Play();
-
-        damageCollider.enabled = true;
-        yield return new WaitForSeconds(0.5f);
-        damageCollider.enabled = false;
-
-        yield return new WaitForSeconds(cooldown - 0.5f);
-
-        attacking = null;
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (IsCorrentTarget(other.gameObject) &&
-            other.gameObject.TryGetComponent(out MonoBehaviour comp) &&
-            comp is IHealth _unit)
-        {
-            _unit.TakeDamage(damage);
-        }
+        yield return null;
     }
 }

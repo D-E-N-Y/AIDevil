@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
 public class SpellRange : Spell
 {
     [SerializeField, Range(1f, 100f)] protected float attackRadius;
     [SerializeField] protected Projectile projectile;
     protected List<Projectile> projectiles;
 
-    private SphereCollider triggerCollider;
+    [SerializeField] protected Sensor sensor;
 
-    protected List<IHealth> units;
-
-    public override void Initialize()
+    public override void Initialize(string originLayer)
     {
-        projectiles = new List<Projectile>();
-        units = new List<IHealth>();
+        _originLayer = originLayer;
 
-        triggerCollider = GetComponent<SphereCollider>();
-        triggerCollider.radius = attackRadius;
+        projectiles = new List<Projectile>();
+
+        sensor.Initialize(_originLayer, attackRadius);
+        sensor.onEnterUnit += StartAttack;
     }
 
     public override void Cast()
@@ -33,8 +31,8 @@ public class SpellRange : Spell
             projectiles.Add(_projectile);
         }
 
-        _projectile.Initialize(transform.position);
-        _projectile.Fire(targetLayer, GetNearbyEnemyPosition());
+        _projectile.Initialize(_originLayer, transform.position);
+        _projectile.Fire(sensor.GetNerbyUnitPosition());
     }
 
     private Projectile GetAvaliableProjectile()
@@ -46,54 +44,17 @@ public class SpellRange : Spell
         return _avaliableProjectile;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void StartAttack()
     {
-        if (IsCorrentTarget(other.gameObject) &&
-            other.gameObject.TryGetComponent(out MonoBehaviour comp) &&
-            comp is IHealth _unit &&
-            !units.Contains(_unit))
+        if (attacking == null)
         {
-
-            units.Add(_unit);
-            _unit.onDead += RemoveTargetUnit;
-
-            if (attacking == null)
-            {
-                attacking = StartCoroutine(nameof(Attacking));
-            }
+            attacking = StartCoroutine(nameof(Attacking));
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (IsCorrentTarget(other.gameObject) &&
-            other.gameObject.TryGetComponent(out MonoBehaviour comp) &&
-            comp is IHealth _unit &&
-            units.Contains(_unit))
-        {
-            RemoveTargetUnit(_unit);
-        }
-    }
-
-    private void RemoveTargetUnit(IHealth _unit)
-    {
-        units.Remove(_unit);
-        _unit.onDead -= RemoveTargetUnit;
-    }
-
-    protected Vector3 GetNearbyEnemyPosition()
-    {
-        Vector3 _nearbyEnemyPosition = units
-            .OrderBy(x => Vector3.Distance(transform.position, ((MonoBehaviour)x).transform.position))
-            .Select(x => ((MonoBehaviour)x).transform.position)
-            .FirstOrDefault();
-
-        return _nearbyEnemyPosition;
     }
 
     private IEnumerator Attacking()
     {
-        while (units.Count > 0)
+        while (sensor.IsHasUnits())
         {
             Cast();
 
