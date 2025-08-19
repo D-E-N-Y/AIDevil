@@ -93,6 +93,15 @@ public class B_Melee : Boss
         //base.Heuristic(actionsOut);
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<Wall>(out Wall wall))
+        {
+            SetReward(-100f);
+            EndEpisode();
+        }
+    }
+
     private void AttackRangeEnter()
     {
         if (!canDetectTouch) return;
