@@ -39,6 +39,7 @@ public class PlayerBot : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log(meleeSensor.IsHasUnits());
         if (isMoving && !_agent.pathPending)
         {
             if (_agent.remainingDistance <= _agent.stoppingDistance &&

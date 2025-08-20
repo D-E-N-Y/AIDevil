@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1755692387",
+        "python_version": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "D:\\ProgramFiles\\Unity\\Projects\\Diplom\\venv\\Scripts\\mlagents-learn config/moveToGoal.yaml --run-id=MeleeVsBotPlayer00",
+        "mlagents_version": "1.1.0",
+        "mlagents_envs_version": "1.1.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.7.1+cpu",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1755692447"
+    },
+    "total": 59.61385430000155,
+    "count": 1,
+    "self": 0.012038900002153241,
+    "children": {
+        "run_training.setup": {
+            "total": 0.16043139999965206,
+            "count": 1,
+            "self": 0.16043139999965206
+        },
+        "TrainerController.start_learning": {
+            "total": 59.44138399999974,
+            "count": 1,
+            "self": 0.0005485000001499429,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 59.440824299999804,
+                    "count": 1,
+                    "self": 59.440824299999804
+                },
+                "trainer_threads": {
+                    "total": 6.999998731771484e-07,
+                    "count": 1,
+                    "self": 6.999998731771484e-07
+                },
+                "TrainerController._save_models": {
+                    "total": 1.049999991664663e-05,
+                    "count": 1,
+                    "self": 1.049999991664663e-05
+                }
+            }
+        }
+    }
+}

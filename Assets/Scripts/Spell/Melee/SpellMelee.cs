@@ -7,6 +7,8 @@ public class SpellMelee : Spell
 
     public override void Initialize(string originLayer)
     {
+        attacking = null;
+
         _originLayer = originLayer;
 
         meleeWeapon.Initialize(_originLayer);

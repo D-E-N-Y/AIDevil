@@ -1,0 +1,29 @@
+{
+    "B_Melee": {
+        "checkpoints": [
+            {
+                "steps": 10735,
+                "file_path": "results\\MeleeVsBotPlayer03\\B_Melee\\B_Melee-10735.onnx",
+                "reward": null,
+                "creation_time": 1755694027.3688612,
+                "auxillary_file_paths": [
+                    "results\\MeleeVsBotPlayer03\\B_Melee\\B_Melee-10735.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 10735,
+            "file_path": "results\\MeleeVsBotPlayer03\\B_Melee.onnx",
+            "reward": null,
+            "creation_time": 1755694027.3688612,
+            "auxillary_file_paths": [
+                "results\\MeleeVsBotPlayer03\\B_Melee\\B_Melee-10735.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.7.1+cpu"
+    }
+}

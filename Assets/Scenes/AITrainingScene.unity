@@ -1224,7 +1224,7 @@ GameObject:
   - component: {fileID: 434277645}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1340,8 +1340,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 434277644}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.66728115, y: -0, z: -0, w: 0.74480593}
-  m_LocalPosition: {x: 0, y: 35.29, z: -2.42}
+  m_LocalRotation: {x: -0.65575814, y: -0.0028456585, z: 0.0031126726, w: -0.7549593}
+  m_LocalPosition: {x: 0.6123992, y: 44.649063, z: -9.199265}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1772,7 +1772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Record: 0
   NumStepsToRecord: 0
-  DemonstrationName: MeleeAttackDemo
+  DemonstrationName: MeleeVsBotPlayerDemo
   DemonstrationDirectory: 
 --- !u!1001 &666584694
 PrefabInstance:
@@ -2562,6 +2562,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1684bed9bdaa0eb49a5a4e4a47c5c561, type: 3}
+--- !u!114 &876984487 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6139078761418796793, guid: 60307d3ad024f1842ad951561a83b6a0, type: 3}
+  m_PrefabInstance: {fileID: 4904108545017118936}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98e9e5f3af890d98bf643927f7c14e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &946997695
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5078,9 +5089,29 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8335719597915764328, guid: 60307d3ad024f1842ad951561a83b6a0, type: 3}
+      propertyPath: maxHP
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8335719597915764328, guid: 60307d3ad024f1842ad951561a83b6a0, type: 3}
+      propertyPath: playerTarget
+      value: 
+      objectReference: {fileID: 876984487}
     - target: {fileID: 8793328698118171313, guid: 60307d3ad024f1842ad951561a83b6a0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996636305629809678, guid: 60307d3ad024f1842ad951561a83b6a0, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 6b77c14f462ac7a43ace1f353697b3c7, type: 3}
+    - target: {fileID: 8996636305629809678, guid: 60307d3ad024f1842ad951561a83b6a0, type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996636305629809678, guid: 60307d3ad024f1842ad951561a83b6a0, type: 3}
+      propertyPath: m_InferenceDevice
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

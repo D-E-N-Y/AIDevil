@@ -23,10 +23,10 @@ behaviors:
       gail:
         strength: 0.5
         gamma: 0.99
-        demo_path: Assets/Demonstrations/MeleeAttackDemo.demo
+        demo_path: Assets/Demonstrations/MeleeVsBotPlayer_3.demo
     behavioral_cloning:
         strength: 0.5
-        demo_path: Assets/Demonstrations/MeleeAttackDemo.demo
+        demo_path: Assets/Demonstrations/MeleeVsBotPlayer_3.demo
     max_steps: 500000
     time_horizon: 64
     summary_freq: 10000

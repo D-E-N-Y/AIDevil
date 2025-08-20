@@ -13,6 +13,8 @@ public class SpellRange : Spell
 
     public override void Initialize(string originLayer)
     {
+        attacking = null;
+
         _originLayer = originLayer;
 
         projectiles = new List<Projectile>();

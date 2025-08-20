@@ -10,8 +10,8 @@ public class Boss : Agent, IHealth
     public Action<IHealth> onDead { get; set; }
     public Action onChangeHP { get; set; }
 
-    [SerializeField, Range(1, 9999)] private int maxHP;
-    private int currentHP;
+    [SerializeField, Range(1, 9999)] protected int maxHP;
+    protected int currentHP;
 
     [SerializeField] UI_UnitHPIndicator ui_unitHPIndicator;
 
@@ -19,7 +19,7 @@ public class Boss : Agent, IHealth
 
     protected Vector3 oldPosition, newPosition;
 
-    [SerializeField] protected Player playerTarger;
+    [SerializeField] protected Player playerTarget;
     [SerializeField] protected TrainAIEnvironment environment;
 
     [SerializeField] protected List<Spell> spells;
@@ -48,16 +48,16 @@ public class Boss : Agent, IHealth
             }
         }
 
-        playerTarger.onDead += SuccessfulKill;
+        playerTarget.onDead += SuccessfulKill;
     }
 
     public virtual void TakeDamage(int damage)
     {
         damage = Mathf.Max(0, damage);
+        SetReward(-0.01f);
         currentHP -= damage;
 
         onChangeHP?.Invoke();
-
         if (currentHP <= 0)
         {
             Death();
@@ -79,17 +79,17 @@ public class Boss : Agent, IHealth
 
     protected virtual void SuccessfulAttack()
     {
-        SetReward(+0.5f);
+        SetReward(+40f);
     }
 
     protected virtual void SuccessfulKill(IHealth unit)
     {
         environment.Win();
-        SetReward(+100f);
+        SetReward(+200f);
         EndEpisode();
     }
 
-    public void SetPlayerTarget(Player playerTarger) => this.playerTarger = playerTarger;
+    public void SetPlayerTarget(Player playerTarget) => this.playerTarget = playerTarget;
     
     public int GetMaxHP() => maxHP;
     public int GetCurrentHP() => currentHP;

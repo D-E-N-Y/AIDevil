@@ -3,16 +3,13 @@ using UnityEngine;
 
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 
 public class B_Melee : Boss
 {
     [SerializeField] protected Sensor meleeSensor;
 
     private Coroutine attacking;
-
-    private bool isTouchingPlayer;
-
-    private bool canDetectTouch;
 
     private void Start()
     {
@@ -21,7 +18,6 @@ public class B_Melee : Boss
 
     public override void Initialize()
     {
-        isTouchingPlayer = false;
         base.Initialize();
 
         meleeSensor.Initialize(_originLayer, 2f);
@@ -32,38 +28,26 @@ public class B_Melee : Boss
     public override void OnEpisodeBegin()
     {
         transform.position = environment.GetRandomSpawnPosition();
-        canDetectTouch = false;
-        isTouchingPlayer = false;
-        StartCoroutine(EnableTouchDetectionAfterDelay());
-        //base.OnEpisodeBegin();
-        playerTarger.transform.position = environment.GetRandomSpawnPosition();
-        playerTarger.Initialize();
-    }
+        playerTarget.transform.position = environment.GetRandomSpawnPosition();
 
-    private IEnumerator EnableTouchDetectionAfterDelay()
-    {
-        yield return null;
-        canDetectTouch = true;
+        currentHP = maxHP;
+        onChangeHP?.Invoke();
+
+        if (playerTarget.gameObject.TryGetComponent<PlayerBot>(out PlayerBot playerBot))
+        {
+            playerBot.Initialize(playerTarget);
+        }
+        else
+        {
+            playerTarget.Initialize();
+        }
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
 
-        if (!isTouchingPlayer)
-        {
-            sensor.AddObservation(transform.position);
-            sensor.AddObservation(playerTarger.transform.position);
-        }
-        else
-        {
-            sensor.AddObservation(0f);
-            sensor.AddObservation(0f);
-            sensor.AddObservation(0f);
-            sensor.AddObservation(0f);
-            sensor.AddObservation(0f);
-            sensor.AddObservation(0f);
-        }
-
+        sensor.AddObservation(transform.position);
+        sensor.AddObservation(playerTarget.transform.position);
         //base.CollectObservations(sensor);
     }
     public override void OnActionReceived(ActionBuffers actions)
@@ -73,15 +57,15 @@ public class B_Melee : Boss
 
         transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
 
-        newPosition = transform.position;
+        // newPosition = transform.position;
 
-        if (Vector3.Distance(oldPosition, playerTarger.transform.position) < Vector3.Distance(newPosition, playerTarger.transform.position))
-        {
-            SetReward(+0.1f);
-        }
-        else SetReward(-0.1f);
+        // if (Vector3.Distance(oldPosition, playerTarget.transform.position) < Vector3.Distance(newPosition, playerTarget.transform.position))
+        // {
+        //     SetReward(+0.1f);
+        // }
+        // else SetReward(-0.1f);
 
-        oldPosition = newPosition;
+        // oldPosition = newPosition;
 
     }
 
@@ -104,16 +88,13 @@ public class B_Melee : Boss
 
     private void AttackRangeEnter()
     {
-        if (!canDetectTouch) return;
 
         Attack();
         environment.Attacking();
-        isTouchingPlayer = true;
     }
 
     private void AttackRangeExit()
     {
-        isTouchingPlayer = false;
         if (attacking != null)
         {
             StopCoroutine(attacking);
@@ -143,6 +124,5 @@ public class B_Melee : Boss
     protected override void SuccessfulKill(IHealth unit)
     {
         base.SuccessfulKill(unit);
-        isTouchingPlayer = false;
     }
 }
