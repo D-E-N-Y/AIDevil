@@ -32,8 +32,7 @@ public class Sensor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out MonoBehaviour comp) &&
-            comp is IHealth unit &&
+        if (other.gameObject.TryGetComponent<IHealth>(out IHealth unit) &&
             !_units.Contains(unit))
         {
             _units.Add(unit);
@@ -47,8 +46,7 @@ public class Sensor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out MonoBehaviour comp) &&
-            comp is IHealth unit &&
+        if (other.gameObject.TryGetComponent<IHealth>(out IHealth unit) &&
             _units.Contains(unit))
         {
             RemoveTargetUnit(unit);

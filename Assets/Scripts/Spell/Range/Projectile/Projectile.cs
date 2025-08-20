@@ -38,10 +38,9 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out MonoBehaviour comp) &&
-            comp is IHealth _unit)
+        if (other.gameObject.TryGetComponent<IHealth>(out IHealth unit))
         {
-            _unit.TakeDamage(damage);
+            unit.TakeDamage(damage);
             onSuccessfulAttack?.Invoke();
         }
 
