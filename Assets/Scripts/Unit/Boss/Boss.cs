@@ -84,7 +84,7 @@ public class Boss : Agent, IHealth
 
     protected virtual void SuccessfulKill(IHealth unit)
     {
-        // environment.Win();
+        environment.Win();
         SetReward(+100f);
         EndEpisode();
     }
