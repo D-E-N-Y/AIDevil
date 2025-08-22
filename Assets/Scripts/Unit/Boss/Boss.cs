@@ -25,12 +25,12 @@ public class Boss : Agent, IHealth
     [SerializeField] protected List<Spell> spells;
     protected List<SpellMelee> meleeSpells;
 
-    protected string _originLayer;
+    protected UnitFaction _unitFaction;
 
     public override void Initialize()
     {
-        _originLayer = "Enemy";
-        gameObject.layer = LayerMask.NameToLayer(_originLayer);
+        _unitFaction = UnitFaction.Enemy;
+        gameObject.layer = LayerMask.NameToLayer(_unitFaction.ToString());
 
         currentHP = maxHP;
 
@@ -39,7 +39,7 @@ public class Boss : Agent, IHealth
         meleeSpells = new List<SpellMelee>();
         foreach (Spell spell in spells)
         {
-            spell.Initialize(_originLayer);
+            spell.Initialize(_unitFaction);
             spell.onSuccessfulAttack += SuccessfulAttack;
 
             if (spell is SpellMelee _meleeSpell)

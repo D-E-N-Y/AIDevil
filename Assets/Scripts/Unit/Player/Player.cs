@@ -18,26 +18,28 @@ public class Player : MonoBehaviour, IHealth
 
     [SerializeField] private List<Spell> spells;
     private List<SpellMelee> meleeSpells;
+    private List<SpellRange> rangeSpells;
 
     private Rigidbody _rigidbody;
     private FixedJoystick _joystick;
     private Button melleAttackButton;
 
-    protected string _originLayer;
+    protected UnitFaction _unitFaction;
 
     public virtual void Initialize()
     {
-        _originLayer = "Player";
-        gameObject.layer = LayerMask.NameToLayer(_originLayer);
+        _unitFaction = UnitFaction.Player;
+        gameObject.layer = LayerMask.NameToLayer(_unitFaction.ToString());
 
         currentHP = maxHP;
 
         ui_unitHPIndicator.Initialize(this);
 
         meleeSpells = new List<SpellMelee>();
+        rangeSpells = new List<SpellRange>();
         foreach (Spell spell in spells)
         {
-            spell.Initialize(_originLayer);
+            spell.Initialize(_unitFaction);
 
             if (spell is SpellMelee _meleeSpell)
             {
@@ -47,6 +49,10 @@ public class Player : MonoBehaviour, IHealth
                 }
 
                 meleeSpells.Add(_meleeSpell);
+            }
+            else if (spell is SpellRange _rangeSpell)
+            {
+                rangeSpells.Add(_rangeSpell);
             }
         }
 
@@ -76,7 +82,7 @@ public class Player : MonoBehaviour, IHealth
 
     private void FixedUpdate()
     {
-        if (_joystick == null) return;
+        if (_joystick == null || _rigidbody == null) return;
 
         _rigidbody.velocity = new Vector3(
             _joystick.Horizontal * moveSpeed,

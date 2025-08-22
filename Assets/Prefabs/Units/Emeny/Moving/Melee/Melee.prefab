@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9053441337420276833}
+  - {fileID: 8718487453056262359}
   m_Father: {fileID: 3809188046454763258}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2237396601754685031
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 2619470979215013449}
   - component: {fileID: 2138748725271478938}
   - component: {fileID: 2654924476823271698}
-  - component: {fileID: 2679192823051928832}
+  - component: {fileID: -8068561035658136879}
   m_Layer: 8
   m_Name: Melee
   m_TagString: Untagged
@@ -191,7 +191,7 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2679192823051928832
+--- !u!114 &-8068561035658136879
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2237396601754685031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c204c401d3944762999133111999d422, type: 3}
+  m_Script: {fileID: 11500000, guid: 825bf3e1b37150103b0eb29b96cc90de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 100
@@ -208,7 +208,8 @@ MonoBehaviour:
   moveSpeed: 5
   playerTarget: {fileID: 0}
   spells:
-  - {fileID: 730913960816560810}
+  - {fileID: 1116532717622906396}
+  attackRange: 1.5
 --- !u!1001 &4954144005088339822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -221,10 +222,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Unit HP Indicator
       objectReference: {fileID: 0}
-    - target: {fileID: 1105977117399833012, guid: 47f62f4ef5171a360ba4f9fca5d242bf, type: 3}
-      propertyPath: unit
-      value: 
-      objectReference: {fileID: 2679192823051928832}
     - target: {fileID: 6304654320758852536, guid: 47f62f4ef5171a360ba4f9fca5d242bf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -330,7 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e36f1138325b0f418ed1593bb5b366c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &8864049769992790469
+--- !u!1001 &9104427444187047283
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -356,15 +353,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 479394356324222372, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 479394356324222372, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 479394356324222372, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 479394356324222372, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -378,23 +375,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 744469238761534914, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
-      propertyPath: targetLayer.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
     - target: {fileID: 8309421148631438202, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
       propertyPath: m_Name
-      value: BaseMeleeSpell
+      value: Blown
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
---- !u!114 &730913960816560810 stripped
+--- !u!114 &1116532717622906396 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8153718826837863279, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
-  m_PrefabInstance: {fileID: 8864049769992790469}
+  m_PrefabInstance: {fileID: 9104427444187047283}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -402,8 +395,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d1610b1afdee03b94610d7394e1326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &9053441337420276833 stripped
+--- !u!4 &8718487453056262359 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 479394356324222372, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
-  m_PrefabInstance: {fileID: 8864049769992790469}
+  m_PrefabInstance: {fileID: 9104427444187047283}
   m_PrefabAsset: {fileID: 0}

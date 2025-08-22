@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SpellRange : Spell
+public abstract class SpellRange : Spell
 {
     [SerializeField, Range(1f, 100f)] protected float attackRadius;
     [SerializeField] protected Projectile projectile;
@@ -11,35 +11,32 @@ public class SpellRange : Spell
 
     [SerializeField] protected Sensor sensor;
 
-    public override void Initialize(string originLayer)
+    protected Vector3 _targetPosition;
+
+    public bool IsCanAttack { get; protected set; }
+
+    public override void Initialize(UnitFaction unitFaction)
     {
         attacking = null;
 
-        _originLayer = originLayer;
+        _unitFaction = unitFaction;
 
         projectiles = new List<Projectile>();
 
-        sensor.Initialize(_originLayer, attackRadius);
-        sensor.onEnterUnit += StartAttack;
+        RemoveSubsriptions();
+        sensor.Initialize(_unitFaction, attackRadius);
+        SetSubsriptions();
     }
 
     public override void Cast()
     {
-        Projectile _projectile = GetAvaliableProjectile();
-
-        if (_projectile == null)
+        if (attacking == null && IsCanAttack)
         {
-            _projectile = Instantiate(projectile);
-            projectiles.Add(_projectile);
-
-            _projectile.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
+            attacking = StartCoroutine(nameof(Attacking));
         }
-
-        _projectile.Initialize(_originLayer, transform.position);
-        _projectile.Fire(sensor.GetNerbyUnitPosition());
     }
 
-    private Projectile GetAvaliableProjectile()
+    protected Projectile GetAvaliableProjectile()
     {
         Projectile _avaliableProjectile = projectiles
             .Where(x => x.isAvaliable)
@@ -48,23 +45,44 @@ public class SpellRange : Spell
         return _avaliableProjectile;
     }
 
-    protected virtual void StartAttack()
+    protected override IEnumerator Attacking()
     {
-        if (attacking == null)
-        {
-            attacking = StartCoroutine(nameof(Attacking));
-        }
-    }
+        IsAttacking = true;
 
-    private IEnumerator Attacking()
-    {
-        while (sensor.IsHasUnits())
+        while (IsCanAttack)
         {
-            Cast();
+            _targetPosition = sensor.GetNerbyUnitPosition();
 
-            yield return new WaitForSeconds(cooldown);
+            if (_unitFaction == UnitFaction.Enemy) yield return Cooldown();
+
+            yield return Attack();
+
+            if (_unitFaction == UnitFaction.Player) yield return Cooldown();
         }
 
         attacking = null;
+        IsAttacking = false;
+    }
+
+    protected override void SetSubsriptions()
+    {
+        sensor.onEnterUnit += SetValiableAttack;
+        sensor.onExitUnit += SetValiableAttack;
+    }
+
+    protected override void RemoveSubsriptions()
+    {
+        sensor.onEnterUnit -= SetValiableAttack;
+        sensor.onExitUnit -= SetValiableAttack;
+    }
+
+    private void SetValiableAttack()
+    {
+        IsCanAttack = sensor.IsHasUnits();
+
+        if (IsCanAttack && _unitFaction == UnitFaction.Player)
+        {
+            Cast();
+        }
     }
 }

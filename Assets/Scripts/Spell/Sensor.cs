@@ -18,9 +18,9 @@ public class Sensor : MonoBehaviour
 
     private SphereCollider _sphereCollider;
 
-    public void Initialize(string originLayer, float radius)
+    public void Initialize(UnitFaction unitFaction, float radius)
     {
-        _originLayer = originLayer + "Sensor";
+        _originLayer = unitFaction + "Sensor";
         gameObject.layer = LayerMask.NameToLayer(_originLayer);
 
         _units = new List<IHealth>();
@@ -50,8 +50,6 @@ public class Sensor : MonoBehaviour
             _units.Contains(unit))
         {
             RemoveTargetUnit(unit);
-
-            onExitUnit?.Invoke();
         }
 
         onExitTrigger?.Invoke();
@@ -61,6 +59,7 @@ public class Sensor : MonoBehaviour
     {
         _units.Remove(unit);
         unit.onDead -= RemoveTargetUnit;
+        onExitUnit?.Invoke();
     }
 
     public Vector3 GetNerbyUnitPosition()

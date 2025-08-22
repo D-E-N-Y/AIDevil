@@ -20,7 +20,7 @@ public class B_Melee : Boss
     {
         base.Initialize();
 
-        meleeSensor.Initialize(_originLayer, 2f);
+        meleeSensor.Initialize(_unitFaction, 2f);
         meleeSensor.onEnterUnit += AttackRangeEnter;
         meleeSensor.onExitUnit += AttackRangeExit;
     }

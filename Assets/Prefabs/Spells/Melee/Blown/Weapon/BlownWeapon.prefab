@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3571110819873498409
+--- !u!1 &6751460295317509174
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 739538029627000484}
-  - component: {fileID: 7965311475557243552}
-  - component: {fileID: 4013245686890619201}
+  - component: {fileID: 7385479989273016251}
+  - component: {fileID: 195725805001534399}
+  - component: {fileID: 6596870413650432094}
   m_Layer: 0
-  m_Name: Blown
+  m_Name: BlownWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &739538029627000484
+--- !u!4 &7385479989273016251
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3571110819873498409}
+  m_GameObject: {fileID: 6751460295317509174}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6182384132117164421}
-  m_Father: {fileID: 479394356324222372}
+  - {fileID: 4175151985488167066}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7965311475557243552
+--- !u!135 &195725805001534399
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3571110819873498409}
+  m_GameObject: {fileID: 6751460295317509174}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -55,75 +55,27 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4013245686890619201
+--- !u!114 &6596870413650432094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3571110819873498409}
+  m_GameObject: {fileID: 6751460295317509174}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b53722de17844bfabfb6304beb0e16d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 30
-  blownEffect: {fileID: 1376373149200186669}
---- !u!1 &8309421148631438202
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 479394356324222372}
-  - component: {fileID: 8153718826837863279}
-  m_Layer: 0
-  m_Name: BaseMeleeSpell
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &479394356324222372
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8309421148631438202}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 739538029627000484}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8153718826837863279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8309421148631438202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62d1610b1afdee03b94610d7394e1326, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldown: 5
-  meleeWeapon: {fileID: 4013245686890619201}
-  timeAttacking: 0.5
---- !u!1001 &4712543779530856475
+  blownEffect: {fileID: 9161728015521451058}
+--- !u!1001 &3268331958307465476
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 739538029627000484}
+    m_TransformParent: {fileID: 7385479989273016251}
     m_Modifications:
     - target: {fileID: 409372975045344037, guid: 12edd34a75b2e6947bf498c4c839c562, type: 3}
       propertyPath: m_Name
@@ -174,13 +126,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12edd34a75b2e6947bf498c4c839c562, type: 3}
---- !u!198 &1376373149200186669 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5944625679866766646, guid: 12edd34a75b2e6947bf498c4c839c562, type: 3}
-  m_PrefabInstance: {fileID: 4712543779530856475}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6182384132117164421 stripped
+--- !u!4 &4175151985488167066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1489121398293211550, guid: 12edd34a75b2e6947bf498c4c839c562, type: 3}
-  m_PrefabInstance: {fileID: 4712543779530856475}
+  m_PrefabInstance: {fileID: 3268331958307465476}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &9161728015521451058 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5944625679866766646, guid: 12edd34a75b2e6947bf498c4c839c562, type: 3}
+  m_PrefabInstance: {fileID: 3268331958307465476}
   m_PrefabAsset: {fileID: 0}

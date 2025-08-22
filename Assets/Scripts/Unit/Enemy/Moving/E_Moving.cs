@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class E_Moving : Enemy
 {
     protected NavMeshAgent _agent;
+    protected MovingEnemyState _state;
 
     public override void Initialize()
     {
@@ -12,6 +13,9 @@ public class E_Moving : Enemy
 
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = moveSpeed;
+        _agent.stoppingDistance = attackRange;
+
+        _state = MovingEnemyState.Moving;
     }
 
     protected virtual void MoveToPosition(Vector3 _position)
@@ -22,6 +26,53 @@ public class E_Moving : Enemy
 
     protected virtual void Update()
     {
-        MoveToPosition(playerTarget.transform.position);
+        switch (_state)
+        {
+            case MovingEnemyState.Moving:
+                Moving();
+                break;
+
+            case MovingEnemyState.Attacking:
+                Attacking();
+                break;
+        }
+    }
+
+    protected bool IsCanAttack() => Vector3.Distance(transform.position, playerTarget.transform.position) <= attackRange;
+    protected bool IsAttacking()
+    {
+        foreach (Spell spell in spells)
+        {
+            if (spell.IsAttacking)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected virtual void Moving()
+    {
+        if (!IsCanAttack() && _state == MovingEnemyState.Moving)
+        {
+            MoveToPosition(playerTarget.transform.position);
+        }
+        else
+        {
+            _state = MovingEnemyState.Attacking;
+        }
+    }
+
+    protected override void Attacking()
+    {
+        if (IsCanAttack())
+        {
+            base.Attacking();
+        }
+        else if(!IsAttacking())
+        {
+            _state = MovingEnemyState.Moving;
+        }
     }
 }

@@ -18,21 +18,29 @@ public class Enemy : MonoBehaviour, IHealth
 
     [SerializeField] protected List<Spell> spells;
 
-    protected string _originLayer;
+    [SerializeField, Range(1f, 20f)] protected float attackRange;
+
+    protected UnitFaction _unitFaction;
 
     public virtual void Initialize()
     {
-        _originLayer = "Enemy";
-        gameObject.layer = LayerMask.NameToLayer(_originLayer);
+        _unitFaction = UnitFaction.Enemy;
+        gameObject.layer = LayerMask.NameToLayer(_unitFaction.ToString());
 
         currentHP = maxHP;
 
         ui_unitHPIndicator.Initialize(this);
 
-        spells.ForEach(x => x.Initialize(_originLayer));
+        spells.ForEach(x => x.Initialize(_unitFaction));
 
         gameObject.SetActive(true);
     }
+
+    protected virtual void Attacking()
+    {
+        Spell _spells = spells[UnityEngine.Random.Range(0, spells.Count)];
+        _spells.Cast();
+    } 
 
     public virtual void TakeDamage(int value)
     {

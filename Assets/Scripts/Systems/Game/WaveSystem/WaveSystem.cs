@@ -37,6 +37,8 @@ public class WaveSystem : MonoBehaviour
         {
             for (int i = 0; i < enemies.count; i++)
             {
+                yield return new WaitForSeconds(spawnSpeed);
+
                 Vector3 _spawnPosition = GetSpawnPosition();
                 Enemy _enemy = Instantiate(enemies.enemy, _spawnPosition, GetSpawnRotation(_spawnPosition));
 
@@ -44,8 +46,6 @@ public class WaveSystem : MonoBehaviour
                 _enemy.SetPlayerTarget(playerTarget);
 
                 _enemy.onDead += DeathEnemy;
-
-                yield return new WaitForSeconds(spawnSpeed);
             }
         }
     }

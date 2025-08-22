@@ -1,20 +1,21 @@
-using System.Collections;
-using UnityEngine; 
+using System;
+using UnityEngine;
 
-public class SpellMelee : Spell
+public abstract class SpellMelee : Spell
 {
     [SerializeField] protected MeleeWeapon meleeWeapon;
+    private Action _meleeWeaponHandler;
 
-    public override void Initialize(string originLayer)
+    public override void Initialize(UnitFaction unitFaction)
     {
         attacking = null;
 
-        _originLayer = originLayer;
+        _unitFaction = unitFaction;
 
-        meleeWeapon.Initialize(_originLayer);
+        RemoveSubsriptions();
+        meleeWeapon.Initialize(_unitFaction.ToString());
         meleeWeapon.FinishAttack();
-
-        meleeWeapon.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
+        SetSubsriptions();
     }
 
     public override void Cast()
@@ -24,9 +25,18 @@ public class SpellMelee : Spell
             attacking = StartCoroutine(nameof(Attacking));
         }
     }
-
-    protected virtual IEnumerator Attacking()
+    
+    protected override void SetSubsriptions()
     {
-        yield return null;
+        _meleeWeaponHandler = () => onSuccessfulAttack?.Invoke();
+        meleeWeapon.onSuccessfulAttack += _meleeWeaponHandler;
+    }
+
+    protected override void RemoveSubsriptions()
+    {
+        if (_meleeWeaponHandler != null)
+        {
+            meleeWeapon.onSuccessfulAttack -= _meleeWeaponHandler;
+        }
     }
 }
