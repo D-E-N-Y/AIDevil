@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d1610b1afdee03b94610d7394e1326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangeAttack: 2
   cooldown: 5
+  ui_SpellCooldown: {fileID: 0}
   meleeWeapon: {fileID: 4013245686890619201}
   timeAttacking: 0.5
 --- !u!1001 &7799428616501129503

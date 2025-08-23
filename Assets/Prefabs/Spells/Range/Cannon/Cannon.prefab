@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3224885875630320990}
   - component: {fileID: 9138945288956301045}
   - component: {fileID: 6186184178363174404}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: CannonFireEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4858,7 +4858,7 @@ GameObject:
   m_Component:
   - component: {fileID: 248661860163366008}
   - component: {fileID: 6849256301532455083}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4894,8 +4894,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f8d30af9c5fb9ea8202cc07efa493e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangeAttack: 7
   cooldown: 1
-  attackRadius: 7
+  ui_SpellCooldown: {fileID: 0}
   projectile: {fileID: 5858217141766397348, guid: 667fc7431e6c9cbb29f169475112b28b, type: 3}
   sensor: {fileID: 5654604996673151132}
   firePosition: {fileID: 3367101345421821970}
@@ -4975,7 +4976,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3367101345421821970}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: FirePosition
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}

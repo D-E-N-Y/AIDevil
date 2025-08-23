@@ -5,7 +5,6 @@ using UnityEngine;
 
 public abstract class SpellRange : Spell
 {
-    [SerializeField, Range(1f, 100f)] protected float attackRadius;
     [SerializeField] protected Projectile projectile;
     protected List<Projectile> projectiles;
 
@@ -17,14 +16,12 @@ public abstract class SpellRange : Spell
 
     public override void Initialize(UnitFaction unitFaction)
     {
-        attacking = null;
-
-        _unitFaction = unitFaction;
+        base.Initialize(unitFaction);
 
         projectiles = new List<Projectile>();
 
         RemoveSubsriptions();
-        sensor.Initialize(_unitFaction, attackRadius);
+        sensor.Initialize(_unitFaction, rangeAttack);
         SetSubsriptions();
     }
 

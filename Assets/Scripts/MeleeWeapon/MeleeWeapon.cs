@@ -1,17 +1,20 @@
 using System;
 using UnityEngine;
 
-public class MeleeWeapon : MonoBehaviour
+public abstract class MeleeWeapon : MonoBehaviour
 {
     public Action onSuccessfulAttack;
 
     [SerializeField, Range(1, 100)] protected int damage;
+    protected float _rangeAttack;
     protected string _originLayer;
 
-    public virtual void Initialize(string originLayer)
+    public virtual void Initialize(string originLayer, float rangeAttack)
     {
         _originLayer = originLayer + "MeleeWeapon";
         gameObject.layer = LayerMask.NameToLayer(_originLayer);
+
+        _rangeAttack = rangeAttack;
     }
 
     public virtual void StartAttack()
@@ -23,7 +26,7 @@ public class MeleeWeapon : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent<IHealth>(out IHealth unit))
@@ -32,4 +35,6 @@ public class MeleeWeapon : MonoBehaviour
             onSuccessfulAttack?.Invoke();
         }
     }
+
+    public float RangeAttack() => _rangeAttack;
 }

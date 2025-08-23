@@ -8,12 +8,10 @@ public abstract class SpellMelee : Spell
 
     public override void Initialize(UnitFaction unitFaction)
     {
-        attacking = null;
-
-        _unitFaction = unitFaction;
+        base.Initialize(unitFaction);
 
         RemoveSubsriptions();
-        meleeWeapon.Initialize(_unitFaction.ToString());
+        meleeWeapon.Initialize(_unitFaction.ToString(), rangeAttack);
         meleeWeapon.FinishAttack();
         SetSubsriptions();
     }

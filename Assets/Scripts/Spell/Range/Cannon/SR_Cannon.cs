@@ -12,13 +12,20 @@ public class SR_Cannon : SpellRange
         cannonFireEffect.Stop();
     }
 
+    protected override IEnumerator Cooldown()
+    {
+        RotateToTarget(_targetPosition);
+
+        return base.Cooldown();
+    }
+
     protected override IEnumerator Attack()
     {
+        RotateToTarget(_targetPosition);
+
         cannonFireEffect.Play();
 
         Projectile _projectile = GetAvaliableProjectile();
-
-        RotateToTarget(_targetPosition);
 
         if (_projectile == null)
         {
