@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class UI_MainMenuCanvas : MonoBehaviour
 {
-    [SerializeField] private UI_MainMenu ui_MainMenu;
-    [SerializeField] private UI_CharactersMenu ui_CharactersMenu;
+    [SerializeField] private UI_MainMenu ui_mainMenu;
+    [SerializeField] private UI_CharactersMenu ui_charactersMenu;
 
     public void Initialize()
     {
-        ui_CharactersMenu.Initialize();
-        ui_CharactersMenu.Hide();
+        ui_charactersMenu.Initialize(GameInstance.current);
+        ui_charactersMenu.Hide();
 
-        ui_MainMenu.Initialize(ui_CharactersMenu);
-        ui_MainMenu.Show();
+        ui_mainMenu.Initialize(ui_charactersMenu);
+        ui_mainMenu.Show();
     }
 }

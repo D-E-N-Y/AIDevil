@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5730381690933048701}
   - component: {fileID: 4740111541503192644}
   m_Layer: 7
-  m_Name: Player
+  m_Name: Test 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,9 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98e9e5f3af890d98bf643927f7c14e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
+  _name: Test 4
+  maxHP: 1000
   ui_unitHPIndicator: {fileID: 3876890204640515585}
-  moveSpeed: 5
+  moveSpeed: 100
+  armor: 1000
   spells:
   - {fileID: 3236963587660712351}
   - {fileID: 2288807920995055219}

@@ -9,12 +9,16 @@ public class Player : MonoBehaviour, IHealth
     public Action<IHealth> onDead { get; set; }
     public Action onChangeHP { get; set; }
 
+    [SerializeField] private string _name;
+
     [SerializeField, Range(1, 1000)] protected int maxHP;
     protected int currentHP;
 
     [SerializeField] UI_UnitHPIndicator ui_unitHPIndicator;
 
     [SerializeField, Range(1f, 100f)] protected int moveSpeed;
+
+    [SerializeField, Range(1, 1000)] protected int armor;
 
     [SerializeField] private List<Spell> spells;
     private List<SpellMelee> meleeSpells;
@@ -93,8 +97,11 @@ public class Player : MonoBehaviour, IHealth
 
     public virtual void TakeDamage(int value)
     {
-        value = Math.Max(0, value);
-        currentHP -= value;
+        value = Math.Max(0, value * armor);
+        float reduction = armor / (armor / 100f);
+        float damage = value * (1f - reduction);
+        
+        currentHP -= (int)damage;
 
         onChangeHP?.Invoke();
 
@@ -110,7 +117,9 @@ public class Player : MonoBehaviour, IHealth
         onDead?.Invoke(this);
     }
 
+    public string GetName() => _name;
     public int GetCurrentHP() => currentHP;
     public int GetMaxHP() => maxHP;
     public float GetMoveSpeed() => moveSpeed;
+    public int GetArmor() => armor;
 }
