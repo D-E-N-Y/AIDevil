@@ -97,10 +97,10 @@ public class Player : MonoBehaviour, IHealth
 
     public virtual void TakeDamage(int value)
     {
-        value = Math.Max(0, value * armor);
-        float reduction = armor / (armor / 100f);
-        float damage = value * (1f - reduction);
-        
+        value = Math.Max(0, value);
+        float reduction = armor / ((float)armor + 100f);
+        float damage = (float)value * (1f - reduction);
+
         currentHP -= (int)damage;
 
         onChangeHP?.Invoke();
