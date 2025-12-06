@@ -15,4 +15,14 @@ public class UI_Panel : MonoBehaviour
         gameObject.SetActive(false);
         isShow = false;
     }
+
+    protected virtual void ClearSubscriptions()
+    {
+        
+    }
+
+    protected virtual void AddSubscriptions()
+    {
+        
+    }
 }

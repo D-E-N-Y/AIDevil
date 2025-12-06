@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour, IHealth
@@ -20,13 +19,14 @@ public class Player : MonoBehaviour, IHealth
 
     [SerializeField, Range(1, 1000)] protected int armor;
 
+    public Action updateSpells;
+    [SerializeField, Range(1, 20)] protected int countSpells;
     [SerializeField] private List<Spell> spells;
     private List<SpellMelee> meleeSpells;
     private List<SpellRange> rangeSpells;
 
     private Rigidbody _rigidbody;
     private FixedJoystick _joystick;
-    private Button melleAttackButton;
 
     protected UnitFaction _unitFaction;
 
@@ -39,19 +39,24 @@ public class Player : MonoBehaviour, IHealth
 
         ui_unitHPIndicator.Initialize(this);
 
+        OrderBySpells();
+
+        _rigidbody = GetComponent<Rigidbody>();
+
+        gameObject.SetActive(true);
+    }
+
+    private void OrderBySpells()
+    {
         meleeSpells = new List<SpellMelee>();
         rangeSpells = new List<SpellRange>();
+        
         foreach (Spell spell in spells)
         {
             spell.Initialize(_unitFaction);
 
             if (spell is SpellMelee _meleeSpell)
             {
-                if (melleAttackButton != null)
-                {
-                    SetMeleeSpellController(_meleeSpell);
-                }
-
                 meleeSpells.Add(_meleeSpell);
             }
             else if (spell is SpellRange _rangeSpell)
@@ -60,24 +65,21 @@ public class Player : MonoBehaviour, IHealth
             }
         }
 
-        _rigidbody = GetComponent<Rigidbody>();
-
-        gameObject.SetActive(true);
+        updateSpells?.Invoke();
     }
 
-    public void SetControlers(FixedJoystick _joystick, Button melleAttackButton)
+    public void SetControlers(FixedJoystick _joystick)
     {
         this._joystick = _joystick;
-        this.melleAttackButton = melleAttackButton;
     }
 
-    public void SetMeleeSpellController(SpellMelee spell)
-    {
-        melleAttackButton.onClick.RemoveAllListeners();
-        melleAttackButton.onClick.AddListener(() => spell.Cast());
+    // public void SetMeleeSpellController(SpellMelee spell)
+    // {
+    //     melleAttackButton.onClick.RemoveAllListeners();
+    //     melleAttackButton.onClick.AddListener(() => spell.Cast());
 
-        melleAttackButton.gameObject.SetActive(true);
-    }
+    //     melleAttackButton.gameObject.SetActive(true);
+    // }
 
     public void CastRandomMeleeSpell()
     {
@@ -122,4 +124,7 @@ public class Player : MonoBehaviour, IHealth
     public int GetMaxHP() => maxHP;
     public float GetMoveSpeed() => moveSpeed;
     public int GetArmor() => armor;
+
+    public List<SpellRange> GetSpellRanges() => rangeSpells;
+    public List<SpellMelee> GetSpellMelees() => meleeSpells;
 }

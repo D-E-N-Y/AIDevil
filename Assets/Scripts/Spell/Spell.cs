@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Spell : MonoBehaviour
 {
@@ -19,6 +19,8 @@ public abstract class Spell : MonoBehaviour
     protected Coroutine attacking;
 
     [SerializeField] private UI_SpellCooldown ui_SpellCooldown;
+
+    [SerializeField] private Sprite icon;
 
     public virtual void Initialize(UnitFaction unitFaction)
     {
@@ -61,4 +63,6 @@ public abstract class Spell : MonoBehaviour
     protected abstract void RemoveSubsriptions();
 
     public float RangeAttack() => rangeAttack;
+
+    public Sprite GetIcon() => icon;
 }
