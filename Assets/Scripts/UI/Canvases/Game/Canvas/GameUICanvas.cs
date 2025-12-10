@@ -20,4 +20,5 @@ public class GameUICanvas : MonoBehaviour
     }
 
     public FixedJoystick GetUIFixedJoystick() => ui_joystick;
+    public UI_ResultsSession GetUIResultsSession() => ui_resultsSession;
 }

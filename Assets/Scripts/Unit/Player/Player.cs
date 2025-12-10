@@ -73,14 +73,6 @@ public class Player : MonoBehaviour, IHealth
         this._joystick = _joystick;
     }
 
-    // public void SetMeleeSpellController(SpellMelee spell)
-    // {
-    //     melleAttackButton.onClick.RemoveAllListeners();
-    //     melleAttackButton.onClick.AddListener(() => spell.Cast());
-
-    //     melleAttackButton.gameObject.SetActive(true);
-    // }
-
     public void CastRandomMeleeSpell()
     {
         meleeSpells[UnityEngine.Random.Range(0, meleeSpells.Count)].Cast();

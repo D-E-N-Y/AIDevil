@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class WaveSystem : MonoBehaviour
 {
+    public System.Action<SCompleteWaveInfo> sendResults;
+    public System.Action<ESessionResult> finishWaves;
+    
     [SerializeField, Range(1f, 50f)] private float minSpawnRadius;
     [SerializeField, Range(1f, 50f)] private float maxSpawnRadius;
     [SerializeField, Range(0.1f, 10f)] private float spawnSpeed;
@@ -12,7 +15,10 @@ public class WaveSystem : MonoBehaviour
     [SerializeField] List<WaveData> waves;
     private int currentWave;
     private Coroutine spawningEnemies;
-    int countWaveEnemies;
+    private int countWaveEnemies;
+
+    private SCompleteWaveInfo completeWaveInfo;
+    private int _defeatEnemies;
 
     private Player playerTarget;
 
@@ -32,6 +38,7 @@ public class WaveSystem : MonoBehaviour
     {
         int countEnemies = 0;
         waves[currentWave].enemies.ForEach(x => countEnemies += x.count);
+        countWaveEnemies = countEnemies;
 
         foreach (WaveEnemyData enemies in waves[currentWave].enemies)
         {
@@ -48,16 +55,45 @@ public class WaveSystem : MonoBehaviour
                 _enemy.onDead += DeathEnemy;
             }
         }
+
+        spawningEnemies = null;
     }
 
     public void StopWave()
     {
-        StopCoroutine(spawningEnemies);
+        if(spawningEnemies != null)
+        {
+            StopCoroutine(spawningEnemies);
+        }
     }
 
     public void CompleteWave()
     {
+        Debug.Log("Complete Wave");
+        
         currentWave++;
+
+        SendWaveResults();
+
+        if(currentWave >= waves.Count) 
+        {
+            finishWaves?.Invoke(ESessionResult.WIN);
+        }
+        else
+        {
+            StartWave();
+        }
+    }
+
+    public void SendWaveResults()
+    {
+        completeWaveInfo = new SCompleteWaveInfo(
+            0,
+            _defeatEnemies,
+            currentWave
+        );
+
+        sendResults?.Invoke(completeWaveInfo);
     }
 
     private Vector3 GetSpawnPosition()
@@ -92,6 +128,7 @@ public class WaveSystem : MonoBehaviour
 
     private void DeathEnemy(IHealth _enemy)
     {
+        _defeatEnemies++;
         countWaveEnemies--;
 
         if (countWaveEnemies <= 0)

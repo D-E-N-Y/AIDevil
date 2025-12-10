@@ -6,6 +6,7 @@ public class GameBootstraper : MonoBehaviour
 
     [SerializeField] private CameraOrigin cameraOrigin;
 
+    [SerializeField] private SessionSystem sessionSystem;
     [SerializeField] private WaveSystem waveSystem;
 
     private Player player;
@@ -22,8 +23,10 @@ public class GameBootstraper : MonoBehaviour
 
         gameUICanvas.Initialize(player);
 
+        sessionSystem.Initialize(player, gameUICanvas.GetUIResultsSession(), waveSystem);
         waveSystem.Initialize(player);
-        waveSystem.StartWave();
+
+        sessionSystem.StartSession();
     }
 
     private void InitializePlayer()
