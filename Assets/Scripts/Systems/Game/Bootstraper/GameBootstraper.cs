@@ -21,7 +21,7 @@ public class GameBootstraper : MonoBehaviour
 
         cameraOrigin.Initialize(player.transform);
 
-        gameUICanvas.Initialize(player);
+        gameUICanvas.Initialize(player, waveSystem);
 
         sessionSystem.Initialize(player, gameUICanvas.GetUIResultsSession(), waveSystem);
         waveSystem.Initialize(player);

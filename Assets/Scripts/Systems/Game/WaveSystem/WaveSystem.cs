@@ -8,6 +8,9 @@ public class WaveSystem : MonoBehaviour
     public System.Action<SCompleteWaveInfo> sendResults;
     public System.Action<ESessionResult> finishWaves;
     
+    public System.Action<int> updateNumberWave;
+    public System.Action<int> updateCountEnemies;
+
     [SerializeField, Range(1f, 50f)] private float minSpawnRadius;
     [SerializeField, Range(1f, 50f)] private float maxSpawnRadius;
     [SerializeField, Range(0.1f, 10f)] private float spawnSpeed;
@@ -31,6 +34,7 @@ public class WaveSystem : MonoBehaviour
 
     public void StartWave()
     {
+        updateNumberWave?.Invoke(currentWave + 1);
         spawningEnemies = StartCoroutine(nameof(SpawningEnemies));
     }
 
@@ -38,7 +42,9 @@ public class WaveSystem : MonoBehaviour
     {
         int countEnemies = 0;
         waves[currentWave].enemies.ForEach(x => countEnemies += x.count);
+        
         countWaveEnemies = countEnemies;
+        updateCountEnemies?.Invoke(countWaveEnemies);
 
         foreach (WaveEnemyData enemies in waves[currentWave].enemies)
         {
@@ -129,7 +135,9 @@ public class WaveSystem : MonoBehaviour
     private void DeathEnemy(IHealth _enemy)
     {
         _defeatEnemies++;
+        
         countWaveEnemies--;
+        updateCountEnemies?.Invoke(countWaveEnemies);
 
         if (countWaveEnemies <= 0)
         {
