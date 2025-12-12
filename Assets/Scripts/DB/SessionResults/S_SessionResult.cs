@@ -1,5 +1,9 @@
+using System;
+using UnityEngine;
+
 public struct SSesionResult
 {
+    public string name;
     public Player playerCharacter;
     public ESessionResult result;
     public STime time;
@@ -9,6 +13,8 @@ public struct SSesionResult
 
     public SSesionResult(Player playerCharacter, ESessionResult result, STime time, int collectCoins, int defeatEnemies, int completedWaves)
     {
+        name = $"{playerCharacter.GetName()} {DateTime.Now}";
+        
         this.playerCharacter = playerCharacter;
         this.result = result;
         this.time = time;
@@ -19,6 +25,8 @@ public struct SSesionResult
 
     public SSesionResult(Player playerCharacter, ESessionResult result, int totalSeconds, int collectCoins, int defeatEnemies, int completedWaves)
     {
+        name = $"{playerCharacter.GetName()} {DateTime.Now}";
+        
         this.playerCharacter = playerCharacter;
         this.result = result;
         this.time = new STime(totalSeconds);

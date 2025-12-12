@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 public class SessionSystem : MonoBehaviour 
 {
-    private UI_ResultsSession _ui_resultsSession;
+    private UI_SessionResultsGame _ui_sessionResultsGame;
     private WaveSystem _waveSystem;
     
     private SSesionResult _sesionResult;
@@ -10,14 +11,16 @@ public class SessionSystem : MonoBehaviour
     private float _startTimeSession;
     private float _endTimeSession;
 
-    public void Initialize(Player player, UI_ResultsSession ui_resultsSession, WaveSystem waveSystem)
+    public void Initialize(Player playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, WaveSystem waveSystem)
     {
         _sesionResult = new SSesionResult();
 
-        _sesionResult.playerCharacter = player;
-        player.onDead += DeathPlayerCharacter;
+        _sesionResult.playerCharacter = playerCharacter;
+        _sesionResult.name = $"{playerCharacter.GetName()} - {DateTime.Now}";
 
-        _ui_resultsSession = ui_resultsSession;
+        playerCharacter.onDead += DeathPlayerCharacter;
+
+        _ui_sessionResultsGame = ui_sessionResultsGame;
 
         _waveSystem = waveSystem;
         _waveSystem.finishWaves += CompleteSession;
@@ -53,7 +56,9 @@ public class SessionSystem : MonoBehaviour
         _sesionResult.result = result;
         _sesionResult.time = new STime((int)(_endTimeSession - _startTimeSession));
 
-        _ui_resultsSession.SetResult(_sesionResult);
-        _ui_resultsSession.Show();
+        GameInstance.current.DBSessionResults().AddResult(_sesionResult);
+
+        _ui_sessionResultsGame.SetResult(_sesionResult);
+        _ui_sessionResultsGame.Show();
     }
 }

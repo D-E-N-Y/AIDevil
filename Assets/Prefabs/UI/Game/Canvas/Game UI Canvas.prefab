@@ -8191,6 +8191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4425619139098477513}
   - component: {fileID: 4805029596661539673}
+  - component: {fileID: 5194084799061298093}
   m_Layer: 5
   m_Name: UI Results
   m_TagString: Untagged
@@ -8231,6 +8232,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841c01283152e211aa76538fe6f9424a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ui_sessionResultsDescription: {fileID: 5194084799061298093}
+  ui_exitButton: {fileID: 8827908642266900381}
+  ui_restartButton: {fileID: 8744730622130764073}
+--- !u!114 &5194084799061298093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8920336639164465384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9c327b1421e55a648f0a1fdd12603a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   ui_playerText: {fileID: 1069064412964853241}
   ui_resultText: {fileID: 5772443288108961477}
   ui_hoursText: {fileID: 2443969844377163656}
@@ -8239,8 +8255,6 @@ MonoBehaviour:
   ui_collectCoins: {fileID: 550698116282202592}
   ui_defeatEnemies: {fileID: 1529402961135196188}
   ui_completedWaves: {fileID: 7759911221261038263}
-  ui_exitButton: {fileID: 8827908642266900381}
-  ui_restartButton: {fileID: 8744730622130764073}
 --- !u!1 &9050726360034577232
 GameObject:
   m_ObjectHideFlags: 0

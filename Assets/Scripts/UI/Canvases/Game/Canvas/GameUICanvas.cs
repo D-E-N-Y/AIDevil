@@ -9,7 +9,7 @@ public class GameUICanvas : MonoBehaviour
 
     [SerializeField] private UI_Panel ui_blackout;
     [SerializeField] private UI_PauseMenu ui_pauseMenu;
-    [SerializeField] private UI_ResultsSession ui_resultsSession;
+    [SerializeField] private UI_SessionResultsGame ui_resultsSession;
 
     public void Initialize(Player playerCharacter, WaveSystem waveSystem)
     {
@@ -22,5 +22,5 @@ public class GameUICanvas : MonoBehaviour
     }
 
     public FixedJoystick GetUIFixedJoystick() => ui_joystick;
-    public UI_ResultsSession GetUIResultsSession() => ui_resultsSession;
+    public UI_SessionResultsGame GetUIResultsSession() => ui_resultsSession;
 }
