@@ -16,7 +16,7 @@ public class UI_CharactersMenu : UI_Panel
     {
         _gameInstance = gameInstance;
         
-        ui_charactersList.Initialize(this);
+        ui_charactersList.Initialize(gameInstance, this);
         ui_characterDescription.Initialize();
 
         ui_closeButton.onClick.RemoveAllListeners();
@@ -24,6 +24,11 @@ public class UI_CharactersMenu : UI_Panel
 
         ui_fightButton.onClick.RemoveAllListeners();
         ui_fightButton.onClick.AddListener(() => SceneManager.LoadScene("GameScene"));
+    }
+
+    public void UpdateData()
+    {
+        ui_charactersList.UpdateData();
     }
 
     public void Select(Player character)

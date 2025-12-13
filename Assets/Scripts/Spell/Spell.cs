@@ -65,4 +65,9 @@ public abstract class Spell : MonoBehaviour
     public float RangeAttack() => rangeAttack;
 
     public Sprite GetIcon() => icon;
+
+    protected virtual void OnDestroy()
+    {
+        RemoveSubsriptions();
+    }
 }

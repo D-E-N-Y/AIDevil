@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-public class DB_SessionResults : MonoBehaviour 
+public class DB_SessionResults 
 {
     private List<SSesionResult> _sessionResults;
 
-    public void Initialize()
+    public DB_SessionResults()
     {
         _sessionResults = new List<SSesionResult>();
     }

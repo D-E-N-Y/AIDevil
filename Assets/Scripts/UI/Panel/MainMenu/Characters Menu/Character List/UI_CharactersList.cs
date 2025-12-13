@@ -6,22 +6,27 @@ using UnityEngine;
 public class UI_CharactersList : UI_Panel 
 {
     [SerializeField] private Transform container;
-    
     [SerializeField] private UI_Character ui_characterPrefab;
-    private List<UI_Character> ui_characters;
-    private List<Player> characters;
 
     private UI_Character selected_ui_Character;
-
     private UI_CharactersMenu _ui_charactersMenu;
 
-    public void Initialize(UI_CharactersMenu ui_charactersMenu)
+    private GameInstance _gameInstance;
+
+    public void Initialize(GameInstance gameInstance, UI_CharactersMenu ui_charactersMenu)
     {
+        _gameInstance = gameInstance;
         _ui_charactersMenu = ui_charactersMenu;
 
-        characters = GameInstance.current.DBCharacters().GetCharacters();
+        UpdateData();
+    }
+
+    public void UpdateData()
+    {
+        selected_ui_Character = null;
+        List<Player> characters = _gameInstance.DBCharacters().GetCharacters();
         
-        ui_characters = new List<UI_Character>();
+        List<UI_Character> ui_characters = new List<UI_Character>();
         ui_characters = container.GetComponentsInChildren<UI_Character>(true).ToList();
 
         int residue = Math.Abs(ui_characters.Count - characters.Count);
@@ -40,7 +45,16 @@ public class UI_CharactersList : UI_Panel
             ui_characters[i].Show();
         }
 
-        ui_characters[0].Select();
+        if(_gameInstance.GetPlayerCharacter() != null)
+        {
+            Player _playerCharacter = _gameInstance.GetPlayerCharacter();
+            UI_Character ui_character = ui_characters.Find(x => x.GetCharacter() == _playerCharacter);
+            ui_character.Select();
+        }
+        else
+        {
+            ui_characters[0].Select();
+        }
     }
 
     public void Select(UI_Character ui_character)

@@ -9,24 +9,23 @@ public class UI_SessionResultsList : UI_Panel
     
     [SerializeField] private UI_SessionResult ui_sessionResultPrefab;
     [SerializeField] private RectTransform containerUISessionResults;
-    private List<UI_SessionResult> _ui_sessionResults;
-    private List<SSesionResult> _sessionResults;
     private UI_SessionResult selected_ui_sessionResult;
 
-    private DB_SessionResults _db_SessionResults;
+    private GameInstance _gameInstance;
     
     public void Initialize(GameInstance gameInstance)
     {
-        _db_SessionResults = gameInstance.DBSessionResults();
+        _gameInstance = gameInstance;
 
         UpdateData();
     }
 
-    void UpdateData()
+    public void UpdateData()
     {
-        _sessionResults = _db_SessionResults.GetSessionResults();
+        selected_ui_sessionResult = null;
+        List<SSesionResult> _sessionResults = _gameInstance.DBSessionResults().GetSessionResults();
         
-        _ui_sessionResults = new List<UI_SessionResult>();
+        List<UI_SessionResult> _ui_sessionResults = new List<UI_SessionResult>();
         _ui_sessionResults = containerUISessionResults.GetComponentsInChildren<UI_SessionResult>(true).ToList();
         _ui_sessionResults.ForEach(x => x.Hide());
 
@@ -65,11 +64,5 @@ public class UI_SessionResultsList : UI_Panel
 
         selected_ui_sessionResult = ui_sessionResult;
         onSelect?.Invoke(selected_ui_sessionResult.GetSesionResult());
-    }
-
-    public override void Show()
-    {
-        base.Show();
-        UpdateData();
     }
 }

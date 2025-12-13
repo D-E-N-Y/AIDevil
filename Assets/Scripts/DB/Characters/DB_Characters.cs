@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DB_Characters : MonoBehaviour
+[CreateAssetMenu(menuName = "DB/Characters")] 
+public class DB_Characters : ScriptableObject
 {
     [SerializeField] private List<Player> _characters;
 
-    public List<Player> GetCharacters() => _characters;
+    public List<Player> GetCharacters() => _characters; 
 }

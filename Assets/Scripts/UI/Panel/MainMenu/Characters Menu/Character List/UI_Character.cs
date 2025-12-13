@@ -23,34 +23,27 @@ public class UI_Character : UI_Panel
         selectedColor = new Vector4(255f / 255f, 243f / 255f, 208f / 255f, 1f);
         unselectedColor = new Vector4(32f / 255f, 18f / 255f, 6f / 255f, 1f);
 
-        isSelect = false;
-        ui_selectImage.gameObject.SetActive(false);
-        ui_characterImage.color = unselectedColor;
-
         ui_selectButton.onClick.RemoveAllListeners();
         ui_selectButton.onClick.AddListener(() => Select());
+
+        UnSelect();
     }
 
     public void Select()
     {
-        if(!isSelect)
-        {
-            ui_selectImage.gameObject.SetActive(true);
-            ui_characterImage.color = selectedColor;
-            isSelect = true;
+        isSelect = true;
+        ui_selectImage.gameObject.SetActive(isSelect);
+        ui_characterImage.color = selectedColor;
 
-            _ui_charactersList.Select(this);
-        }
+        _ui_charactersList.Select(this);
     }
 
     public void UnSelect()
     {
-        if(isSelect)
-        {
-            ui_selectImage.gameObject.SetActive(false);
-            ui_characterImage.color = unselectedColor;
-            isSelect = false;
-        }
+        isSelect = false;
+
+        ui_selectImage.gameObject.SetActive(isSelect);
+        ui_characterImage.color = unselectedColor;
     }
 
     public Player GetCharacter() => _player;

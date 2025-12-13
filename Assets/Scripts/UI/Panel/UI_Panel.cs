@@ -16,13 +16,11 @@ public class UI_Panel : MonoBehaviour
         isShow = false;
     }
 
-    protected virtual void ClearSubscriptions()
-    {
-        
-    }
+    protected virtual void ClearSubscriptions() {}
+    protected virtual void AddSubscriptions() {}
 
-    protected virtual void AddSubscriptions()
+    private void OnDestroy()
     {
-        
+        ClearSubscriptions();
     }
 }
