@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,6 +31,8 @@ public class UI_AttackRange : UI_Panel
     protected override void ClearSubscriptions()
     {
         base.ClearSubscriptions();
+
+        if(_spell == null) return;
 
         _spell.updateCooldown -= UpdateCooldown;
     }

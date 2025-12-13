@@ -36,6 +36,8 @@ public class UI_AttackMelee : UI_Panel
     {
         base.ClearSubscriptions();
 
+        if(_spell == null) return;
+
         _spell.updateCooldown -= UpdateCooldown;
     }
 
