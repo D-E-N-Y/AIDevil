@@ -35,7 +35,11 @@ public class GameBootstraper : MonoBehaviour
 
     private void InitializePlayer()
     {
-        playerCharacter = Instantiate(_gameInstance.GetPlayerCharacter());
+        playerCharacter = Instantiate(
+            DataBase.current.Characters.GetCharacterByName(
+                _gameInstance.GetProfile().playerCharacterName
+            )
+        );
         playerCharacter.transform.position = new Vector3(0f, 1f, 0f);
         
         playerCharacter.SetControlers(gameUICanvas.GetUIFixedJoystick());

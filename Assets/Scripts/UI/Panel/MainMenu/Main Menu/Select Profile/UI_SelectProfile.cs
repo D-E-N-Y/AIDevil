@@ -31,7 +31,7 @@ public class UI_SelectProfile : UI_Panel
     {
         ui_closeButton.onClick.RemoveAllListeners();
         ui_closeButton.onClick.AddListener(() => _ui_profiliesMenu.Hide());
-        ui_closeButton.interactable = _gameInstance.DBProfilies().HasProfilies();
+        ui_closeButton.interactable = DataBase.current.Profilies.HasProfilies();
 
         ui_removeButton.interactable = _gameInstance.IsValidProfile();
     }
@@ -41,14 +41,14 @@ public class UI_SelectProfile : UI_Panel
         _gameInstance.SetProfile(profile);
 
         ui_removeButton.onClick.RemoveAllListeners();
-        ui_removeButton.onClick.AddListener(() => _gameInstance.DBProfilies().RemoveProfile(profile));
+        ui_removeButton.onClick.AddListener(() => DataBase.current.Profilies.RemoveProfile(profile));
     }
 
     protected override void AddSubscriptions()
     {
         base.AddSubscriptions();
 
-        _gameInstance.DBProfilies().onUpdateDB += UpdateData;
+        DataBase.current.Profilies.onUpdateDB += UpdateData;
         _gameInstance.onUpdateProfile += UpdateData;
 
         ui_profiliesList.onSelect += Select;
@@ -60,7 +60,7 @@ public class UI_SelectProfile : UI_Panel
 
         if (_gameInstance != null)
         {
-            _gameInstance.DBProfilies().onUpdateDB -= UpdateData;
+            DataBase.current.Profilies.onUpdateDB -= UpdateData;
             _gameInstance.onUpdateProfile -= UpdateData;
         }
 

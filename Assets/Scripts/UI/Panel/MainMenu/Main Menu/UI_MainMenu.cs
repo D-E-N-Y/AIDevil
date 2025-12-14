@@ -37,7 +37,7 @@ public class UI_MainMenu : UI_Panel
         
         ui_sessionResultsButton.onClick.RemoveAllListeners();
         ui_sessionResultsButton.onClick.AddListener(() => ui_sessionResultsMenu.Show());
-        ui_sessionResultsButton.interactable = GameInstance.current.DBSessionResults().HasRecords();
+        ui_sessionResultsButton.interactable = DataBase.current.SessionResults.HasRecords();
 
         ui_quitButton.onClick.RemoveAllListeners();
         ui_quitButton.onClick.AddListener(() => QuitGame());
@@ -47,7 +47,7 @@ public class UI_MainMenu : UI_Panel
     {
         SaveLoadSystem.current.SaveGame(
             new SaveData(
-                _gameInstance.DBProfilies().GetProfiles(), 
+                DataBase.current.Profilies.GetProfiles(), 
                 _gameInstance.GetProfile()
             )
         );        

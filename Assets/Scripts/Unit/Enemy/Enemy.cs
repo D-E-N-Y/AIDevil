@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour, IHealth
     public Action<IHealth> onDead { get; set; }
     public Action onChangeHP { get; set; }
 
+    [SerializeField] protected string enemyName;
+
     [SerializeField, Range(1, 1000)] protected int maxHP;
     protected int currentHP;
 
@@ -65,4 +67,6 @@ public class Enemy : MonoBehaviour, IHealth
     
     public int GetCurrentHP() => currentHP;
     public int GetMaxHP() => maxHP;
+
+    public string GetUnitName() => enemyName;
 }

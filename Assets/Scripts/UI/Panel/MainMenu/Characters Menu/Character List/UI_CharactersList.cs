@@ -24,7 +24,7 @@ public class UI_CharactersList : UI_Panel
     public void UpdateData()
     {
         selected_ui_Character = null;
-        List<Player> characters = _gameInstance.DBCharacters().GetCharacters();
+        List<Player> characters = DataBase.current.Characters.GetCharacters();
         
         List<UI_Character> ui_characters = new List<UI_Character>();
         ui_characters = container.GetComponentsInChildren<UI_Character>(true).ToList();

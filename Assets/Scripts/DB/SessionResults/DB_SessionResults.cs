@@ -10,6 +10,11 @@ public class DB_SessionResults
         _sessionResults = new List<SSesionResult>();
     }
 
+    public void SetData(List<SSesionResult> sessionResults)
+    {
+        _sessionResults = sessionResults;
+    }
+
     public void AddResult(SSesionResult result)
     {
         _sessionResults.Add(result);

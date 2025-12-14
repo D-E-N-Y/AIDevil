@@ -56,7 +56,7 @@ public class SessionSystem : MonoBehaviour
         _sesionResult.result = result;
         _sesionResult.time = new STime((int)(_endTimeSession - _startTimeSession));
 
-        GameInstance.current.DBSessionResults().AddResult(_sesionResult);
+        DataBase.current.SessionResults.AddResult(_sesionResult);
 
         _ui_sessionResultsGame.SetResult(_sesionResult);
         _ui_sessionResultsGame.Show();

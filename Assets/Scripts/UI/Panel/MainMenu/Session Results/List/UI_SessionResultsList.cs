@@ -23,7 +23,7 @@ public class UI_SessionResultsList : UI_Panel
     public void UpdateData()
     {
         selected_ui_sessionResult = null;
-        List<SSesionResult> _sessionResults = _gameInstance.DBSessionResults().GetSessionResults();
+        List<SSesionResult> _sessionResults = DataBase.current.SessionResults.GetSessionResults();
         
         List<UI_SessionResult> _ui_sessionResults = new List<UI_SessionResult>();
         _ui_sessionResults = containerUISessionResults.GetComponentsInChildren<UI_SessionResult>(true).ToList();

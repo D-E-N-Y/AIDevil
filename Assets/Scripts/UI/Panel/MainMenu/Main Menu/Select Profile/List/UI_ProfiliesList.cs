@@ -17,7 +17,7 @@ public class UI_ProfiliesList : UI_Panel
     public void Initialize(GameInstance gameInstance)
     {
         _gameInstance = gameInstance;
-        _db_profilies = gameInstance.DBProfilies();
+        _db_profilies = DataBase.current.Profilies;
 
         AddSubscriptions();
 

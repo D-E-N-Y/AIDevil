@@ -18,6 +18,12 @@ public class DB_Profilies
         this.profiles = profiles;
     }   
 
+    public void SetData(List<Profile> profiles)
+    {
+        this.profiles = profiles;
+        UpdateDB();
+    }
+
     public void AddProfile(Profile profile)
     {
         profiles.Add(profile);
