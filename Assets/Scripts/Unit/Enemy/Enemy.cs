@@ -59,6 +59,8 @@ public class Enemy : MonoBehaviour, IHealth
 
     public virtual void Death()
     {
+        GameInstance.current.GetProfile().bestiaryData.AddDiscoveredEnemy(enemyName);
+        
         gameObject.SetActive(false);
         onDead?.Invoke(this);
     }
@@ -67,6 +69,8 @@ public class Enemy : MonoBehaviour, IHealth
     
     public int GetCurrentHP() => currentHP;
     public int GetMaxHP() => maxHP;
+    public string GetName() => enemyName;
+    public float GetMoveSpeed() => moveSpeed;
 
-    public string GetUnitName() => enemyName;
+    public List<Spell> GetSpells() => spells;
 }

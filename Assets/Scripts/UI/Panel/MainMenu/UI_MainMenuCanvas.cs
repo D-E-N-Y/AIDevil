@@ -5,6 +5,7 @@ public class UI_MainMenuCanvas : MonoBehaviour
     [SerializeField] private UI_MainMenu ui_mainMenu;
     [SerializeField] private UI_ProfiliesMenu ui_profiliesMenu;
     [SerializeField] private UI_CharactersMenu ui_charactersMenu;
+    [SerializeField] private UI_BestiaryMenu ui_bestiaryMenu;  
     [SerializeField] private UI_SessionResultsMenu ui_sessionResultsMenu;
 
     private GameInstance _gameInstance;
@@ -17,13 +18,16 @@ public class UI_MainMenuCanvas : MonoBehaviour
         ui_sessionResultsMenu.Initialize(_gameInstance);
         ui_sessionResultsMenu.Hide();
         
+        ui_bestiaryMenu.Initialize();
+        ui_bestiaryMenu.Hide();
+
         ui_charactersMenu.Initialize(_gameInstance);
         ui_charactersMenu.Hide();
 
         ui_profiliesMenu.Initialize(_gameInstance);
         ui_profiliesMenu.Hide();
 
-        ui_mainMenu.Initialize(_gameInstance, ui_profiliesMenu, ui_charactersMenu, ui_sessionResultsMenu);
+        ui_mainMenu.Initialize(_gameInstance, ui_profiliesMenu, ui_charactersMenu, ui_sessionResultsMenu, ui_bestiaryMenu);
         ui_mainMenu.Show();
     }
 
@@ -31,7 +35,8 @@ public class UI_MainMenuCanvas : MonoBehaviour
     {
         ui_charactersMenu.UpdateData();
         ui_sessionResultsMenu.UpdateData();
-        ui_mainMenu.UpdateData(ui_profiliesMenu, ui_charactersMenu, ui_sessionResultsMenu);
+        ui_bestiaryMenu.UpdateData();
+        ui_mainMenu.UpdateData(ui_profiliesMenu, ui_charactersMenu, ui_sessionResultsMenu, ui_bestiaryMenu);
     }
 
     public void ShowProfiliesMenu() => ui_profiliesMenu.Show();
