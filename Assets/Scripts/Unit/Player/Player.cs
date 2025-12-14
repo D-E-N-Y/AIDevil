@@ -119,4 +119,5 @@ public class Player : MonoBehaviour, IHealth
 
     public List<SpellRange> GetSpellRanges() => rangeSpells;
     public List<SpellMelee> GetSpellMelees() => meleeSpells;
+    public List<Spell> GetSpells() => spells;
 }

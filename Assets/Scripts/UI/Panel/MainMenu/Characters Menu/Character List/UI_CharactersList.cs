@@ -61,6 +61,8 @@ public class UI_CharactersList : UI_Panel
     {
         if(ui_character != null)
         {
+            if(ui_character == selected_ui_Character) return;
+
             if(selected_ui_Character != null)
             {
                 selected_ui_Character.UnSelect();

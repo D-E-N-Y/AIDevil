@@ -7,11 +7,7 @@ public class UI_CharacterDescription : UI_Panel
     [SerializeField] private TextMeshProUGUI ui_hpText;
     [SerializeField] private TextMeshProUGUI ui_armorText;
     [SerializeField] private TextMeshProUGUI ui_speedText;
-    
-    public void Initialize()
-    {
-        
-    }
+    [SerializeField] private UI_SpellsList ui_spellsList;
 
     public void SetCharacterInfo(Player player)
     {
@@ -19,5 +15,7 @@ public class UI_CharacterDescription : UI_Panel
         ui_hpText.text = player.GetMaxHP().ToString();
         ui_armorText.text = player.GetArmor().ToString();
         ui_speedText.text = player.GetMoveSpeed().ToString();
+
+        ui_spellsList.SetInfo(player.GetSpells());
     }
 }

@@ -17,7 +17,6 @@ public class UI_CharactersMenu : UI_Panel
         _gameInstance = gameInstance;
         
         ui_charactersList.Initialize(gameInstance, this);
-        ui_characterDescription.Initialize();
 
         ui_closeButton.onClick.RemoveAllListeners();
         ui_closeButton.onClick.AddListener(() => Hide()); 
