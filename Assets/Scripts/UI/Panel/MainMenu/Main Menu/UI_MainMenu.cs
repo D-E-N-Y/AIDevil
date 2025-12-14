@@ -40,7 +40,18 @@ public class UI_MainMenu : UI_Panel
         ui_sessionResultsButton.interactable = GameInstance.current.DBSessionResults().HasRecords();
 
         ui_quitButton.onClick.RemoveAllListeners();
-        ui_quitButton.onClick.AddListener(() => Application.Quit());
+        ui_quitButton.onClick.AddListener(() => QuitGame());
+    }
+
+    private void QuitGame()
+    {
+        SaveLoadSystem.current.SaveGame(
+            new SaveData(
+                _gameInstance.DBProfilies().GetProfiles(), 
+                _gameInstance.GetProfile()
+            )
+        );        
+        Application.Quit();
     }
 
     private void UpdateNameProfile()

@@ -14,7 +14,7 @@ public class UI_SessionResultsDescription : UI_Panel
 
     public void SetResult(SSesionResult result)
     {
-        ui_playerText.text = result.playerCharacter.GetName();
+        ui_playerText.text = result.namePlayerCharacter;
         ui_resultText.text = result.result.ToString();
         ui_hoursText.text = result.time.hours.ToString();
         ui_minutesText.text = CorrectTimeFormat(result.time.minutes);

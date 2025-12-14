@@ -15,7 +15,7 @@ public class SessionSystem : MonoBehaviour
     {
         _sesionResult = new SSesionResult();
 
-        _sesionResult.playerCharacter = playerCharacter;
+        _sesionResult.namePlayerCharacter = playerCharacter.GetName();
         _sesionResult.name = $"{playerCharacter.GetName()} - {DateTime.Now}";
 
         playerCharacter.onDead += DeathPlayerCharacter;

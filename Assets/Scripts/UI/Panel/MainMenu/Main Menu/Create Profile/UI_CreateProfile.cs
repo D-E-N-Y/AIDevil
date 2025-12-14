@@ -51,7 +51,6 @@ public class UI_CreateProfile : UI_Panel
         Profile newProfile = new Profile(
             ui_nameInputField.text,
             null,
-            _gameInstance.GetCopyDBCharacters(),
             new DB_SessionResults()
         );
         

@@ -3,11 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class MainBootstraper : MonoBehaviour
 {
+    [SerializeField] private SaveLoadSystem saveLoadSystem;
     [SerializeField] private GameInstance gameInstance;
 
     private void Start()
     {
-        gameInstance.Initialize();
+        saveLoadSystem.Initialize();
+        gameInstance.Initialize(saveLoadSystem);
 
         SceneManager.LoadScene("MainMenuScene");
     }

@@ -9,33 +9,37 @@ public class GameBootstraper : MonoBehaviour
     [SerializeField] private SessionSystem sessionSystem;
     [SerializeField] private WaveSystem waveSystem;
 
-    private Player player;
+    private Player playerCharacter;
+
+    private GameInstance _gameInstance;
 
     private void Start()
     {
+        _gameInstance = GameInstance.current;
+        
         Time.timeScale = 1f;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 120;
 
         InitializePlayer();
 
-        cameraOrigin.Initialize(player.transform);
+        cameraOrigin.Initialize(playerCharacter.transform);
 
-        gameUICanvas.Initialize(player, waveSystem);
+        gameUICanvas.Initialize(playerCharacter, waveSystem);
 
-        sessionSystem.Initialize(player, gameUICanvas.GetUIResultsSession(), waveSystem);
-        waveSystem.Initialize(player);
+        sessionSystem.Initialize(playerCharacter, gameUICanvas.GetUIResultsSession(), waveSystem);
+        waveSystem.Initialize(playerCharacter);
 
         sessionSystem.StartSession();
     }
 
     private void InitializePlayer()
     {
-        player = Instantiate(GameInstance.current.GetPlayerCharacter());
-        player.transform.position = new Vector3(0f, 1f, 0f);
+        playerCharacter = Instantiate(_gameInstance.GetPlayerCharacter());
+        playerCharacter.transform.position = new Vector3(0f, 1f, 0f);
         
-        player.SetControlers(gameUICanvas.GetUIFixedJoystick());
+        playerCharacter.SetControlers(gameUICanvas.GetUIFixedJoystick());
         
-        player.Initialize(); 
+        playerCharacter.Initialize(); 
     }
 }

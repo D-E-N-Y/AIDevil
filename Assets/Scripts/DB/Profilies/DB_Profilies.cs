@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-using UnityEngine;
-
+[Serializable]
 public class DB_Profilies 
 {
     public Action onUpdateDB;
@@ -14,16 +13,21 @@ public class DB_Profilies
         profiles = new List<Profile>();
     }
 
+    public DB_Profilies(List<Profile> profiles)
+    {
+        this.profiles = profiles;
+    }   
+
     public void AddProfile(Profile profile)
     {
         profiles.Add(profile);
-        onUpdateDB?.Invoke();
+        UpdateDB();
     }
 
     public void RemoveProfile(Profile profile)
     {
         profiles.Remove(profile);
-        onUpdateDB?.Invoke();
+        UpdateDB();
     }
 
     public void UpdateProfile(Profile profile)
@@ -32,7 +36,7 @@ public class DB_Profilies
         if(index != -1)
         {
             profiles[index] = profile;
-            onUpdateDB?.Invoke();
+            UpdateDB();
         }
     }
 
@@ -49,4 +53,11 @@ public class DB_Profilies
     public List<Profile> GetProfiles() => profiles;
 
     public bool HasProfilies() => profiles.Count > 0;
+
+    private void UpdateDB()
+    {
+        // SaveLoadSystem.current.SaveGame(new SaveData(this, GameInstance.current.GetProfile()));
+        onUpdateDB?.Invoke();
+    }
+
 }

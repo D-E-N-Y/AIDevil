@@ -1,4 +1,5 @@
 using System;
+using Unity.Barracuda;
 using UnityEngine;
 
 public class GameInstance : MonoBehaviour
@@ -8,18 +9,42 @@ public class GameInstance : MonoBehaviour
     public Action onUpdateProfile;
 
     [SerializeField] private DB_Characters db_characters;
+
     private DB_Profilies db_profilies;
     private Profile currentProfile;
 
-    public void Initialize()
+    private SaveLoadSystem _saveLoadSystem;
+
+    public void Initialize(SaveLoadSystem saveLoadSystem)
     {
         current = this;
         DontDestroyOnLoad(this);
         
-        db_profilies = new DB_Profilies();
-        currentProfile = new Profile(null, null, GetCopyDBCharacters(), new DB_SessionResults());
+        _saveLoadSystem = saveLoadSystem;
 
-        db_profilies.onUpdateDB += UpdateCurrentProfile;
+        SaveData saveData = _saveLoadSystem.LoadGame();
+        if (saveData == null)
+        {
+            Debug.Log("[GameInstance] New Game");
+
+            db_profilies = new DB_Profilies();
+            currentProfile = new Profile(
+                null,
+                null,
+                new DB_SessionResults()
+            );
+        }
+        else
+        {
+            Debug.Log("[GameInstance] Load Game");
+
+            db_profilies = new DB_Profilies(saveData.profiles);
+            currentProfile = saveData.currentProfile;
+        }
+
+        Debug.Log($"[GameInstance]\n DB Session Results : {currentProfile.db_sessionResults.HasRecords()}");
+
+        db_profilies.onUpdateDB += UpdateCurrentProfile; 
     }
 
     public void SetProfile(Profile profile)
@@ -34,15 +59,8 @@ public class GameInstance : MonoBehaviour
         onUpdateProfile?.Invoke();
     }
 
-    public bool IsValidProfile()
-    {
-        return !string.IsNullOrEmpty(currentProfile.name);
-    }
-
-    public Profile GetProfile()
-    {
-        return currentProfile;
-    }
+    public bool IsValidProfile() => !string.IsNullOrEmpty(currentProfile.name);
+    public Profile GetProfile() => currentProfile;
 
     private void UpdateCurrentProfile()
     {
@@ -54,7 +72,13 @@ public class GameInstance : MonoBehaviour
             }
             else
             {
-                SetProfile(new Profile(null, null, GetCopyDBCharacters(), new DB_SessionResults()));
+                SetProfile(
+                    new Profile(
+                        null, 
+                        null, 
+                        new DB_SessionResults()
+                    )
+                );
             }
         }
     }
@@ -67,17 +91,17 @@ public class GameInstance : MonoBehaviour
             return;
         }
 
-        currentProfile.playerCharacter = player;
+        currentProfile.playerCharacterName = player.GetName();
+
+        // _saveLoadSystem.SaveGame(new SaveData(db_profilies, currentProfile));
     }
     
     public DB_Profilies DBProfilies() => db_profilies;
-
-    public Player GetPlayerCharacter() => currentProfile.playerCharacter;
-    
-    public DB_Characters DBCharacters() => currentProfile.db_characters;
-    public DB_Characters GetCopyDBCharacters() => Instantiate(db_characters);
-
+    public Player GetPlayerCharacter() => db_characters.GetCharacterByName(currentProfile.playerCharacterName);
+    public DB_Characters DBCharacters() => db_characters;
     public DB_SessionResults DBSessionResults() => currentProfile.db_sessionResults;
+    public DB_Characters GetCopyDBCharacters() => Instantiate(db_characters);
+    // public bool IsNewGame() => isNewGame; 
 
     public void ClearSubscriptions()
     {
