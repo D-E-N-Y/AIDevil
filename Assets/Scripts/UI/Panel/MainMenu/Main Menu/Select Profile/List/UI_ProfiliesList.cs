@@ -11,13 +11,11 @@ public class UI_ProfiliesList : UI_Panel
     [SerializeField] private RectTransform containerUIProfilies;
     private UI_Profile selected_ui_profile;
 
-    private GameInstance _gameInstance;    
-    private DB_Profilies _db_profilies;
+    private GameInstance _gameInstance;
     
     public void Initialize(GameInstance gameInstance)
     {
         _gameInstance = gameInstance;
-        _db_profilies = DataBase.current.Profilies;
 
         AddSubscriptions();
 
@@ -28,7 +26,7 @@ public class UI_ProfiliesList : UI_Panel
     {
         selected_ui_profile = null;
         
-        List<Profile> _profilies = _db_profilies.GetProfiles();
+        IReadOnlyList<Profile> _profilies = _gameInstance.GetProfiles();
         
         List<UI_Profile> _ui_profiles = new List<UI_Profile>();
         _ui_profiles = containerUIProfilies.GetComponentsInChildren<UI_Profile>(true).ToList();
@@ -84,12 +82,12 @@ public class UI_ProfiliesList : UI_Panel
     protected override void AddSubscriptions()
     {
         base.AddSubscriptions();
-        _db_profilies.onUpdateDB += UpdateData;
+        _gameInstance.onUpdateProfiles += UpdateData;
     }
 
     protected override void ClearSubscriptions()
     {
         base.ClearSubscriptions();
-        _db_profilies.onUpdateDB -= UpdateData;
+        _gameInstance.onUpdateProfiles -= UpdateData;
     }
 }

@@ -29,7 +29,7 @@ public class UI_CreateProfile : UI_Panel
 
     private void OnValidName(string name)
     {
-        if(DataBase.current.Profilies.HasProfilieByName(name))
+        if(_gameInstance.HasProfilieByName(name))
         {
             ui_createButton.interactable = false;
         }
@@ -49,12 +49,10 @@ public class UI_CreateProfile : UI_Panel
     private void CreateProfile()
     {
         Profile newProfile = new Profile(
-            ui_nameInputField.text,
-            null,
-            new List<SSesionResult>()
+            ui_nameInputField.text
         );
-        
-        DataBase.current.Profilies.AddProfile(newProfile);
+
+        _gameInstance.AddProfile(newProfile);
 
         ui_nameInputField.text = string.Empty;
         OnValidName("");

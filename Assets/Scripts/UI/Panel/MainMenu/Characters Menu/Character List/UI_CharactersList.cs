@@ -75,4 +75,6 @@ public class UI_CharactersList : UI_Panel
     }
 
     public UI_Character GetSelectedUICharacter() => selected_ui_Character;
+
+    
 }

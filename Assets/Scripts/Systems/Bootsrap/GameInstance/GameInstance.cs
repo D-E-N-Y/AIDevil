@@ -6,76 +6,110 @@ public class GameInstance : MonoBehaviour
 {
     public static GameInstance current;
 
-    public Action onUpdateProfile;
-
-    private Profile currentProfile;
+    public Action onUpdateProfiles;
+    public Action onCurrentProfileChanged;
+    
+    private Profile _currentProfile;
+    private List<Profile> _profiles;
 
     private SaveLoadSystem _saveLoadSystem;
     private DataBase _dataBase;
 
-    public void Initialize(SaveLoadSystem saveLoadSystem, DataBase dataBase)
+    public void Initialize(DataBase dataBase)
     {
         current = this;
         DontDestroyOnLoad(this);
         
-        _saveLoadSystem = saveLoadSystem;
+        _saveLoadSystem = new SaveLoadSystem();
         _dataBase = dataBase;
 
-        SaveData saveData = _saveLoadSystem.LoadGame();
-        if (saveData == null)
-        {
-            currentProfile = new Profile(
-                null,
-                null,
-                new List<SSesionResult>()
-            );
-        }
-        else
-        {
-            _dataBase.Profilies.SetData(saveData.profiles);
-            _dataBase.SessionResults.SetData(saveData.currentProfile.sessionResults);
-            currentProfile = saveData.currentProfile;
-        }
+        CheckData();
+    }
+    
+    #region Profiles Management
+    
+    public void AddProfile(Profile profile)
+    {
+        if (_profiles.Exists(p => p.name == profile.name)) return;
 
-        _dataBase.Profilies.onUpdateDB += UpdateCurrentProfile; 
+        _profiles.Add(profile);
+        onUpdateProfiles?.Invoke();
+    }
+
+    public void RemoveProfile(Profile profile)
+    {
+        _profiles.Remove(profile);
+        
+        UpdateCurrentProfile();
+
+        onUpdateProfiles?.Invoke();
     }
 
     public void SetProfile(Profile profile)
     {
-        if(currentProfile.name == profile.name) return;
+        if(_currentProfile.name == profile.name) return;
 
-        Profile _profile = currentProfile;
-        currentProfile = profile;
+        UpdateCurrentProfileInList();
 
-        _dataBase.Profilies.UpdateProfile(_profile);
-        _dataBase.SessionResults.SetData(profile.sessionResults);
-        
-        onUpdateProfile?.Invoke();
+        _currentProfile = profile;
+
+        onCurrentProfileChanged?.Invoke();
     }
-
-    public bool IsValidProfile() => !string.IsNullOrEmpty(currentProfile.name);
-    public Profile GetProfile() => currentProfile;
 
     private void UpdateCurrentProfile()
     {
-        if(!_dataBase.Profilies.HasProfilieByName(currentProfile.name))
+        if(!HasProfilieByName(_currentProfile.name))
         {
-            if(_dataBase.Profilies.HasProfilies())
+            if(HasProfilies())
             {
-                SetProfile(_dataBase.Profilies.GetProfiles()[0]);
+                SetProfile(_profiles[0]);
             }
             else
             {
-                SetProfile(
-                    new Profile(
-                        null, 
-                        null, 
-                        new List<SSesionResult>()
-                    )
-                );
+                SetProfile(new Profile());
             }
         }
     }
+
+    private void UpdateCurrentProfileInList()
+    {
+        int index = _profiles.FindIndex(p => p.name == _currentProfile.name);
+        if(index >= 0)
+        {
+            _profiles[index] = _currentProfile;
+        }
+    }
+
+    public bool HasProfilieByName(string name)
+    {
+        return _profiles.Exists(p => p.name == name);
+    }
+
+    public bool HasProfilies() => _profiles.Count > 0;
+
+    public bool IsValidProfile() => HasProfilieByName(_currentProfile.name) && _currentProfile.playerCharacterName != string.Empty;
+
+    public Profile GetProfile() => _currentProfile;
+    public IReadOnlyList<Profile> GetProfiles() => _profiles;
+
+    #endregion
+    
+
+    #region Session Results Management
+
+    public void AddSessionResult(SSesionResult sessionResult)
+    {
+        _currentProfile.sessionResults.Add(sessionResult);
+    }
+
+    public bool HasSessionResultsCurrentProfile() => _currentProfile.sessionResults.Count > 0;
+
+    public IReadOnlyList<SSesionResult> GetSessionResultsCurrentProfile() => _currentProfile.sessionResults;
+
+    #endregion
+
+    
+    #region Player Character Management
 
     public void SetPlayer(Player player)
     {
@@ -85,18 +119,61 @@ public class GameInstance : MonoBehaviour
             return;
         }
 
-        currentProfile.playerCharacterName = player.GetName();
-
-        // _saveLoadSystem.SaveGame(new SaveData(db_profilies, currentProfile));
+        _currentProfile.playerCharacterName = player.GetName();
     }
 
     public Player GetPlayerCharacter()
     {
-        return _dataBase.Characters.GetCharacterByName(currentProfile.playerCharacterName);
+        return _dataBase.Characters.GetCharacterByName(_currentProfile.playerCharacterName);
     }
+
+    #endregion
+
+    
+    #region Data Management
+
+    private void CheckData()
+    {
+        SaveData saveData = _saveLoadSystem.LoadGame();
+        
+        if (saveData == null)
+        {
+            CreateNewData();
+        }
+        else
+        {
+            LoadData(saveData);
+        }
+    }
+
+    private void LoadData(SaveData saveData)
+    {
+        _currentProfile = saveData.currentProfile;
+        _profiles = saveData.profiles;
+    }
+
+    private void CreateNewData()
+    {
+        _currentProfile = new Profile();
+        _profiles = new List<Profile>();
+    }
+
+    public void SaveData()
+    {
+        _saveLoadSystem.SaveGame(
+            new SaveData(
+                _profiles, 
+                _currentProfile
+            )
+        );
+    }
+
+    #endregion
+    
+
 
     public void ClearSubscriptions()
     {
-        onUpdateProfile = null;
+        onUpdateProfiles = null;
     }
 }

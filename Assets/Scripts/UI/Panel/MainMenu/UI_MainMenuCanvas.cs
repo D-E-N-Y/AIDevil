@@ -13,7 +13,7 @@ public class UI_MainMenuCanvas : MonoBehaviour
     public void Initialize(GameInstance gameInstance)
     {
         _gameInstance = gameInstance;
-        _gameInstance.onUpdateProfile += UpdateData;
+        _gameInstance.onCurrentProfileChanged += UpdateData;
         
         ui_sessionResultsMenu.Initialize(_gameInstance);
         ui_sessionResultsMenu.Hide();
@@ -40,4 +40,10 @@ public class UI_MainMenuCanvas : MonoBehaviour
     }
 
     public void ShowProfiliesMenu() => ui_profiliesMenu.Show();
+
+    private void OnDestroy()
+    {
+        if(_gameInstance != null)
+            _gameInstance.onCurrentProfileChanged -= UpdateData;
+    }
 }

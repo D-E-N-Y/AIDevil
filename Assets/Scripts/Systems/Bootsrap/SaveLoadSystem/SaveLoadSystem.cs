@@ -2,21 +2,13 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using System.IO;
 
-public class SaveLoadSystem : MonoBehaviour 
+public class SaveLoadSystem
 {
-    public static SaveLoadSystem current;
-
     private string fileName = "savegame.dat";
     private string FilePath =>
         Path.Combine(Application.persistentDataPath, fileName);
     
     private SaveData _saveData;
-
-    public void Initialize()
-    {
-        current = this;
-        DontDestroyOnLoad(this);
-    }
 
     public void SaveGame(SaveData saveData)
     {
