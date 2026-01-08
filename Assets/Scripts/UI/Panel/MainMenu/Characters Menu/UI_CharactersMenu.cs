@@ -25,10 +25,6 @@ public class UI_CharactersMenu : UI_Panel
         ui_fightButton.onClick.AddListener(() => SceneManager.LoadScene("GameScene"));
     }
 
-    public void UpdateData()
-    {
-        ui_charactersList.UpdateData();
-    }
 
     public void Select(Player character)
     {

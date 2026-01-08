@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UI_SessionResultsList : UI_Panel
@@ -9,7 +10,12 @@ public class UI_SessionResultsList : UI_Panel
     
     [SerializeField] private UI_SessionResult ui_sessionResultPrefab;
     [SerializeField] private RectTransform containerUISessionResults;
+
     private UI_SessionResult selected_ui_sessionResult;
+
+    private List<UI_SessionResult> _ui_sessionResults;
+
+    private UI_MainMenuCanvas _mainMenuCanvas;
 
     private GameInstance _gameInstance;
     
@@ -17,22 +23,20 @@ public class UI_SessionResultsList : UI_Panel
     {
         _gameInstance = gameInstance;
 
+        AddSubscriptions();
+
+        CreateElements();
         UpdateData();
     }
 
-    public void UpdateData()
+    private void CreateElements()
     {
-        selected_ui_sessionResult = null;
-        IReadOnlyList<SSesionResult> _sessionResults = _gameInstance.GetSessionResultsCurrentProfile();
-        
-        List<UI_SessionResult> _ui_sessionResults = new List<UI_SessionResult>();
+        _ui_sessionResults = new List<UI_SessionResult>();
         _ui_sessionResults = containerUISessionResults.GetComponentsInChildren<UI_SessionResult>(true).ToList();
-        _ui_sessionResults.ForEach(x => x.Hide());
 
-        // stop function if session results is none
-        if(_sessionResults.Count <= 0) return;
+        int countForCreate = 1000; // arbitrary large number to avoid dynamic creation during update
+        int residue = Math.Abs(_ui_sessionResults.Count - countForCreate);
 
-        int residue = Math.Abs(_ui_sessionResults.Count - _sessionResults.Count);
         if(residue > 0)
         {
             for(int i = 0; i < residue; i++)
@@ -41,7 +45,17 @@ public class UI_SessionResultsList : UI_Panel
                 _ui_sessionResults.Add(_ui_sessionResult);
             }
         }
+    }
 
+    public void UpdateData()
+    {
+        selected_ui_sessionResult = null;
+        IReadOnlyList<SSesionResult> _sessionResults = _gameInstance.GetSessionResultsCurrentProfile();
+        
+        // stop function if session results is none
+        if(_sessionResults.Count <= 0) return;
+
+        _ui_sessionResults.ForEach(x => x.Hide());
         for(int i = 0; i < _sessionResults.Count; i++)
         {
             _ui_sessionResults[i].Initialize(_sessionResults[i]);
@@ -64,5 +78,17 @@ public class UI_SessionResultsList : UI_Panel
 
         selected_ui_sessionResult = ui_sessionResult;
         onSelect?.Invoke(selected_ui_sessionResult.GetSesionResult());
+    }
+
+    protected override void AddSubscriptions()
+    {
+        base.AddSubscriptions();
+        _gameInstance.onCurrentProfileChanged += UpdateData;
+    }
+
+    protected override void ClearSubscriptions()
+    {
+        base.ClearSubscriptions();
+        _gameInstance.onCurrentProfileChanged -= UpdateData;
     }
 }

@@ -171,6 +171,12 @@ public class GameInstance : MonoBehaviour
     #endregion
     
 
+    #region DataBase Management
+
+    public DataBase GetDataBase() => _dataBase;
+
+    #endregion
+
 
     public void ClearSubscriptions()
     {

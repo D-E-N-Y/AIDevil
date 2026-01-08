@@ -36,7 +36,7 @@ public class GameBootstraper : MonoBehaviour
     private void InitializePlayer()
     {
         playerCharacter = Instantiate(
-            DataBase.current.Characters.GetCharacterByName(
+            _gameInstance.GetDataBase().Characters.GetCharacterByName(
                 _gameInstance.GetProfile().playerCharacterName
             )
         );

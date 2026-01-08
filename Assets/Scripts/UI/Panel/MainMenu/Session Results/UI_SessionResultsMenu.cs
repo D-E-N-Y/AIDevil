@@ -21,9 +21,4 @@ public class UI_SessionResultsMenu : UI_Panel
     {
         ui_sessionResultsDescription.SetResult(result);
     }
-
-    public void UpdateData()
-    {
-        ui_sessionResultsList.UpdateData();
-    }
 }

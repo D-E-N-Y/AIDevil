@@ -13,12 +13,11 @@ public class UI_MainMenuCanvas : MonoBehaviour
     public void Initialize(GameInstance gameInstance)
     {
         _gameInstance = gameInstance;
-        _gameInstance.onCurrentProfileChanged += UpdateData;
         
         ui_sessionResultsMenu.Initialize(_gameInstance);
         ui_sessionResultsMenu.Hide();
         
-        ui_bestiaryMenu.Initialize();
+        ui_bestiaryMenu.Initialize(_gameInstance);
         ui_bestiaryMenu.Hide();
 
         ui_charactersMenu.Initialize(_gameInstance);
@@ -31,19 +30,5 @@ public class UI_MainMenuCanvas : MonoBehaviour
         ui_mainMenu.Show();
     }
 
-    public void UpdateData()
-    {
-        ui_charactersMenu.UpdateData();
-        ui_sessionResultsMenu.UpdateData();
-        ui_bestiaryMenu.UpdateData();
-        ui_mainMenu.UpdateData(ui_profiliesMenu, ui_charactersMenu, ui_sessionResultsMenu, ui_bestiaryMenu);
-    }
-
     public void ShowProfiliesMenu() => ui_profiliesMenu.Show();
-
-    private void OnDestroy()
-    {
-        if(_gameInstance != null)
-            _gameInstance.onCurrentProfileChanged -= UpdateData;
-    }
 }

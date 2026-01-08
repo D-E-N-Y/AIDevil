@@ -13,37 +13,56 @@ public class UI_MainMenu : UI_Panel
     [SerializeField] private Button ui_bestiaryButton;
     [SerializeField] private Button ui_quitButton;
 
+    private UI_ProfiliesMenu _ui_profiliesMenu;
+    private UI_CharactersMenu _ui_charactersMenu;
+    private UI_SessionResultsMenu _ui_sessionResultsMenu;
+    private UI_BestiaryMenu _ui_bestiaryMenu;
+
     private GameInstance _gameInstance;
 
     public void Initialize(GameInstance gameInstance, UI_ProfiliesMenu ui_profiliesMenu, UI_CharactersMenu ui_charactesPanel, UI_SessionResultsMenu ui_sessionResultsMenu, UI_BestiaryMenu ui_bestiaryMenu)
     {
         _gameInstance = gameInstance;
-        
-        UpdateData(ui_profiliesMenu, ui_charactesPanel, ui_sessionResultsMenu, ui_bestiaryMenu);
+
+        _ui_profiliesMenu = ui_profiliesMenu;
+        _ui_charactersMenu = ui_charactesPanel;
+        _ui_sessionResultsMenu = ui_sessionResultsMenu;
+        _ui_bestiaryMenu = ui_bestiaryMenu;
+
+        AddSubscriptions();
+
+        SetButtonAction();
     }
 
-    public void UpdateData(UI_ProfiliesMenu ui_profiliesMenu, UI_CharactersMenu ui_charactesPanel, UI_SessionResultsMenu ui_sessionResultsMenu, UI_BestiaryMenu ui_bestiaryMenu)
+    private void SetButtonAction()
     {
         ui_profiliesButton.onClick.RemoveAllListeners();
-        ui_profiliesButton.onClick.AddListener(() => ui_profiliesMenu.Show());
+        ui_profiliesButton.onClick.AddListener(() => _ui_profiliesMenu.Show());
 
         UpdateNameProfile();
         
         ui_playButton.onClick.RemoveAllListeners();
-        ui_playButton.onClick.AddListener(() => ui_charactesPanel.Show());
+        ui_playButton.onClick.AddListener(() => _ui_charactersMenu.Show());
 
         // ui_settingsButton.onClick.RemoveAllListeners();
         // ui_settingsButton.onClick.AddListener(() => Application.Quit());
 
         ui_bestiaryButton.onClick.RemoveAllListeners();
-        ui_bestiaryButton.onClick.AddListener(() => ui_bestiaryMenu.Show());
+        ui_bestiaryButton.onClick.AddListener(() => _ui_bestiaryMenu.Show());
         
         ui_sessionResultsButton.onClick.RemoveAllListeners();
-        ui_sessionResultsButton.onClick.AddListener(() => ui_sessionResultsMenu.Show());
+        ui_sessionResultsButton.onClick.AddListener(() => _ui_sessionResultsMenu.Show());
         ui_sessionResultsButton.interactable = _gameInstance.HasSessionResultsCurrentProfile();
 
         ui_quitButton.onClick.RemoveAllListeners();
         ui_quitButton.onClick.AddListener(() => QuitGame());
+    }
+
+    private void UpdateData()
+    {
+        UpdateNameProfile();
+        
+        ui_sessionResultsButton.interactable = _gameInstance.HasSessionResultsCurrentProfile();
     }
 
     private void QuitGame()
@@ -55,5 +74,17 @@ public class UI_MainMenu : UI_Panel
     private void UpdateNameProfile()
     {
         ui_nameProfileText.text = _gameInstance.GetProfile().name;
+    }
+
+    protected override void AddSubscriptions()
+    {
+        base.AddSubscriptions();
+        _gameInstance.onCurrentProfileChanged += UpdateData;
+    }
+
+    protected override void ClearSubscriptions()
+    {
+        base.ClearSubscriptions();
+        _gameInstance.onCurrentProfileChanged -= UpdateData;
     }
 }

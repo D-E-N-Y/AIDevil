@@ -15,23 +15,26 @@ public class UI_EnemyList : UI_Panel
 
     private UI_Enemy selected_ui_enemy;
 
-    public void UpdateData()
-    {
-        List<Enemy> discoveredEnemies = DataBase.current.Enemies.GetEnemiesByNames(GameInstance.current.GetProfile().bestiaryData.discoveredEnemiesNames);
-        List<Enemy> allEnemies = DataBase.current.Enemies.GetAllEnemies();
+    private List<UI_Enemy> ui_enemies;
+    private List<Enemy> allEnemies;
 
-        UpdateList(discoveredEnemies);
-        UpdateProgress(allEnemies.Count, discoveredEnemies.Count);
+    private GameInstance _gameInstance;
+
+    public void Initialize(GameInstance gameInstance)
+    {
+        _gameInstance = gameInstance;
+
+        CreateElements();
     }
 
-    private void UpdateList(List<Enemy> enemies)
+    private void CreateElements()
     {
-        selected_ui_enemy = null;
+        allEnemies = _gameInstance.GetDataBase().Enemies.GetAllEnemies();
         
-        List<UI_Enemy> ui_enemies = new List<UI_Enemy>();
+        ui_enemies = new List<UI_Enemy>();
         ui_enemies = contentTransform.GetComponentsInChildren<UI_Enemy>(true).ToList();
 
-        int residue = Math.Abs(ui_enemies.Count - enemies.Count);
+        int residue = Math.Abs(ui_enemies.Count - allEnemies.Count);
         if(residue > 0)
         {
             for(int i = 0; i < residue; i++)
@@ -40,6 +43,20 @@ public class UI_EnemyList : UI_Panel
                 ui_enemies.Add(ui_enemy);
             }
         }
+    }
+
+
+    public void UpdateData()
+    {
+        List<Enemy> discoveredEnemies = _gameInstance.GetDataBase().Enemies.GetEnemiesByNames(GameInstance.current.GetProfile().bestiaryData.discoveredEnemiesNames);
+
+        UpdateList(discoveredEnemies);
+        UpdateProgress(allEnemies.Count, discoveredEnemies.Count);
+    }
+
+    private void UpdateList(List<Enemy> enemies)
+    {
+        selected_ui_enemy = null;
 
         ui_enemies.ForEach(x => x.Hide());
 
