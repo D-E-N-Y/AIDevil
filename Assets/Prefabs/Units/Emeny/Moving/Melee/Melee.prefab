@@ -68,6 +68,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2184928977473983112}
+  - {fileID: 2496710169436399646}
   - {fileID: 8883898448928876928}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -203,13 +204,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825bf3e1b37150103b0eb29b96cc90de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: Base Melee Enemy
-  maxHP: 100
+  _name: Melee Enemy
+  _stats:
+    maxHP: 50
+    baseMoveSpeed: 3
+    moveSpeedModifier: 1
+    armor: 10
+    damageModifier: 1
+    speedAttackModifier: 1
+    criticalDamageChance: 0
+    criticalDamageModifier: 0
+    multiattackChance: 0
+    areaModifier: 1
+    dodgeChance: 0
   ui_unitHPIndicator: {fileID: 5447561066302684890}
-  moveSpeed: 5
-  playerTarget: {fileID: 0}
+  playerCharacterTarget: {fileID: 0}
   spells:
   - {fileID: 1116532717622906396}
+  ui_worldSpellCooldown: {fileID: 2427886636802672106}
   attackRange: 1.5
 --- !u!1001 &1752557879287822902
 PrefabInstance:
@@ -217,7 +229,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 8718487453056262359}
+    m_TransformParent: {fileID: 3809188046454763258}
     m_Modifications:
     - target: {fileID: 4248106869947601448, guid: 69828841a836a97408d663d47e9bbb6c, type: 3}
       propertyPath: m_Pivot.x
@@ -285,7 +297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4248106869947601448, guid: 69828841a836a97408d663d47e9bbb6c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4248106869947601448, guid: 69828841a836a97408d663d47e9bbb6c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -504,10 +516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 479394356324222372, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2496710169436399646}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59fcb4bec090f75ebb29c3df1d2a4166, type: 3}
 --- !u!114 &1116532717622906396 stripped

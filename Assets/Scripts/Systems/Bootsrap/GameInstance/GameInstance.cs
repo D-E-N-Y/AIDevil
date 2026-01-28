@@ -111,7 +111,7 @@ public class GameInstance : MonoBehaviour
     
     #region Player Character Management
 
-    public void SetPlayer(Player player)
+    public void SetPlayer(PlayerCharacter player)
     {
         if (player == null)
         {
@@ -122,7 +122,7 @@ public class GameInstance : MonoBehaviour
         _currentProfile.playerCharacterName = player.GetName();
     }
 
-    public Player GetPlayerCharacter()
+    public PlayerCharacter GetPlayerCharacter()
     {
         return _dataBase.Characters.GetCharacterByName(_currentProfile.playerCharacterName);
     }

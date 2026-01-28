@@ -11,7 +11,7 @@ public class UI_UnitHPIndicator : UI_Panel
     public void Initialize(IHealth unit)
     {
         this.unit = unit;
-        unit.onChangeHP += UpdateHP;
+        unit.OnHpChanged += UpdateHP;
         UpdateHP();
 
         _camera = Camera.main;
@@ -19,7 +19,7 @@ public class UI_UnitHPIndicator : UI_Panel
 
     private void UpdateHP()
     {
-        ui_hpSlider.value = (float)unit.GetCurrentHP() / (float)unit.GetMaxHP();
+        ui_hpSlider.value = (float)unit.CurrentHP / (float)unit.MaxHP;
     }
 
     private void Update()

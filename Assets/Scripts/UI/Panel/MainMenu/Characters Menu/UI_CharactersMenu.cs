@@ -26,7 +26,7 @@ public class UI_CharactersMenu : UI_Panel
     }
 
 
-    public void Select(Player character)
+    public void Select(PlayerCharacter character)
     {
         ui_characterDescription.SetCharacterInfo(character);
         _gameInstance.SetPlayer(character);

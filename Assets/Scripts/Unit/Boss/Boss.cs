@@ -5,21 +5,19 @@ using Unity.MLAgents.Actuators;
 using System;
 using System.Collections.Generic;
 
-public class Boss : Agent, IHealth
+public class Boss : Agent, IUnit
 {
-    public Action<IHealth> onDead { get; set; }
-    public Action onChangeHP { get; set; }
+    [SerializeField] protected string _name;
+    [SerializeField] protected UnitStats _stats;
 
-    [SerializeField, Range(1, 9999)] protected int maxHP;
-    protected int currentHP;
+    protected UnitHealth _health;
+    public event Action<IUnit> OnDead;
 
     [SerializeField] UI_UnitHPIndicator ui_unitHPIndicator;
 
-    [SerializeField, Range(1f, 100f)] protected float moveSpeed;
-
     protected Vector3 oldPosition, newPosition;
 
-    [SerializeField] protected Player playerTarget;
+    [SerializeField] protected PlayerCharacter playerCharacterTarget;
     [SerializeField] protected TrainAIEnvironment environment;
 
     [SerializeField] protected List<Spell> spells;
@@ -32,14 +30,15 @@ public class Boss : Agent, IHealth
         _unitFaction = UnitFaction.Enemy;
         gameObject.layer = LayerMask.NameToLayer(_unitFaction.ToString());
 
-        currentHP = maxHP;
+        _health = new UnitHealth(_stats);
+        _health.OnDead += Death;
 
-        ui_unitHPIndicator.Initialize(this);
+        ui_unitHPIndicator.Initialize(_health);
 
         meleeSpells = new List<SpellMelee>();
         foreach (Spell spell in spells)
         {
-            spell.Initialize(_unitFaction);
+            spell.Initialize(_unitFaction, _stats);
             spell.onSuccessfulAttack += SuccessfulAttack;
 
             if (spell is SpellMelee _meleeSpell)
@@ -48,20 +47,7 @@ public class Boss : Agent, IHealth
             }
         }
 
-        playerTarget.onDead += SuccessfulKill;
-    }
-
-    public virtual void TakeDamage(int damage)
-    {
-        damage = Mathf.Max(0, damage);
-        SetReward(-0.01f);
-        currentHP -= damage;
-
-        onChangeHP?.Invoke();
-        if (currentHP <= 0)
-        {
-            Death();
-        }
+        playerCharacterTarget.OnDead += SuccessfulKill;
     }
 
     public virtual void Death()
@@ -82,15 +68,16 @@ public class Boss : Agent, IHealth
         SetReward(+40f);
     }
 
-    protected virtual void SuccessfulKill(IHealth unit)
+    protected virtual void SuccessfulKill(IUnit unit)
     {
         environment.Win();
         SetReward(+200f);
         EndEpisode();
     }
 
-    public void SetPlayerTarget(Player playerTarget) => this.playerTarget = playerTarget;
+    public void SetPlayerTarget(PlayerCharacter playerTarget) => this.playerCharacterTarget = playerTarget;
     
-    public int GetMaxHP() => maxHP;
-    public int GetCurrentHP() => currentHP;
+    public string GetName() => _name;
+    public UnitStats GetStats() => _stats;
+    public UnitHealth GetHealth() => _health;
 }

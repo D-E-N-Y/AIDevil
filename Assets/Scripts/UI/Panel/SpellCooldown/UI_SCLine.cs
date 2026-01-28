@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class UI_SCLine : UI_SpellCooldown
+public class UI_SCLine : UI_WorldSpellCooldown
 {
     public override void Initialize(Spell spell)
     {
         base.Initialize(spell);
 
         _rectTransform.sizeDelta = new Vector2(
-            1f,
+            1f * spell.AreaModifier,
             spell.RangeAttack()
         );
     }
@@ -17,9 +17,21 @@ public class UI_SCLine : UI_SpellCooldown
         ui_cooldownImage.fillAmount = value;
     }
 
-    // public void SetRotation(Quaternion rotation)
-    // {
-    //     float yAngle = rotation.eulerAngles.y;
-    //     transform.rotation = Quaternion.Euler(0f, 0f, yAngle);
-    // }
+    public void SetRotation()
+    {
+        Quaternion _rotation = Quaternion.Euler(90, _spell.transform.eulerAngles.y, -90);
+        canvasTransform.rotation = _rotation;
+    }
+
+    protected override void AddSubscriptions()
+    {
+        base.AddSubscriptions();
+        _spell.onStartCooldown += SetRotation;
+    }
+
+    protected override void ClearSubscriptions()
+    {
+        base.ClearSubscriptions();
+        _spell.onStartCooldown -= SetRotation;
+    }
 }

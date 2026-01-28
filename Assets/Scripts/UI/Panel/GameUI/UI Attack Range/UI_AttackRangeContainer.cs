@@ -5,12 +5,12 @@ public class UI_AttackRangeContainer : UI_Panel
 {
     [SerializeField] private List<UI_AttackRange> ui_spells;
 
-    private Player _playerCharacter;
+    private PlayerCharacter _playerCharacter;
 
-    public void Initialize(Player playerCharacter)
+    public void Initialize(PlayerCharacter playerCharacter)
     {
         _playerCharacter = playerCharacter;
-        _playerCharacter.updateSpells += UpdateUI;
+        _playerCharacter.GetSpellController().updateSpells += UpdateUI;
 
         UpdateUI();
     }
@@ -19,7 +19,7 @@ public class UI_AttackRangeContainer : UI_Panel
     {
         ui_spells.ForEach(x => x.Hide()); 
 
-        List<SpellRange> _spellRanges = _playerCharacter.GetSpellRanges();
+        List<SpellRange> _spellRanges = _playerCharacter.GetSpellController().GetSpellRanges();
 
         for (int i = 0; i < _spellRanges.Count; i++)
         {

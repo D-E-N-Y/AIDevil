@@ -23,9 +23,9 @@ public class MeleeBossAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Player>(out Player player))
+        if (other.TryGetComponent<PlayerCharacter>(out PlayerCharacter playerCharacter))
         {
-            player.TakeDamage(damage);
+            playerCharacter.GetHealth().TakeDamage(damage);
             isSuccessfulAttack?.Invoke();
         }
     }

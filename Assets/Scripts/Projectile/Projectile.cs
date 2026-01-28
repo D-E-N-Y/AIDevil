@@ -13,12 +13,29 @@ public class Projectile : MonoBehaviour
     protected string _originLayer;
     protected Vector3 _targetPosition;
 
+    protected float _damageModifier;
+    protected float _criticalDamageChance;
+    protected float _criticalDamageModifier;
+    protected float _areaModifier;
+
     public bool isAvaliable { get; protected set; }
 
-    public virtual void Initialize(UnitFaction unitFaction, Vector3 position)
+    public virtual void Initialize(UnitFaction unitFaction)
     {
         _originLayer = unitFaction + "Projectile";
         gameObject.layer = LayerMask.NameToLayer(_originLayer);
+
+        isAvaliable = true;
+    }
+
+    public virtual void SetToFire(Vector3 position, float damageModifier = 1f, float criticalDamageChance = 0f, float criticalDamageModifier = 1f, float areaModifier = 1f)
+    {
+        _damageModifier = damageModifier;
+        _criticalDamageChance = criticalDamageChance;
+        _criticalDamageModifier = criticalDamageModifier;
+        _areaModifier = areaModifier;
+
+        transform.localScale = new Vector3(1f * areaModifier, 1f * areaModifier, 1f * areaModifier);
 
         transform.position = position;
     }
@@ -51,9 +68,16 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<IHealth>(out IHealth unit))
+        if (other.gameObject.TryGetComponent<IUnit>(out IUnit unit))
         {
-            unit.TakeDamage(damage);
+            float _damage = damage * _damageModifier;
+            
+            if(IsCriticalHit())
+            {
+                _damage *= _criticalDamageModifier;
+            }
+
+            unit.GetHealth().TakeDamage(_damage);
             onSuccessfulAttack?.Invoke();
         }
 
@@ -68,5 +92,11 @@ public class Projectile : MonoBehaviour
         impactEffect.Play();
         yield return new WaitWhile(() => impactEffect.IsAlive(true));
         isAvaliable = true;
+    }
+
+    protected bool IsCriticalHit()
+    {
+        float roll = UnityEngine.Random.Range(0f, 1f);
+        return roll < _criticalDamageChance;
     }
 }

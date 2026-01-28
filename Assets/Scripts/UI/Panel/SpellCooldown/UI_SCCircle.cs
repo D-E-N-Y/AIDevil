@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UI_SCCircle : UI_SpellCooldown
+public class UI_SCCircle : UI_WorldSpellCooldown
 {
     protected RectTransform rectTransformCooldownImage;
 

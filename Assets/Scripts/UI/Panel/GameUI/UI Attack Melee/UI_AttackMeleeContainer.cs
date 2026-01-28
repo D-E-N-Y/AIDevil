@@ -5,12 +5,12 @@ public class UI_AttackMeleeContainer : UI_Panel
 {
     [SerializeField] private List<UI_AttackMelee> ui_spells;
 
-    private Player _playerCharacter;
+    private PlayerCharacter _playerCharacter;
 
-    public void Initialize(Player playerCharacter)
+    public void Initialize(PlayerCharacter playerCharacter)
     {
         _playerCharacter = playerCharacter;
-        _playerCharacter.updateSpells += UpdateUI;
+        _playerCharacter.GetSpellController().updateSpells += UpdateUI;
 
         UpdateUI();
     }
@@ -19,7 +19,7 @@ public class UI_AttackMeleeContainer : UI_Panel
     {
         ui_spells.ForEach(x => x.Hide());
 
-        List<SpellMelee> _spellMelles = _playerCharacter.GetSpellMelees();
+        List<SpellMelee> _spellMelles = _playerCharacter.GetSpellController().GetSpellMelees();
 
         for (int i = 0; i < _spellMelles.Count; i++)
         {

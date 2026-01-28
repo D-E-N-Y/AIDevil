@@ -6,9 +6,9 @@ public abstract class SpellMelee : Spell
     [SerializeField] protected MeleeWeapon meleeWeapon;
     private Action _meleeWeaponHandler;
 
-    public override void Initialize(UnitFaction unitFaction)
+    public override void Initialize(UnitFaction unitFaction, UnitStats stats)
     {
-        base.Initialize(unitFaction);
+        base.Initialize(unitFaction, stats);
 
         RemoveSubsriptions();
         meleeWeapon.Initialize(_unitFaction.ToString(), rangeAttack);

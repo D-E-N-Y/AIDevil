@@ -14,9 +14,9 @@ public abstract class SpellRange : Spell
 
     public bool IsCanAttack { get; protected set; }
 
-    public override void Initialize(UnitFaction unitFaction)
+    public override void Initialize(UnitFaction unitFaction, UnitStats stats)
     {
-        base.Initialize(unitFaction);
+        base.Initialize(unitFaction, stats);
 
         projectiles = new List<Projectile>();
 
@@ -45,32 +45,39 @@ public abstract class SpellRange : Spell
     protected override IEnumerator Attacking()
     {
         IsAttacking = true;
+        onStartAttack?.Invoke();
 
         while (IsCanAttack)
         {
-            _targetPosition = sensor.GetNerbyUnitPosition();
+            _targetPosition = sensor.GetNearestTarget().position;
 
             if (_unitFaction == UnitFaction.Enemy) yield return Cooldown();
 
             yield return Attack();
+            onAttack?.Invoke();
 
             if (_unitFaction == UnitFaction.Player) yield return Cooldown();
         }
 
         attacking = null;
         IsAttacking = false;
+        onStopAttack?.Invoke();
     }
 
     protected override void SetSubsriptions()
     {
-        sensor.onEnterUnit += SetValiableAttack;
-        sensor.onExitUnit += SetValiableAttack;
+        sensor.OnUnitEnter += (_) => SetValiableAttack();
+        sensor.OnUnitExit += (_) => SetValiableAttack();
+
+        _stats.OnStatChanged += UpdateStats;
     }
 
     protected override void RemoveSubsriptions()
     {
-        sensor.onEnterUnit -= SetValiableAttack;
-        sensor.onExitUnit -= SetValiableAttack;
+        sensor.OnUnitEnter -= (_) => SetValiableAttack();
+        sensor.OnUnitExit -= (_) => SetValiableAttack();
+
+        _stats.OnStatChanged -= UpdateStats;
     }
 
     private void SetValiableAttack()
@@ -82,4 +89,14 @@ public abstract class SpellRange : Spell
             Cast();
         }
     }
+
+    // protected void RotateToTarget(Vector3 targetPosition)
+    // {
+    //     Vector3 direction = targetPosition - transform.position;
+    //     direction.y = 0;
+    //     direction.Normalize();
+
+    //     Quaternion rotation = Quaternion.LookRotation(direction);
+    //     transform.rotation = rotation * Quaternion.Euler(0, -90, 0);
+    // }
 }

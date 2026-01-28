@@ -36,6 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5876724121084450982}
+  - {fileID: 3942123166054290637}
   - {fileID: 1602634397829593983}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -171,13 +172,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825bf3e1b37150103b0eb29b96cc90de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: Base Range Enemy
-  maxHP: 50
+  _name: Range Enemy
+  _stats:
+    maxHP: 50
+    baseMoveSpeed: 5
+    moveSpeedModifier: 1
+    armor: 5
+    damageModifier: 1
+    speedAttackModifier: 1
+    criticalDamageChance: 0
+    criticalDamageModifier: 0
+    multiattackChance: 0
+    areaModifier: 1
+    dodgeChance: 0
   ui_unitHPIndicator: {fileID: 307832241562989812}
-  moveSpeed: 9.2
-  playerTarget: {fileID: 0}
+  playerCharacterTarget: {fileID: 0}
   spells:
   - {fileID: 3549126975990371772}
+  ui_worldSpellCooldown: {fileID: 3522864599326716504}
   attackRange: 6.5
 --- !u!1 &9206541884789591435
 GameObject:
@@ -338,7 +350,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7872035807595501935}
+    m_TransformParent: {fileID: 7592035775117329211}
     m_Modifications:
     - target: {fileID: 4248106869947601448, guid: 69828841a836a97408d663d47e9bbb6c, type: 3}
       propertyPath: m_Pivot.x
@@ -508,10 +520,7 @@ PrefabInstance:
       objectReference: {fileID: 3522864599326716504}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 248661860163366008, guid: e568d46d3b9007ab89e9a465662876b3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3942123166054290637}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e568d46d3b9007ab89e9a465662876b3, type: 3}
 --- !u!114 &3549126975990371772 stripped

@@ -11,7 +11,7 @@ public class GameUICanvas : MonoBehaviour
     [SerializeField] private UI_PauseMenu ui_pauseMenu;
     [SerializeField] private UI_SessionResultsGame ui_resultsSession;
 
-    public void Initialize(Player playerCharacter, WaveSystem waveSystem)
+    public void Initialize(PlayerCharacter playerCharacter, WaveSystem waveSystem)
     {
         ui_attackRangeContainer.Initialize(playerCharacter);
         ui_attackMeleeContainer.Initialize(playerCharacter);

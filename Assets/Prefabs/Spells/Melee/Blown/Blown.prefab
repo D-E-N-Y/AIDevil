@@ -47,7 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rangeAttack: 2
   cooldown: 5
-  ui_SpellCooldown: {fileID: 0}
   icon: {fileID: 21300000, guid: 61dab0b6e506c6a43b12d9fde15b2393, type: 3}
   meleeWeapon: {fileID: 4013245686890619201}
   timeAttacking: 0.5
@@ -62,6 +61,14 @@ PrefabInstance:
     - target: {fileID: 6751460295317509174, guid: f25b26fd62bb709eca5c4aaab553d54d, type: 3}
       propertyPath: m_Name
       value: BlownWeapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751460295317509174, guid: f25b26fd62bb709eca5c4aaab553d54d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751460295317509174, guid: f25b26fd62bb709eca5c4aaab553d54d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7385479989273016251, guid: f25b26fd62bb709eca5c4aaab553d54d, type: 3}
       propertyPath: m_LocalPosition.x

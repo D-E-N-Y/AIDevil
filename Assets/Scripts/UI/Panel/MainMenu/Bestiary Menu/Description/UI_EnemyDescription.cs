@@ -13,9 +13,9 @@ public class UI_EnemyDescription : UI_Panel
     public void SetUnitInfo(Enemy enemy)
     {
         ui_nameText.text = enemy.GetName();
-        ui_hpText.text = enemy.GetMaxHP().ToString();
+        ui_hpText.text = enemy.GetStats().MaxHP.ToString();
         // ui_armorText.text = enemy.GetArmor().ToString();
-        ui_speedText.text = enemy.GetMoveSpeed().ToString();
+        ui_speedText.text = enemy.GetStats().BaseMoveSpeed.ToString();
         ui_spellsList.SetInfo(enemy.GetSpells());
     }
 }

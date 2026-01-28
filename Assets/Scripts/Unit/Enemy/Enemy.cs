@@ -2,23 +2,20 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IHealth
+public class Enemy : MonoBehaviour, IUnit
 {
-    public Action<IHealth> onDead { get; set; }
-    public Action onChangeHP { get; set; }
+    [SerializeField] protected string _name;
+    [SerializeField] protected UnitStats _stats;
 
-    [SerializeField] protected string enemyName;
-
-    [SerializeField, Range(1, 1000)] protected int maxHP;
-    protected int currentHP;
+    protected UnitHealth _health;
+    public event Action<IUnit> OnDead;
 
     [SerializeField] UI_UnitHPIndicator ui_unitHPIndicator;
 
-    [SerializeField, Range(1f, 100f)] protected float moveSpeed;
-
-    [SerializeField] protected Player playerTarget;
+    [SerializeField] protected PlayerCharacter playerCharacterTarget;
 
     [SerializeField] protected List<Spell> spells;
+    [SerializeField] protected UI_WorldSpellCooldown ui_worldSpellCooldown;
 
     [SerializeField, Range(1f, 20f)] protected float attackRange;
 
@@ -29,11 +26,13 @@ public class Enemy : MonoBehaviour, IHealth
         _unitFaction = UnitFaction.Enemy;
         gameObject.layer = LayerMask.NameToLayer(_unitFaction.ToString());
 
-        currentHP = maxHP;
+        _health = new UnitHealth(_stats);
+        _health.OnDead += Death;
 
-        ui_unitHPIndicator.Initialize(this);
+        ui_unitHPIndicator.Initialize(_health);
 
-        spells.ForEach(x => x.Initialize(_unitFaction));
+        spells.ForEach(x => x.Initialize(_unitFaction, _stats));
+        ui_worldSpellCooldown.Initialize(spells[0]);
 
         gameObject.SetActive(true);
     }
@@ -44,33 +43,19 @@ public class Enemy : MonoBehaviour, IHealth
         _spells.Cast();
     } 
 
-    public virtual void TakeDamage(int value)
-    {
-        value = Math.Max(0, value);
-        currentHP -= value;
-
-        onChangeHP?.Invoke();
-
-        if (currentHP <= 0)
-        {
-            Death();
-        }
-    }
-
     public virtual void Death()
     {
-        GameInstance.current.GetProfile().bestiaryData.AddDiscoveredEnemy(enemyName);
+        GameInstance.current.GetProfile().bestiaryData.AddDiscoveredEnemy(_name);
         
         gameObject.SetActive(false);
-        onDead?.Invoke(this);
+        OnDead?.Invoke(this);
     }
 
-    public virtual void SetPlayerTarget(Player playerTarget) => this.playerTarget = playerTarget;
-    
-    public int GetCurrentHP() => currentHP;
-    public int GetMaxHP() => maxHP;
-    public string GetName() => enemyName;
-    public float GetMoveSpeed() => moveSpeed;
+    public virtual void SetPlayerTarget(PlayerCharacter playerTarget) => this.playerCharacterTarget = playerTarget;
+
+    public string GetName() => _name;
+    public UnitStats GetStats() => _stats;
+    public UnitHealth GetHealth() => _health;
 
     public List<Spell> GetSpells() => spells;
 }

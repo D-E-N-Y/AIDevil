@@ -12,7 +12,7 @@ public class E_Moving : Enemy
         base.Initialize();
 
         _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = moveSpeed;
+        _agent.speed = _stats.BaseMoveSpeed * _stats.MoveSpeedModifier;
         _agent.stoppingDistance = attackRange;
 
         _state = MovingEnemyState.Moving;
@@ -38,7 +38,7 @@ public class E_Moving : Enemy
         }
     }
 
-    protected bool IsCanAttack() => Vector3.Distance(transform.position, playerTarget.transform.position) <= attackRange;
+    protected bool IsCanAttack() => Vector3.Distance(transform.position, playerCharacterTarget.transform.position) <= attackRange;
     protected bool IsAttacking()
     {
         foreach (Spell spell in spells)
@@ -56,7 +56,7 @@ public class E_Moving : Enemy
     {
         if (!IsCanAttack() && _state == MovingEnemyState.Moving)
         {
-            MoveToPosition(playerTarget.transform.position);
+            MoveToPosition(playerCharacterTarget.transform.position);
         }
         else
         {

@@ -31,7 +31,7 @@ public class UI_CharactersList : UI_Panel
 
     private void CreateElements()
     {
-        List<Player> characters = _gameInstance.GetDataBase().Characters.GetCharacters();
+        List<PlayerCharacter> characters = _gameInstance.GetDataBase().Characters.GetCharacters();
         
         ui_characters = new List<UI_Character>();
         ui_characters = container.GetComponentsInChildren<UI_Character>(true).ToList();
@@ -63,7 +63,7 @@ public class UI_CharactersList : UI_Panel
 
         if(_gameInstance.GetPlayerCharacter() != null)
         {
-            Player _playerCharacter = _gameInstance.GetPlayerCharacter();
+            PlayerCharacter _playerCharacter = _gameInstance.GetPlayerCharacter();
             UI_Character ui_character = ui_characters.Find(x => x.GetCharacter() == _playerCharacter);
             ui_character.Select();
         }

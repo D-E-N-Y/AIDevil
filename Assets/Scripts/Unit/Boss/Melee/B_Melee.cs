@@ -21,25 +21,24 @@ public class B_Melee : Boss
         base.Initialize();
 
         meleeSensor.Initialize(_unitFaction, 2f);
-        meleeSensor.onEnterUnit += AttackRangeEnter;
-        meleeSensor.onExitUnit += AttackRangeExit;
+        meleeSensor.OnUnitEnter += (_) => AttackRangeEnter();
+        meleeSensor.OnUnitExit += (_) => AttackRangeExit();
     }
 
     public override void OnEpisodeBegin()
     {
         transform.position = environment.GetRandomSpawnPosition();
-        playerTarget.transform.position = environment.GetRandomSpawnPosition();
+        playerCharacterTarget.transform.position = environment.GetRandomSpawnPosition();
 
-        currentHP = maxHP;
-        onChangeHP?.Invoke();
+        _health.Heal(_stats.MaxHP);
 
-        if (playerTarget.gameObject.TryGetComponent<PlayerBot>(out PlayerBot playerBot))
+        if (playerCharacterTarget.gameObject.TryGetComponent<PlayerBot>(out PlayerBot playerBot))
         {
-            playerBot.Initialize(playerTarget);
+            playerBot.Initialize(playerCharacterTarget);
         }
         else
         {
-            playerTarget.Initialize();
+            // playerCharacterTarget.Initialize();
         }
     }
 
@@ -47,7 +46,7 @@ public class B_Melee : Boss
     {
 
         sensor.AddObservation(transform.position);
-        sensor.AddObservation(playerTarget.transform.position);
+        sensor.AddObservation(playerCharacterTarget.transform.position);
         //base.CollectObservations(sensor);
     }
     public override void OnActionReceived(ActionBuffers actions)
@@ -55,7 +54,7 @@ public class B_Melee : Boss
         float moveX = actions.ContinuousActions[0];
         float moveZ = actions.ContinuousActions[1];
 
-        transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
+        transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * (_stats.BaseMoveSpeed * _stats.MoveSpeedModifier);
 
         // newPosition = transform.position;
 
@@ -121,7 +120,7 @@ public class B_Melee : Boss
         }
     }
 
-    protected override void SuccessfulKill(IHealth unit)
+    protected override void SuccessfulKill(IUnit unit)
     {
         base.SuccessfulKill(unit);
     }

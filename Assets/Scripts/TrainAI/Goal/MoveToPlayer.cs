@@ -84,7 +84,7 @@ public class MoveToPlayer : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Player>(out Player player))
+        if (other.TryGetComponent<PlayerCharacter>(out PlayerCharacter playerCharacter))
         {
             SetReward(+100f);
             EndEpisode();

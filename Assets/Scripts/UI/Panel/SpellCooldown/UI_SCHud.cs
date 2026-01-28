@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_SCHud : UI_SpellCooldown
+public class UI_SCHud : UI_WorldSpellCooldown
 {
     public override void SetCooldown(float value)
     {

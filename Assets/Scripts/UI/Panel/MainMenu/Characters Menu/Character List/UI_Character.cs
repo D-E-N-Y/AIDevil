@@ -10,14 +10,14 @@ public class UI_Character : UI_Panel
     private Color selectedColor;
     private Color unselectedColor;
 
-    private Player _player;
+    private PlayerCharacter _playerCharacter;
     private bool isSelect;
 
     private UI_CharactersList _ui_charactersList;
 
-    public void Initialize(Player player, UI_CharactersList ui_charactersList)
+    public void Initialize(PlayerCharacter playerCharacter, UI_CharactersList ui_charactersList)
     {
-        _player = player;
+        _playerCharacter = playerCharacter;
         _ui_charactersList = ui_charactersList;
         
         selectedColor = new Vector4(255f / 255f, 243f / 255f, 208f / 255f, 1f);
@@ -46,6 +46,6 @@ public class UI_Character : UI_Panel
         ui_characterImage.color = unselectedColor;
     }
 
-    public Player GetCharacter() => _player;
+    public PlayerCharacter GetCharacter() => _playerCharacter;
     public bool IsSelect() => isSelect;
 }

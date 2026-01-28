@@ -9,7 +9,7 @@ public class GameBootstraper : MonoBehaviour
     [SerializeField] private SessionSystem sessionSystem;
     [SerializeField] private WaveSystem waveSystem;
 
-    private Player playerCharacter;
+    private PlayerCharacter playerCharacter;
 
     private GameInstance _gameInstance;
 
@@ -41,9 +41,6 @@ public class GameBootstraper : MonoBehaviour
             )
         );
         playerCharacter.transform.position = new Vector3(0f, 1f, 0f);
-        
-        playerCharacter.SetControlers(gameUICanvas.GetUIFixedJoystick());
-        
-        playerCharacter.Initialize(); 
+        playerCharacter.Initialize(gameUICanvas.GetUIFixedJoystick()); 
     }
 }

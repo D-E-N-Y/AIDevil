@@ -6,9 +6,9 @@ public class SR_Cannon : SpellRange
     [SerializeField] private Transform firePosition;
     [SerializeField] private ParticleSystem cannonFireEffect;
 
-    public override void Initialize(UnitFaction unitFaction)
+    public override void Initialize(UnitFaction unitFaction, UnitStats stats)
     {
-        base.Initialize(unitFaction);
+        base.Initialize(unitFaction, stats);
         cannonFireEffect.Stop();
     }
 
@@ -31,17 +31,18 @@ public class SR_Cannon : SpellRange
         {
             _projectile = Instantiate(projectile);
             projectiles.Add(_projectile);
+            _projectile.Initialize(_unitFaction);
 
             _projectile.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
         }
 
-        _projectile.Initialize(_unitFaction, firePosition.transform.position);
+        _projectile.SetToFire(firePosition.position);
         _projectile.Fire(_targetPosition);
 
         yield return null;
     }
 
-    private void RotateToTarget(Vector3 targetPosition)
+    protected void RotateToTarget(Vector3 targetPosition)
     {
         Vector3 direction = targetPosition - transform.position;
         direction.y = 0;

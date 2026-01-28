@@ -23,9 +23,9 @@ public class WaveSystem : MonoBehaviour
     private SCompleteWaveInfo completeWaveInfo;
     private int _defeatEnemies;
 
-    private Player playerTarget;
+    private PlayerCharacter playerTarget;
 
-    public void Initialize(Player playerTarget)
+    public void Initialize(PlayerCharacter playerTarget)
     {
         this.playerTarget = playerTarget;
 
@@ -58,7 +58,7 @@ public class WaveSystem : MonoBehaviour
                 _enemy.Initialize();
                 _enemy.SetPlayerTarget(playerTarget);
 
-                _enemy.onDead += DeathEnemy;
+                _enemy.GetHealth().OnDead += DeathEnemy;
             }
         }
 
@@ -132,7 +132,7 @@ public class WaveSystem : MonoBehaviour
         return Quaternion.LookRotation(direction, Vector3.up);
     }
 
-    private void DeathEnemy(IHealth _enemy)
+    private void DeathEnemy()
     {
         _defeatEnemies++;
         

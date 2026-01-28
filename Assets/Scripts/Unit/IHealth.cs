@@ -2,12 +2,12 @@ using System;
 
 public interface IHealth
 {
-    public Action onChangeHP { get; set; }
-    public Action<IHealth> onDead { get; set; }
+    event Action OnHpChanged;
+    event Action OnDead;
 
-    public int GetCurrentHP();
-    public int GetMaxHP();
+    int CurrentHP { get; }
+    int MaxHP { get; }
 
-    public void TakeDamage(int _value);
-    public void Death();
+    void TakeDamage(float value);
+    void Heal(int value);
 }

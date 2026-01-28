@@ -11,14 +11,14 @@ public class SessionSystem : MonoBehaviour
     private float _startTimeSession;
     private float _endTimeSession;
 
-    public void Initialize(Player playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, WaveSystem waveSystem)
+    public void Initialize(PlayerCharacter playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, WaveSystem waveSystem)
     {
         _sesionResult = new SSesionResult();
 
         _sesionResult.namePlayerCharacter = playerCharacter.GetName();
         _sesionResult.name = $"{playerCharacter.GetName()} - {DateTime.Now}";
 
-        playerCharacter.onDead += DeathPlayerCharacter;
+        playerCharacter.GetHealth().OnDead += DeathPlayerCharacter;
 
         _ui_sessionResultsGame = ui_sessionResultsGame;
 
@@ -34,7 +34,7 @@ public class SessionSystem : MonoBehaviour
         _waveSystem.StartWave();
     }
 
-    private void DeathPlayerCharacter(IHealth health)
+    private void DeathPlayerCharacter()
     {
         _waveSystem.StopWave();
         _waveSystem.SendWaveResults();

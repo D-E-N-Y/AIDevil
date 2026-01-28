@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class UI_SpellCooldown : UI_Panel
+public abstract class UI_WorldSpellCooldown : UI_Panel
 {
+    [SerializeField] protected Transform canvasTransform;
+    
     [SerializeField] protected RectTransform _rectTransform;
     [SerializeField] protected Image ui_cooldownImage;
     protected Spell _spell;
@@ -13,22 +15,22 @@ public abstract class UI_SpellCooldown : UI_Panel
 
         _spell = spell;
 
-        RemoveSubsriptions();
-        SetSubsriptions();
+        ClearSubscriptions();
+        AddSubscriptions();
     }
 
-    protected void SetSubsriptions()
+    protected override void AddSubscriptions()
     {
         _spell.updateCooldown += SetCooldown;
-        _spell.startCooldown += Show;
-        _spell.stopCooldown += Hide;
+        _spell.onStartCooldown += Show;
+        _spell.onStopCooldown += Hide;
     }
 
-    protected void RemoveSubsriptions()
+    protected override void ClearSubscriptions()
     {
         _spell.updateCooldown -= SetCooldown;
-        _spell.startCooldown -= Show;
-        _spell.stopCooldown -= Hide;
+        _spell.onStartCooldown -= Show;
+        _spell.onStopCooldown -= Hide;
     }
 
     public abstract void SetCooldown(float value);

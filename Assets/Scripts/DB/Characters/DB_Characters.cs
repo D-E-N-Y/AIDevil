@@ -4,11 +4,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "DataBase/Characters")] 
 public class DB_Characters : ScriptableObject
 {
-    [SerializeField] private List<Player> _characters;
+    [SerializeField] private List<PlayerCharacter> _characters;
 
-    public List<Player> GetCharacters() => _characters; 
+    public List<PlayerCharacter> GetCharacters() => _characters; 
 
-    public Player GetCharacterByName(string name)
+    public PlayerCharacter GetCharacterByName(string name)
     {
         return _characters.Find(character => character.GetName() == name);
     }

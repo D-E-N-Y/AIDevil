@@ -29,9 +29,9 @@ public abstract class MeleeWeapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<IHealth>(out IHealth unit))
+        if (other.gameObject.TryGetComponent<IUnit>(out IUnit unit))
         {
-            unit.TakeDamage(damage);
+            unit.GetHealth().TakeDamage(damage);
             onSuccessfulAttack?.Invoke();
         }
     }

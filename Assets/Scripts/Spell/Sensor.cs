@@ -8,13 +8,10 @@ public class Sensor : MonoBehaviour
 {
     private string _originLayer;
 
-    public Action onEnterTrigger;
-    public Action onExitTrigger;
+    public event Action<IUnit> OnUnitEnter;
+    public event Action<IUnit> OnUnitExit;
 
-    public Action onEnterUnit;
-    public Action onExitUnit;
-
-    private List<IHealth> _units;
+    private List<IUnit> _units;
 
     private SphereCollider _sphereCollider;
 
@@ -23,7 +20,7 @@ public class Sensor : MonoBehaviour
         _originLayer = unitFaction + "Sensor";
         gameObject.layer = LayerMask.NameToLayer(_originLayer);
 
-        _units = new List<IHealth>();
+        _units = new List<IUnit>();
 
         _sphereCollider = GetComponent<SphereCollider>();
         _sphereCollider.radius = radius;
@@ -32,48 +29,43 @@ public class Sensor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<IHealth>(out IHealth unit) &&
-            !_units.Contains(unit))
-        {
-            _units.Add(unit);
-            unit.onDead += RemoveTargetUnit;
+        if (!other.TryGetComponent(out IUnit unit)) return;
+        if (_units.Contains(unit)) return;
 
-            onEnterUnit?.Invoke();
-        }
+        _units.Add(unit);
+        unit.OnDead += OnUnitDead;
 
-        onEnterTrigger?.Invoke();
+        OnUnitEnter?.Invoke(unit);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.TryGetComponent<IHealth>(out IHealth unit) &&
-            _units.Contains(unit))
-        {
-            RemoveTargetUnit(unit);
-        }
-
-        onExitTrigger?.Invoke();
+        if (!other.TryGetComponent(out IUnit unit)) return;
+            
+        RemoveUnit(unit);
     }
 
-    private void RemoveTargetUnit(IHealth unit)
+    void OnUnitDead(IUnit unit)
     {
-        _units.Remove(unit);
-        unit.onDead -= RemoveTargetUnit;
-        onExitUnit?.Invoke();
+        RemoveUnit(unit);
     }
 
-    public Vector3 GetNerbyUnitPosition()
+    private void RemoveUnit(IUnit unit)
     {
-        Vector3 _nearbyUnitPosition = _units
-            .OrderBy(x => Vector3.Distance(transform.position, ((MonoBehaviour)x).transform.position))
-            .Select(x => ((MonoBehaviour)x).transform.position)
-            .FirstOrDefault();
+        if (!_units.Remove(unit)) return;
 
-        return _nearbyUnitPosition;
+        unit.OnDead -= OnUnitDead;
+        OnUnitExit?.Invoke(unit);
     }
 
-    public bool IsHasUnits()
+    public Transform GetNearestTarget()
     {
-        return _units.Count > 0;
+        return _units
+            .OfType<MonoBehaviour>()
+            .OrderBy(u => Vector3.Distance(transform.position, u.transform.position))
+            .FirstOrDefault()
+            ?.transform;
     }
+
+    public bool IsHasUnits() => _units.Count > 0;
 }
