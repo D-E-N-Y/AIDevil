@@ -43,6 +43,14 @@ public class Inventory
         }
     }
 
+    public void AddItems(Item item, int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            AddItem(item);
+        }
+    }
+
     public void RemoveItem(Item item)
     {
         foreach (var slot in slots)

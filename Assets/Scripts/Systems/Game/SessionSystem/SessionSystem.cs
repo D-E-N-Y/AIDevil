@@ -11,6 +11,9 @@ public class SessionSystem : MonoBehaviour
     private float _startTimeSession;
     private float _endTimeSession;
 
+    // temporary field
+    private Wallet _wallet;
+
     public void Initialize(PlayerCharacter playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, WaveSystem waveSystem)
     {
         _sesionResult = new SSesionResult();
@@ -19,6 +22,7 @@ public class SessionSystem : MonoBehaviour
         _sesionResult.name = $"{playerCharacter.GetName()} - {DateTime.Now}";
 
         playerCharacter.GetHealth().OnDead += DeathPlayerCharacter;
+        _wallet = playerCharacter.GetWallet();
 
         _ui_sessionResultsGame = ui_sessionResultsGame;
 
@@ -55,6 +59,7 @@ public class SessionSystem : MonoBehaviour
 
         _sesionResult.result = result;
         _sesionResult.time = new STime((int)(_endTimeSession - _startTimeSession));
+        _sesionResult.collectCoins = _wallet.AllCollectedMoney;
 
         GameInstance.current.AddSessionResult(_sesionResult);
 

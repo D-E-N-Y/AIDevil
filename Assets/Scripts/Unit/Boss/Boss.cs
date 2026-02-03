@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class Boss : Agent, IUnit
 {
     [SerializeField] protected string _name;
-    [SerializeField] protected UnitStats _stats;
+    [SerializeField] protected EnemyStats _stats;
 
     protected UnitHealth _health;
     public event Action<IUnit> OnDead;

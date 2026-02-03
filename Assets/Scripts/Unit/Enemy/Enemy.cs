@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IUnit
 {
     [SerializeField] protected string _name;
-    [SerializeField] protected UnitStats _stats;
+    [SerializeField] protected EnemyStats _stats;
 
     protected UnitHealth _health;
     public event Action<IUnit> OnDead;
@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour, IUnit
     [SerializeField] protected UI_WorldSpellCooldown ui_worldSpellCooldown;
 
     [SerializeField, Range(1f, 20f)] protected float attackRange;
+
+    [SerializeField] protected WorldMoney worldMoney;
 
     protected UnitFaction _unitFaction;
 
@@ -47,8 +49,16 @@ public class Enemy : MonoBehaviour, IUnit
     {
         GameInstance.current.GetProfile().bestiaryData.AddDiscoveredEnemy(_name);
         
+        DropMoney();
+
         gameObject.SetActive(false);
         OnDead?.Invoke(this);
+    }
+
+    protected void DropMoney()
+    {
+        WorldMoney _worldMoney = Instantiate(worldMoney, transform.position, Quaternion.identity);
+        _worldMoney.Initialize(_stats.DropMoney);
     }
 
     public virtual void SetPlayerTarget(PlayerCharacter playerTarget) => this.playerCharacterTarget = playerTarget;

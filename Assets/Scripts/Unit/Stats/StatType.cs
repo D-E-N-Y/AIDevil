@@ -10,5 +10,7 @@ public enum StatType
     CriticalDamageModifier,
     MultiattackChance,
     AreaModifier,
-    DodgeChance
+    DodgeChance,
+    PickUpRangeModifier,
+    MoneyModifier
 }

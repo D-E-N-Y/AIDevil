@@ -7,12 +7,13 @@ public class PlayerCharacter : MonoBehaviour, IUnit
     [SerializeField] private PlayerCharacterStats _stats;
     [SerializeField] private PlayerCharacterMovement _movement;
     [SerializeField] private UI_UnitHPIndicator _ui_hpIndicator;
-    [SerializeField] private ItemSensor _itemSensor;
+    [SerializeField] private PickupSensor _pickupSensor;
     [SerializeField] private SpellContainer _spellContainer;
     [SerializeField] private StartItems _startItems;
 
     private UnitHealth _health;
     private Inventory _inventory;
+    private Wallet _wallet;
     private SpellController _spellController;
     private ItemContext _itemContext;
 
@@ -36,10 +37,13 @@ public class PlayerCharacter : MonoBehaviour, IUnit
         _health.OnDead += Death;
 
         _itemContext = new ItemContext(this, _stats, null);
+        
         _inventory = new Inventory(_itemContext);
+        _wallet = new Wallet();
+        
         _itemContext.Inventory = _inventory;
 
-        _itemSensor.Initialize(_inventory);
+        _pickupSensor.Initialize(_itemContext);
 
         _inventory.AddItems(_startItems.GetStartItems());
 
@@ -56,6 +60,7 @@ public class PlayerCharacter : MonoBehaviour, IUnit
     public UnitStats GetStats() => _stats;
     public UnitHealth GetHealth() => _health;
     public Inventory GetInventory() => _inventory;
+    public Wallet GetWallet() => _wallet;
     public StartItems GetStartItems() => _startItems;
 
     public SpellController GetSpellController() => _spellController;

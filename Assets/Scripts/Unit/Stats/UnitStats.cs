@@ -45,8 +45,7 @@ public class UnitStats
         int _maxHP = maxHP + value;
         maxHP = Math.Max(1, _maxHP);
 
-        OnStatChanged?.Invoke(StatType.MaxHP);
-        OnStatsChanged?.Invoke();
+       RaiseStatChanged(StatType.MaxHP);
     }
 
     public void ModifyBaseMoveSpeed(float value)
@@ -54,8 +53,7 @@ public class UnitStats
         float _baseMoveSpeed = baseMoveSpeed + value;
         baseMoveSpeed = Math.Max(1f, _baseMoveSpeed);
 
-        OnStatChanged?.Invoke(StatType.BaseMoveSpeed);
-        OnStatsChanged?.Invoke();
+        RaiseStatChanged(StatType.BaseMoveSpeed);
     }
 
     public void ModifyMoveSpeedModifier(float value)
@@ -63,8 +61,7 @@ public class UnitStats
         float _moveSpeedModifier = moveSpeedModifier + value;
         moveSpeedModifier = Math.Max(0.1f, _moveSpeedModifier);
 
-        OnStatChanged?.Invoke(StatType.MoveSpeedModifier);
-        OnStatsChanged?.Invoke();
+        RaiseStatChanged(StatType.MoveSpeedModifier);
     }
 
     public void ModifyArmor(float value)
@@ -72,8 +69,7 @@ public class UnitStats
         float _armor = armor + value;
         armor = Math.Max(0f, _armor);
 
-        OnStatChanged?.Invoke(StatType.Armor);
-        OnStatsChanged?.Invoke();
+        RaiseStatChanged(StatType.Armor);
     }
 
     public void ModifyDamageModifier(float value)
@@ -81,8 +77,7 @@ public class UnitStats
         float _damageModifier = damageModifier + value;
         damageModifier = Math.Max(0.1f, _damageModifier);
 
-        OnStatChanged?.Invoke(StatType.DamageModifier);
-        OnStatsChanged?.Invoke();
+        RaiseStatChanged(StatType.DamageModifier);
     }
 
     public void ModifySpeedAttackModifier(float value)
@@ -90,8 +85,7 @@ public class UnitStats
         float _speedAttackModifier = speedAttackModifier + value;
         speedAttackModifier = Math.Max(0.1f, _speedAttackModifier);
 
-        OnStatChanged?.Invoke(StatType.SpeedAttackModifier);
-        OnStatsChanged?.Invoke();
+        RaiseStatChanged(StatType.SpeedAttackModifier);
     }
 
     public void ModifyCriticalDamageChance(float value)
@@ -99,8 +93,7 @@ public class UnitStats
         float _criticalDamageChance = criticalDamageChance + value;
         criticalDamageChance = Math.Max(0f, _criticalDamageChance);
 
-        OnStatChanged?.Invoke(StatType.CriticalDamageChance);
-        OnStatsChanged?.Invoke();
+        RaiseStatChanged(StatType.CriticalDamageChance);
     }
 
     public void ModifyCriticalDamageModifier(float value)
@@ -108,8 +101,7 @@ public class UnitStats
         float _criticalDamageModifier = criticalDamageModifier + value;
         criticalDamageModifier = Math.Max(0.1f, _criticalDamageModifier);
 
-        OnStatChanged?.Invoke(StatType.CriticalDamageModifier);
-        OnStatsChanged?.Invoke();
+        RaiseStatChanged(StatType.CriticalDamageModifier);
     }
 
     public void ModifyMultiattackChance(float value)
@@ -117,8 +109,7 @@ public class UnitStats
         float _multiattackChance = multiattackChance + value;
         multiattackChance = Math.Max(0f, _multiattackChance);
 
-        OnStatChanged?.Invoke(StatType.MultiattackChance);
-        OnStatsChanged?.Invoke();
+        RaiseStatChanged(StatType.MultiattackChance);
     }
 
     public void ModifyAreaModifier(float value)
@@ -126,8 +117,7 @@ public class UnitStats
         float _areaModifier = areaModifier + value;
         areaModifier = Math.Max(0.1f, _areaModifier);
 
-        OnStatChanged?.Invoke(StatType.AreaModifier);
-        OnStatsChanged?.Invoke();
+        RaiseStatChanged(StatType.AreaModifier);
     }
 
     public void ModifyDodgeChance(float value)
@@ -135,7 +125,12 @@ public class UnitStats
         float _dodgeChance = dodgeChance + value;
         dodgeChance = Math.Max(0f, _dodgeChance);
 
-        OnStatChanged?.Invoke(StatType.DodgeChance);
+        RaiseStatChanged(StatType.DodgeChance);
+    }
+
+    protected void RaiseStatChanged(StatType stat)
+    {
+        OnStatChanged?.Invoke(stat);
         OnStatsChanged?.Invoke();
     }
 }

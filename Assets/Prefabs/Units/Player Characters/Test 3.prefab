@@ -168,7 +168,7 @@ MonoBehaviour:
     moneyModifier: 1
   _movement: {fileID: 8768770807541341721}
   _ui_hpIndicator: {fileID: 3876890204640515585}
-  _itemSensor: {fileID: 8689108363711354854}
+  _pickupSensor: {fileID: 8689108363711354854}
   _spellContainer: {fileID: 64495448200942777}
   _startItems: {fileID: 5489251517013878800}
 --- !u!114 &8768770807541341721
@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 2223329103030007869}
   - component: {fileID: 8689108363711354854}
   m_Layer: 7
-  m_Name: Item Sensor
+  m_Name: Pickup Sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -340,7 +340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdf4ed56cd61527a4a23c06bcf6ee4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 1
 --- !u!1001 &4221072751506083765
 PrefabInstance:
   m_ObjectHideFlags: 0

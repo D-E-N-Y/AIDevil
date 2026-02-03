@@ -5,6 +5,7 @@ public class GameUICanvas : MonoBehaviour
     [SerializeField] private FixedJoystick ui_joystick;
     [SerializeField] private UI_AttackRangeContainer ui_attackRangeContainer;
     [SerializeField] private UI_AttackMeleeContainer ui_attackMeleeContainer;
+    [SerializeField] private UI_MoneyAmount ui_moneyAmount;
     [SerializeField] private UI_Wave ui_wave;
 
     [SerializeField] private UI_Panel ui_blackout;
@@ -15,6 +16,7 @@ public class GameUICanvas : MonoBehaviour
     {
         ui_attackRangeContainer.Initialize(playerCharacter);
         ui_attackMeleeContainer.Initialize(playerCharacter);
+        ui_moneyAmount.Initialize(playerCharacter.GetWallet());
         ui_wave.Initialize(waveSystem);
 
         ui_resultsSession.Initialize(ui_blackout);
