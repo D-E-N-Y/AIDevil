@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 
-public class SessionSystem : MonoBehaviour 
+public class SessionSystem
 {
     private UI_SessionResultsGame _ui_sessionResultsGame;
     private WaveSystem _waveSystem;
+    private TradeZone _tradeZone;
     
     private SSesionResult _sesionResult;
     
@@ -14,7 +15,7 @@ public class SessionSystem : MonoBehaviour
     // temporary field
     private Wallet _wallet;
 
-    public void Initialize(PlayerCharacter playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, WaveSystem waveSystem)
+    public SessionSystem(PlayerCharacter playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, WaveSystem waveSystem, TradeZone tradeZone)
     {
         _sesionResult = new SSesionResult();
 
@@ -28,13 +29,27 @@ public class SessionSystem : MonoBehaviour
 
         _waveSystem = waveSystem;
         _waveSystem.finishWaves += CompleteSession;
+        _waveSystem.OnCompleteWave += CompleteWave;
         _waveSystem.sendResults += SetResults;
+
+        _tradeZone = tradeZone;
+        _tradeZone.OnCompleteTrade += CompleteTrade;
     }
 
     public void StartSession()
     {
         _startTimeSession = Time.unscaledTime;
 
+        _waveSystem.StartWave();
+    }
+
+    private void CompleteWave()
+    {
+        _tradeZone.Spawn();
+    }
+
+    private void CompleteTrade()
+    {
         _waveSystem.StartWave();
     }
 

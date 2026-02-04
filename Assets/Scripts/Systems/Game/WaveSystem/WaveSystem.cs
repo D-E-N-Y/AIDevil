@@ -7,6 +7,7 @@ public class WaveSystem : MonoBehaviour
 {
     public System.Action<SCompleteWaveInfo> sendResults;
     public System.Action<ESessionResult> finishWaves;
+    public System.Action OnCompleteWave;
     
     public System.Action<int> updateNumberWave;
     public System.Action<int> updateCountEnemies;
@@ -87,7 +88,7 @@ public class WaveSystem : MonoBehaviour
         }
         else
         {
-            StartWave();
+            OnCompleteWave?.Invoke();
         }
     }
 

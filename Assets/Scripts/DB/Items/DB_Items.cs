@@ -29,4 +29,11 @@ public class DB_Items : ScriptableObject
         }
         return selectedItems;
     }
+
+    public Item GetRandomItem()
+    {
+        if (items.Count == 0) return null;
+        int randomIndex = Random.Range(0, items.Count);
+        return items[randomIndex];
+    }
 }
