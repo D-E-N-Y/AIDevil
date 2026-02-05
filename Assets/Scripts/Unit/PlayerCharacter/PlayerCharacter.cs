@@ -27,6 +27,8 @@ public class PlayerCharacter : MonoBehaviour, IUnit
         _unitFaction = UnitFaction.Player;
         gameObject.layer = LayerMask.NameToLayer(_unitFaction.ToString());
 
+        _stats.Initialize();
+
         _health = new UnitHealth(_stats);
         _spellController = new SpellController(_unitFaction, _stats, _spellContainer);
         

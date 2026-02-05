@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -40,92 +41,103 @@ public class UnitStats
     [SerializeField, Range(0f, 1f)] private float dodgeChance;
     public float DodgeChance => dodgeChance;
 
-    public void ModifyMaxHP(int value)
-    {
-        int _maxHP = maxHP + value;
-        maxHP = Math.Max(1, _maxHP);
+    protected Dictionary<StatType, Action<float>> _modifyStat;
 
-       RaiseStatChanged(StatType.MaxHP);
+    public virtual void Initialize()
+    {
+        _modifyStat = new Dictionary<StatType, Action<float>>
+        {
+            { StatType.MaxHP, ModifyMaxHP },
+            { StatType.BaseMoveSpeed, ModifyBaseMoveSpeed },
+            { StatType.MoveSpeedModifier, ModifyMoveSpeedModifier },
+            { StatType.Armor, ModifyArmor },
+            { StatType.DamageModifier, ModifyDamageModifier },
+            { StatType.SpeedAttackModifier, ModifySpeedAttackModifier },
+            { StatType.CriticalDamageChance, ModifyCriticalDamageChance },
+            { StatType.CriticalDamageModifier, ModifyCriticalDamageModifier },
+            { StatType.MultiattackChance, ModifyMultiattackChance },
+            { StatType.AreaModifier, ModifyAreaModifier },
+            { StatType.DodgeChance, ModifyDodgeChance }
+        };
     }
 
-    public void ModifyBaseMoveSpeed(float value)
+    public virtual void ModifyStat(StatType stat, float value)
+    {
+        if (_modifyStat.TryGetValue(stat, out var modifier))
+        {
+            modifier.Invoke(value);
+            RaiseStatChanged(stat);
+        }
+        else
+        {
+            Debug.LogWarning($"No modifier registered for stat {stat}");
+        }
+    }
+
+    private void ModifyMaxHP(float value)
+    {
+        int _maxHP = maxHP + (int)value;
+        maxHP = Math.Max(1, _maxHP);
+    }
+
+    private void ModifyBaseMoveSpeed(float value)
     {
         float _baseMoveSpeed = baseMoveSpeed + value;
         baseMoveSpeed = Math.Max(1f, _baseMoveSpeed);
-
-        RaiseStatChanged(StatType.BaseMoveSpeed);
     }
 
-    public void ModifyMoveSpeedModifier(float value)
+    private void ModifyMoveSpeedModifier(float value)
     {
         float _moveSpeedModifier = moveSpeedModifier + value;
         moveSpeedModifier = Math.Max(0.1f, _moveSpeedModifier);
-
-        RaiseStatChanged(StatType.MoveSpeedModifier);
     }
 
-    public void ModifyArmor(float value)
+    private void ModifyArmor(float value)
     {
         float _armor = armor + value;
         armor = Math.Max(0f, _armor);
-
-        RaiseStatChanged(StatType.Armor);
     }
 
-    public void ModifyDamageModifier(float value)
+    private void ModifyDamageModifier(float value)
     {
         float _damageModifier = damageModifier + value;
         damageModifier = Math.Max(0.1f, _damageModifier);
-
-        RaiseStatChanged(StatType.DamageModifier);
     }
 
-    public void ModifySpeedAttackModifier(float value)
+    private void ModifySpeedAttackModifier(float value)
     {
         float _speedAttackModifier = speedAttackModifier + value;
         speedAttackModifier = Math.Max(0.1f, _speedAttackModifier);
-
-        RaiseStatChanged(StatType.SpeedAttackModifier);
     }
 
-    public void ModifyCriticalDamageChance(float value)
+    private void ModifyCriticalDamageChance(float value)
     {
         float _criticalDamageChance = criticalDamageChance + value;
         criticalDamageChance = Math.Max(0f, _criticalDamageChance);
-
-        RaiseStatChanged(StatType.CriticalDamageChance);
     }
 
-    public void ModifyCriticalDamageModifier(float value)
+    private void ModifyCriticalDamageModifier(float value)
     {
         float _criticalDamageModifier = criticalDamageModifier + value;
         criticalDamageModifier = Math.Max(0.1f, _criticalDamageModifier);
-
-        RaiseStatChanged(StatType.CriticalDamageModifier);
     }
 
-    public void ModifyMultiattackChance(float value)
+    private void ModifyMultiattackChance(float value)
     {
         float _multiattackChance = multiattackChance + value;
         multiattackChance = Math.Max(0f, _multiattackChance);
-
-        RaiseStatChanged(StatType.MultiattackChance);
     }
 
-    public void ModifyAreaModifier(float value)
+    private void ModifyAreaModifier(float value)
     {
         float _areaModifier = areaModifier + value;
         areaModifier = Math.Max(0.1f, _areaModifier);
-
-        RaiseStatChanged(StatType.AreaModifier);
     }
 
-    public void ModifyDodgeChance(float value)
+    private void ModifyDodgeChance(float value)
     {
         float _dodgeChance = dodgeChance + value;
         dodgeChance = Math.Max(0f, _dodgeChance);
-
-        RaiseStatChanged(StatType.DodgeChance);
     }
 
     protected void RaiseStatChanged(StatType stat)

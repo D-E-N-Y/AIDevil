@@ -20,6 +20,12 @@ public class Inventory
 
     public void AddItem(Item item)
     {
+        if(item as ConsumableItem)
+        {
+            item.Apply(_context);
+            return;
+        }
+        
         foreach (var slot in slots)
         {
             if (slot.Item != null && slot.Item == item)

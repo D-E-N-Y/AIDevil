@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Spell Item", menuName = "Item/Spell Item")]

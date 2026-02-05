@@ -9,9 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e16e80971e22dc168a380523d535e20a, type: 3}
-  m_Name: Boots
+  m_Script: {fileID: 11500000, guid: 5ad9fd8a5a84f854d9f81e2d0ade3073, type: 3}
+  m_Name: Titanium Spine
   m_EditorClassIdentifier: 
-  _name: Boots
-  _icon: {fileID: 21300000, guid: bc4a2c6bdce59a94eb0d6bb7a135043e, type: 3}
-  speedBonus: 1
+  _name: Titanium Spine
+  _icon: {fileID: 21300000, guid: dcdc43f7a0ad67b4ab3e3db38233dfae, type: 3}
+  _price: 350
+  _rare: 2
+  _modifiers:
+  - stat: 0
+    valueType: 0
+    value: 60
