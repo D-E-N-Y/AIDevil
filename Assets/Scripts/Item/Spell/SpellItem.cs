@@ -6,6 +6,8 @@ public class SpellItem : Item
     [SerializeField] private Spell _spell;
     public Spell Spell => _spell;
 
+    public override ItemType ItemType => ItemType.Spell;
+
     public override void Apply(ItemContext context)
     {
         context.Owner.GetSpellController().AddSpell(_spell);

@@ -6,6 +6,8 @@ public class EquipmentItem : Item
 {
     [SerializeField] private List<StatModifier> _modifiers;
 
+    public override ItemType ItemType => ItemType.Equipment;
+
     public override void Apply(ItemContext context)
     {
         foreach(StatModifier modifier in _modifiers)

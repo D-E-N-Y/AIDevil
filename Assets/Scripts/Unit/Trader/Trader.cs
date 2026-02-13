@@ -9,11 +9,11 @@ public class Trader : MonoBehaviour
     private List<Item> _items;
     public List<Item> Items => _items;
 
-    private DB_Items _dbItems;
+    private DB_Items _db_items;
 
     public void Initilaize(GameInstance gameInstance)
     {
-        _dbItems = gameInstance.GetDataBase().Items;   
+        _db_items = gameInstance.GetDataBase().Items;   
     }
 
     public void GenerateItems(int itemCount = 3)
@@ -24,7 +24,17 @@ public class Trader : MonoBehaviour
 
         for (int i = 0; i < itemCount; i++)
         {
-            _items.Add(_dbItems.GetRandomItem());
+            while(true)
+            {
+                Item _item = _db_items.GetRandomItemByRarityChance();
+
+                if(!_items.Contains(_item) && _item != null)
+                {
+                    _items.Add(_item);
+
+                    break;
+                }
+            }
         }
 
         OnItemsGenerated?.Invoke();

@@ -12,8 +12,10 @@ public abstract class Item : ScriptableObject
     [SerializeField, Range(0, 9999)] protected int _price;
     public int Price => _price;
 
-    [SerializeField] protected ItemRare _rare;
-    public ItemRare Rare => _rare;
+    [SerializeField] protected ItemRarity _rarity;
+    public ItemRarity Rarity => _rarity;
+
+    public abstract ItemType ItemType { get; }
 
     public abstract void Apply(ItemContext context);
     public virtual void Remove(ItemContext context) { }

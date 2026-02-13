@@ -26,7 +26,7 @@ public class UI_Trade : UI_Panel
     {
         ui_itemIconImage.sprite = _worldItem.Item.Icon;
         ui_itemNameText.text = _worldItem.Item.Name;
-        ui_itemRareText.text = _worldItem.Item.Rare.ToString();
+        ui_itemRareText.text = _worldItem.Item.Rarity.ToString();
         ui_itemPriceText.text = _worldItem.Item.Price.ToString();
     }
 

@@ -1,39 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "DataBase/Items")]
+[CreateAssetMenu(menuName = "DataBase/Items/Main")]
 public class DB_Items : ScriptableObject
 {
-    [SerializeField] private List<Item> items;
-    
-    public Item GetItemByName(string name)
-    {
-        return items.Find(item => item.Name == name);
-    }
+    [SerializeField] private List<DB_ItemsByType> _types; 
 
-    public List<Item> GetAllItems()
-    {
-        return items;
-    }
-
-    public List<Item> GetItemsByNames(List<string> names)
-    {
-        List<Item> selectedItems = new List<Item>();
-        foreach (string name in names)
-        {
-            Item item = GetItemByName(name);
-            if (item != null)
-            {
-                selectedItems.Add(item);
-            }
-        }
-        return selectedItems;
-    }
+    [SerializeField] private RarityChances _rarityChances;
+    // public RarityChances RarityChances => _rarityChances;
 
     public Item GetRandomItem()
     {
-        if (items.Count == 0) return null;
-        int randomIndex = Random.Range(0, items.Count);
-        return items[randomIndex];
+        int _randomType = Random.Range(0, _types.Count);
+        return _types[_randomType].GetRandomItem();
+    }
+
+    public Item GetRandomItemByRarity(ItemRarity rarity)
+    {
+        int _randomType = Random.Range(0, _types.Count);
+        return _types[_randomType].GetRandomItemByRarity(rarity);
+    }
+
+    public Item GetRandomItemByRarityChance()
+    {
+        float _chance = Random.Range(0.00f, 1.00f);
+        ItemRarity _rarity = _rarityChances.GetRarityByChance(_chance);
+
+        return GetRandomItemByRarity(_rarity);
     }
 }
