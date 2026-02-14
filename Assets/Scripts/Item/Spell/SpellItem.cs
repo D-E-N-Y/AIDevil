@@ -10,11 +10,11 @@ public class SpellItem : Item
 
     public override void Apply(ItemContext context)
     {
-        context.Owner.GetSpellController().AddSpell(_spell);
+        context.SpellController.AddSpell(_spell);
     }
 
     public override void Remove(ItemContext context)
     {
-        context.Owner.GetSpellController().RemoveSpell(_spell);
+        context.SpellController.RemoveSpell(_spell);
     }
 }

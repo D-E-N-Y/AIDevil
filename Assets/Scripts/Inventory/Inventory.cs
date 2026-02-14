@@ -11,11 +11,14 @@ public class Inventory
     private ItemContext _context;
     public ItemContext Context => _context;
 
-    public Inventory(ItemContext context)
+    public Inventory()
+    {
+        slots = new List<InventorySlot>();
+    }
+
+    public void SetContext(ItemContext context)
     {
         _context = context;
-
-        slots = new List<InventorySlot>();
     }
 
     public void AddItem(Item item)

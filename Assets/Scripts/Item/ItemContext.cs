@@ -1,13 +1,17 @@
 public class ItemContext
 {
-    public PlayerCharacter Owner;
     public UnitStats Stats;
     public Inventory Inventory;
+    public SpellController SpellController;
+    public UnitHealth UnitHealth;
+    public Wallet Wallet;
 
-    public ItemContext(PlayerCharacter owner, UnitStats stats, Inventory inventory)
+    public ItemContext(UnitStats stats, Inventory inventory, SpellController spellController, UnitHealth unitHealth, Wallet wallet)
     {
-        Owner = owner;
         Stats = stats;
         Inventory = inventory;
+        SpellController = spellController;
+        UnitHealth = unitHealth;
+        Wallet = wallet;
     }
 }

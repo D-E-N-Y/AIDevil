@@ -18,7 +18,7 @@ public class WorldMoney : WorldPickup
         float modifier = ((PlayerCharacterStats)context.Stats).MoneyModifier;
         int finalAmount = Mathf.RoundToInt(_amount * modifier);
 
-        context.Owner.GetWallet().AddMoney(finalAmount);
+        context.Wallet.AddMoney(finalAmount);
 
         gameObject.SetActive(false);
     }

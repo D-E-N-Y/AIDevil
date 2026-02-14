@@ -29,7 +29,7 @@ public class GameBootstraper : MonoBehaviour
         gameUICanvas.Initialize(playerCharacter, waveSystem);
         
         waveSystem.Initialize(playerCharacter);
-        _tradeZone.Initialize(_gameInstance);
+        _tradeZone.Initialize(_gameInstance, gameUICanvas.GetUITrade());
 
         sessionSystem = new SessionSystem(playerCharacter, gameUICanvas.GetUIResultsSession(), waveSystem, _tradeZone);
 

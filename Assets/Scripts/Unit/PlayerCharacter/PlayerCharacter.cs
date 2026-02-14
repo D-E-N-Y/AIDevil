@@ -38,15 +38,15 @@ public class PlayerCharacter : MonoBehaviour, IUnit
         _ui_hpIndicator.Initialize(_health);
         _health.OnDead += Death;
 
-        _itemContext = new ItemContext(this, _stats, null);
-        
-        _inventory = new Inventory(_itemContext);
+        _inventory = new Inventory();
         _wallet = new Wallet();
-        
-        _itemContext.Inventory = _inventory;
+        _wallet.AddMoney(9999);
+
+        _itemContext = new ItemContext(_stats, _inventory, _spellController, _health, _wallet);
 
         _pickupSensor.Initialize(_itemContext);
 
+        _inventory.SetContext(_itemContext);
         _inventory.AddItems(_startItems.GetStartItems());
 
         gameObject.SetActive(true);
@@ -64,6 +64,7 @@ public class PlayerCharacter : MonoBehaviour, IUnit
     public Inventory GetInventory() => _inventory;
     public Wallet GetWallet() => _wallet;
     public StartItems GetStartItems() => _startItems;
+    public ItemContext GetItemContext() => _itemContext;
 
     public SpellController GetSpellController() => _spellController;
     public PlayerCharacterMovement GetMovement() => _movement;
