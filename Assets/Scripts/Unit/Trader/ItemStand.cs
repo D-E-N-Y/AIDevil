@@ -25,8 +25,6 @@ public class ItemStand : MonoBehaviour
         _ui_trade = ui_trade;
         
         _worldItem.gameObject.SetActive(false);
-        
-        _isTradeItem = false;
 
         _sphereCollider = GetComponent<SphereCollider>();
         _sphereCollider.isTrigger = true;
@@ -39,6 +37,8 @@ public class ItemStand : MonoBehaviour
     {
         _item = item;
         _worldItem.Initialize(item, 1, false);
+
+        _isTradeItem = false;
 
         OnItemChanged?.Invoke();
     }

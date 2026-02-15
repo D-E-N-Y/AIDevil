@@ -15,8 +15,7 @@ public class WaveSystem : MonoBehaviour
     [SerializeField, Range(1f, 50f)] private float minSpawnRadius;
     [SerializeField, Range(1f, 50f)] private float maxSpawnRadius;
     [SerializeField, Range(0.1f, 10f)] private float spawnSpeed;
-    [SerializeField, Range(0.1f, 10f)] private float timeBetweenWaves;
-    [SerializeField] List<WaveData> waves;
+    [SerializeField] List<Wave> waves;
     private int currentWave;
     private Coroutine spawningEnemies;
     private int countWaveEnemies;
@@ -41,26 +40,25 @@ public class WaveSystem : MonoBehaviour
 
     private IEnumerator SpawningEnemies()
     {
-        int countEnemies = 0;
-        waves[currentWave].enemies.ForEach(x => countEnemies += x.count);
-        
-        countWaveEnemies = countEnemies;
+        countWaveEnemies = waves[currentWave].Count;
         updateCountEnemies?.Invoke(countWaveEnemies);
 
-        foreach (WaveEnemyData enemies in waves[currentWave].enemies)
+        for (int i = 0; i < waves[currentWave].Count; i++)
         {
-            for (int i = 0; i < enemies.count; i++)
-            {
-                yield return new WaitForSeconds(spawnSpeed);
+            yield return new WaitForSeconds(spawnSpeed);
 
-                Vector3 _spawnPosition = GetSpawnPosition();
-                Enemy _enemy = Instantiate(enemies.enemy, _spawnPosition, GetSpawnRotation(_spawnPosition));
+            Vector3 _spawnPosition = GetSpawnPosition();
+            
+            Enemy _enemy = Instantiate(
+                waves[currentWave].GetRandomEnemy(), 
+                _spawnPosition, 
+                GetSpawnRotation(_spawnPosition)
+            );
 
-                _enemy.Initialize();
-                _enemy.SetPlayerTarget(playerTarget);
+            _enemy.Initialize();
+            _enemy.SetPlayerTarget(playerTarget);
 
-                _enemy.GetHealth().OnDead += DeathEnemy;
-            }
+            _enemy.GetHealth().OnDead += DeathEnemy;
         }
 
         spawningEnemies = null;

@@ -29,9 +29,9 @@ public class GameBootstraper : MonoBehaviour
         gameUICanvas.Initialize(playerCharacter, waveSystem);
         
         waveSystem.Initialize(playerCharacter);
-        _tradeZone.Initialize(_gameInstance, gameUICanvas.GetUITrade());
+        _tradeZone.Initialize(_gameInstance, gameUICanvas.UIGameplay.UITrade);
 
-        sessionSystem = new SessionSystem(playerCharacter, gameUICanvas.GetUIResultsSession(), waveSystem, _tradeZone);
+        sessionSystem = new SessionSystem(playerCharacter, gameUICanvas.UIResultsSession, waveSystem, _tradeZone);
 
         sessionSystem.StartSession();
     }
@@ -44,6 +44,6 @@ public class GameBootstraper : MonoBehaviour
             )
         );
         playerCharacter.transform.position = new Vector3(0f, 1f, 0f);
-        playerCharacter.Initialize(gameUICanvas.GetUIFixedJoystick()); 
+        playerCharacter.Initialize(gameUICanvas.UIGameplay.UIJoystick); 
     }
 }

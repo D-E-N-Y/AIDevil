@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour
     protected float _criticalDamageModifier;
     protected float _areaModifier;
 
+    public bool isCanAttack;
     public bool isAvaliable { get; protected set; }
 
     public virtual void Initialize(UnitFaction unitFaction)
@@ -30,6 +31,8 @@ public class Projectile : MonoBehaviour
 
     public virtual void SetToFire(Vector3 position, float damageModifier = 1f, float criticalDamageChance = 0f, float criticalDamageModifier = 1f, float areaModifier = 1f)
     {
+        isCanAttack = true;
+        
         _damageModifier = damageModifier;
         _criticalDamageChance = criticalDamageChance;
         _criticalDamageModifier = criticalDamageModifier;
@@ -47,6 +50,7 @@ public class Projectile : MonoBehaviour
 
         isAvaliable = false;
         mesh.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     protected void RotateToTarget(Vector3 targetPosition)
@@ -70,6 +74,8 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<IUnit>(out IUnit unit))
         {
+            if(!isCanAttack) return;
+            
             float _damage = damage * _damageModifier;
             
             if(IsCriticalHit())
@@ -79,6 +85,8 @@ public class Projectile : MonoBehaviour
 
             unit.GetHealth().TakeDamage(_damage);
             onSuccessfulAttack?.Invoke();
+
+            isCanAttack = false;
         }
 
         _targetPosition = Vector3.zero;
@@ -92,6 +100,8 @@ public class Projectile : MonoBehaviour
         impactEffect.Play();
         yield return new WaitWhile(() => impactEffect.IsAlive(true));
         isAvaliable = true;
+
+        gameObject.SetActive(false);
     }
 
     protected bool IsCriticalHit()

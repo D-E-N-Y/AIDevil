@@ -6,7 +6,6 @@ public class PlayerCharacter : MonoBehaviour, IUnit
     [SerializeField] private string _name;
     [SerializeField] private PlayerCharacterStats _stats;
     [SerializeField] private PlayerCharacterMovement _movement;
-    [SerializeField] private UI_UnitHPIndicator _ui_hpIndicator;
     [SerializeField] private PickupSensor _pickupSensor;
     [SerializeField] private SpellContainer _spellContainer;
     [SerializeField] private StartItems _startItems;
@@ -35,12 +34,10 @@ public class PlayerCharacter : MonoBehaviour, IUnit
         _movement.Initialize(_stats);
         _movement.SetControlers(joystick);
 
-        _ui_hpIndicator.Initialize(_health);
         _health.OnDead += Death;
 
         _inventory = new Inventory();
         _wallet = new Wallet();
-        _wallet.AddMoney(9999);
 
         _itemContext = new ItemContext(_stats, _inventory, _spellController, _health, _wallet);
 
