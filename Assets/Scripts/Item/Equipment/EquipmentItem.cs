@@ -5,6 +5,7 @@ using UnityEngine;
 public class EquipmentItem : Item
 {
     [SerializeField] private List<StatModifier> _modifiers;
+    public IReadOnlyList<StatModifier> Modifiers => _modifiers;
 
     public override ItemType ItemType => ItemType.Equipment;
 

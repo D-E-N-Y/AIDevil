@@ -23,7 +23,8 @@ public class ItemStand : MonoBehaviour
     public void Initialize(UI_Trade ui_trade)
     {
         _ui_trade = ui_trade;
-        
+        _ui_trade.Initialize();
+
         _worldItem.gameObject.SetActive(false);
 
         _sphereCollider = GetComponent<SphereCollider>();
@@ -66,7 +67,7 @@ public class ItemStand : MonoBehaviour
 
         _itemContext = other.gameObject.GetComponent<PlayerCharacter>().GetItemContext();
 
-        _ui_trade.Initialize(_item, _itemContext.Wallet.HasEnoughMoney(_item.Price));
+        _ui_trade.SetItem(_item, _itemContext.Wallet.HasEnoughMoney(_item.Price));
         _ui_trade.Show();
 
         AddSubcriptions();
