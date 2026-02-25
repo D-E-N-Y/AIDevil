@@ -32,18 +32,15 @@ public class UI_Inventory : UI_Panel
         _spellsContainer.HideAllSlots();
         _equipmentContainer.HideAllSlots();
         
-        IReadOnlyList<InventorySlot> _slots = _inventory.Slots;
+        UpdateContainer(_inventory.SpellSlots, _spellsContainer);
+        UpdateContainer(_inventory.EquipmentSlots, _equipmentContainer);
+    }
 
-        foreach(InventorySlot _slot in _slots)
+    private void UpdateContainer(IReadOnlyList<InventorySlot> slots, UI_ContainerInventorySlots container)
+    {
+        foreach(InventorySlot _slot in slots)
         {
-            if(_slot.Item is SpellItem)
-            {
-                _spellsContainer.AddSlot(_slot);
-            }
-            else if(_slot.Item is EquipmentItem)
-            {
-                _equipmentContainer.AddSlot(_slot);
-            }
+            container.AddSlot(_slot);
         }
     }
 

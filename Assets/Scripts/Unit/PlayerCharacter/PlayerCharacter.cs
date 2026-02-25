@@ -10,6 +10,8 @@ public class PlayerCharacter : MonoBehaviour, IUnit
     [SerializeField] private SpellContainer _spellContainer;
     [SerializeField] private StartItems _startItems;
 
+    [SerializeField, Range(1, 10)] private int _maxSpellsCount = 4;
+
     private UnitHealth _health;
     private Inventory _inventory;
     private Wallet _wallet;
@@ -36,7 +38,7 @@ public class PlayerCharacter : MonoBehaviour, IUnit
 
         _health.OnDead += Death;
 
-        _inventory = new Inventory();
+        _inventory = new Inventory(_maxSpellsCount);
         _wallet = new Wallet();
 
         _itemContext = new ItemContext(_stats, _inventory, _spellController, _health, _wallet);

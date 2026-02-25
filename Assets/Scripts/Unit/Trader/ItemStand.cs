@@ -67,7 +67,13 @@ public class ItemStand : MonoBehaviour
 
         _itemContext = other.gameObject.GetComponent<PlayerCharacter>().GetItemContext();
 
-        _ui_trade.SetItem(_item, _itemContext.Wallet.HasEnoughMoney(_item.Price));
+        bool canBuy = _itemContext.Wallet.HasEnoughMoney(_item.Price);
+        if (_item.Type == ItemType.Spell && _itemContext.Inventory.IsSpellSlotsFull)
+        {
+            canBuy = false;
+        }
+
+        _ui_trade.UpdatePanel(_item, canBuy);
         _ui_trade.Show();
 
         AddSubcriptions();

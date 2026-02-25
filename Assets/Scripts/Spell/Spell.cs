@@ -21,6 +21,10 @@ public abstract class Spell : MonoBehaviour
     protected UnitFaction _unitFaction;
     [SerializeField, Range(0.1f, 15f)] protected float cooldown;
     
+    [SerializeField] protected Weapon _weapon;
+    public Weapon Weapon => _weapon;
+    protected Action _weaponHandler;
+
     protected float _damageModifier;
     public float DamageModifier => _damageModifier;
     protected float _speedAttackModifier;
@@ -43,11 +47,17 @@ public abstract class Spell : MonoBehaviour
 
     public virtual void Initialize(UnitFaction unitFaction, UnitStats stats)
     {
+        RemoveSubsriptions();
+        
         attacking = null;
         _unitFaction = unitFaction;
 
         _stats = stats;
         SetStats();
+
+        _weapon.Initialize(unitFaction);
+        
+        SetSubsriptions();
     }
 
     protected void UpdateStats(StatType statType)
@@ -95,10 +105,29 @@ public abstract class Spell : MonoBehaviour
         onStopCooldown?.Invoke();
     }
 
-    protected abstract void SetSubsriptions();
-    protected abstract void RemoveSubsriptions();
+    protected virtual void SetSubsriptions()
+    {
+        _stats.OnStatChanged += UpdateStats;
+        
+        _weaponHandler = () => onSuccessfulAttack?.Invoke();
+        _weapon.onSuccessfulAttack += _weaponHandler;
+    }
+
+    protected virtual void RemoveSubsriptions()
+    {
+        if (_stats != null)
+        {
+            _stats.OnStatChanged -= UpdateStats;
+        }
+
+        if (_weaponHandler != null)
+        {
+            _weapon.onSuccessfulAttack -= _weaponHandler;
+        }
+    }
 
     public float RangeAttack() => rangeAttack;
+    public float GetCooldown() => cooldown;
 
     public Sprite GetIcon() => icon;
 

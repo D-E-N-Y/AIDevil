@@ -15,7 +15,7 @@ public abstract class Item : ScriptableObject
     [SerializeField] protected ItemRarity _rarity;
     public ItemRarity Rarity => _rarity;
 
-    public abstract ItemType ItemType { get; }
+    public abstract ItemType Type { get; }
 
     public abstract void Apply(ItemContext context);
     public virtual void Remove(ItemContext context) { }

@@ -3,17 +3,13 @@ using UnityEngine;
 
 public abstract class SpellMelee : Spell
 {
-    [SerializeField] protected MeleeWeapon meleeWeapon;
-    private Action _meleeWeaponHandler;
+    protected MeleeWeapon _meleeWeapon;
 
     public override void Initialize(UnitFaction unitFaction, UnitStats stats)
     {
         base.Initialize(unitFaction, stats);
 
-        RemoveSubsriptions();
-        meleeWeapon.Initialize(_unitFaction.ToString(), rangeAttack);
-        meleeWeapon.FinishAttack();
-        SetSubsriptions();
+        _meleeWeapon = (MeleeWeapon)_weapon;
     }
 
     public override void Cast()
@@ -21,20 +17,6 @@ public abstract class SpellMelee : Spell
         if (attacking == null)
         {
             attacking = StartCoroutine(nameof(Attacking));
-        }
-    }
-    
-    protected override void SetSubsriptions()
-    {
-        _meleeWeaponHandler = () => onSuccessfulAttack?.Invoke();
-        meleeWeapon.onSuccessfulAttack += _meleeWeaponHandler;
-    }
-
-    protected override void RemoveSubsriptions()
-    {
-        if (_meleeWeaponHandler != null)
-        {
-            meleeWeapon.onSuccessfulAttack -= _meleeWeaponHandler;
         }
     }
 }

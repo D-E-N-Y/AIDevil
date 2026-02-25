@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 7107369187649492154}
   - component: {fileID: 5144783469343879550}
   - component: {fileID: 5858217141766397348}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cannonball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7107369187649492154
 Transform:
   m_ObjectHideFlags: 0
@@ -68,10 +68,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 505d6f1844329888e96096c71e5f15ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10
   mesh: {fileID: 7825983549736071321}
   impactEffect: {fileID: 8070395117558027211}
-  damage: 10
   moveSpeed: 15
+  isCanAttack: 0
 --- !u!1 &2346492406564241348
 GameObject:
   m_ObjectHideFlags: 0

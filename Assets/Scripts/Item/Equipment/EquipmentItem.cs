@@ -7,7 +7,7 @@ public class EquipmentItem : Item
     [SerializeField] private List<StatModifier> _modifiers;
     public IReadOnlyList<StatModifier> Modifiers => _modifiers;
 
-    public override ItemType ItemType => ItemType.Equipment;
+    public override ItemType Type => ItemType.Equipment;
 
     public override void Apply(ItemContext context)
     {

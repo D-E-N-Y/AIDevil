@@ -2,44 +2,30 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : Weapon
 {
     [SerializeField] protected Transform mesh;
     [SerializeField] private ParticleSystem impactEffect;
-    public Action onSuccessfulAttack;
 
-    [SerializeField, Range(1, 100)] protected int damage;
     [SerializeField, Range(1f, 100f)] protected float moveSpeed;
-    protected string _originLayer;
-    protected Vector3 _targetPosition;
 
-    protected float _damageModifier;
-    protected float _criticalDamageChance;
-    protected float _criticalDamageModifier;
-    protected float _areaModifier;
+    protected Vector3 _targetPosition;
 
     public bool isCanAttack;
     public bool isAvaliable { get; protected set; }
 
-    public virtual void Initialize(UnitFaction unitFaction)
+    protected override string WeaponType => "Projectile";
+
+    public override void Initialize(UnitFaction unitFaction)
     {
-        _originLayer = unitFaction + "Projectile";
-        gameObject.layer = LayerMask.NameToLayer(_originLayer);
+        base.Initialize(unitFaction);
 
         isAvaliable = true;
     }
 
-    public virtual void SetToFire(Vector3 position, float damageModifier = 1f, float criticalDamageChance = 0f, float criticalDamageModifier = 1f, float areaModifier = 1f)
+    public virtual void SetToFire(Vector3 position)
     {
         isCanAttack = true;
-        
-        _damageModifier = damageModifier;
-        _criticalDamageChance = criticalDamageChance;
-        _criticalDamageModifier = criticalDamageModifier;
-        _areaModifier = areaModifier;
-
-        transform.localScale = new Vector3(1f * areaModifier, 1f * areaModifier, 1f * areaModifier);
-
         transform.position = position;
     }
 
@@ -63,11 +49,25 @@ public class Projectile : MonoBehaviour
         transform.rotation = rotation;
     }
 
+    private float _timeToLive = 5f;
+    private float _timeAlive = 0f;
+
     private void Update()
     {
         if (_targetPosition == Vector3.zero) return;
 
         transform.position += transform.forward * moveSpeed * Time.deltaTime;
+
+        _timeAlive += Time.deltaTime;
+        if (_timeAlive >= _timeToLive)
+        {
+            _timeAlive = 0f;
+            
+            _targetPosition = Vector3.zero;
+            mesh.gameObject.SetActive(false);
+
+            StartCoroutine(nameof(ImpactEffect));
+        }
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -76,15 +76,7 @@ public class Projectile : MonoBehaviour
         {
             if(!isCanAttack) return;
             
-            float _damage = damage * _damageModifier;
-            
-            if(IsCriticalHit())
-            {
-                _damage *= _criticalDamageModifier;
-            }
-
-            unit.GetHealth().TakeDamage(_damage);
-            onSuccessfulAttack?.Invoke();
+            ApplyDamage(unit);
 
             isCanAttack = false;
         }
@@ -102,11 +94,5 @@ public class Projectile : MonoBehaviour
         isAvaliable = true;
 
         gameObject.SetActive(false);
-    }
-
-    protected bool IsCriticalHit()
-    {
-        float roll = UnityEngine.Random.Range(0f, 1f);
-        return roll < _criticalDamageChance;
     }
 }

@@ -6,7 +6,7 @@ public class SpellItem : Item
     [SerializeField] private Spell _spell;
     public Spell Spell => _spell;
 
-    public override ItemType ItemType => ItemType.Spell;
+    public override ItemType Type => ItemType.Spell;
 
     public override void Apply(ItemContext context)
     {

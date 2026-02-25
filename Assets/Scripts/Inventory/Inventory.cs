@@ -5,15 +5,34 @@ public class Inventory
 {
     public event Action OnInventoryChanged;
     
-    private List<InventorySlot> slots;
-    public IReadOnlyList<InventorySlot> Slots => slots;
+    private Dictionary<ItemType, List<InventorySlot>> _slots;
+    public IReadOnlyDictionary<ItemType, List<InventorySlot>> Slots => _slots;
+
+    public IReadOnlyList<InventorySlot> ConsumableSlots => _slots[ItemType.Consumable];
+    public IReadOnlyList<InventorySlot> EquipmentSlots => _slots[ItemType.Equipment];
+    public IReadOnlyList<InventorySlot> SpellSlots => _slots[ItemType.Spell];
+
+    private int _maxSpellsCount;
+    public int MaxSpellsCount => _maxSpellsCount;
+
+    private int _currentSpellsCount;
+    public int CurrentSpellsCount => _currentSpellsCount;
+
+    public bool IsSpellSlotsFull => _currentSpellsCount >= _maxSpellsCount;
 
     private ItemContext _context;
     public ItemContext Context => _context;
 
-    public Inventory()
+    public Inventory(int maxSpellsCount = 4)
     {
-        slots = new List<InventorySlot>();
+        _maxSpellsCount = maxSpellsCount;
+        
+        _slots = new Dictionary<ItemType, List<InventorySlot>>()
+        {
+            { ItemType.Consumable, new List<InventorySlot>() },
+            { ItemType.Equipment, new List<InventorySlot>() },
+            { ItemType.Spell, new List<InventorySlot>() }
+        };
     }
 
     public void SetContext(ItemContext context)
@@ -23,16 +42,28 @@ public class Inventory
 
     public void AddItem(Item item)
     {
-        if(item as ConsumableItem)
+        if(item.Type == ItemType.Consumable)
         {
             item.Apply(_context);
             return;
         }
         
-        foreach (var slot in slots)
+        foreach (var slot in _slots[item.Type])
         {
             if (slot.Item != null && slot.Item == item)
             {
+                if (item.Type == ItemType.Spell)
+                {
+                    if (_currentSpellsCount >= _maxSpellsCount)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        _currentSpellsCount++;
+                    }
+                }
+                
                 slot.AddItem();
                 OnInventoryChanged?.Invoke();
                 return;
@@ -40,7 +71,7 @@ public class Inventory
         }
 
         var newSlot = new InventorySlot(_context, item);
-        slots.Add(newSlot);
+        _slots[item.Type].Add(newSlot);
         OnInventoryChanged?.Invoke();
     }
 
@@ -62,10 +93,15 @@ public class Inventory
 
     public void RemoveItem(Item item)
     {
-        foreach (var slot in slots)
+        foreach (var slot in _slots[item.Type])
         {
             if (slot.Item != null && slot.Item == item)
             {
+                if (item.Type == ItemType.Spell)
+                {
+                    _currentSpellsCount--;
+                } 
+                
                 slot.RemoveItem();
                 OnInventoryChanged?.Invoke();
                 return;
@@ -76,22 +112,28 @@ public class Inventory
     public List<Item> GetAllItems()
     {
         List<Item> itemList = new List<Item>();
-        foreach (var slot in slots)
+        
+        foreach (ItemType type in Enum.GetValues(typeof(ItemType)))
         {
-            if (slot.Item != null)
+            foreach (var slot in _slots[type])
             {
-                for (int i = 0; i < slot.Count; i++)
+                if (slot.Item != null)
                 {
-                    itemList.Add(slot.Item);
+                    for (int i = 0; i < slot.Count; i++)
+                    {
+                        itemList.Add(slot.Item);
+                    }
                 }
             }
         }
+
         return itemList;
     }
 
     public void ClearInventory()
     {
-        slots.Clear();
+        _slots.Clear();
+        
         OnInventoryChanged?.Invoke();
     }
 }

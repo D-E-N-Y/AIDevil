@@ -21,8 +21,10 @@ public class SM_Blown : SpellMelee
 
     protected override IEnumerator Attack()
     {
-        meleeWeapon.StartAttack();
+        _meleeWeapon.PrepareAttack(_damageModifier, _criticalDamageChance, _criticalDamageModifier, _areaModifier);
+
+        _meleeWeapon.StartAttack();
         yield return new WaitForSeconds(timeAttacking);
-        meleeWeapon.FinishAttack();
+        _meleeWeapon.FinishAttack();
     }
 }

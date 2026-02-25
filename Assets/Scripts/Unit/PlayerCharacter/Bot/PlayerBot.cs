@@ -39,21 +39,21 @@ public class PlayerBot : MonoBehaviour
 
     private void Update()
     {
-        // //Debug.Log(meleeSensor.IsHasUnits());
-        // if (isMoving && !_agent.pathPending)
-        // {
-        //     if (_agent.remainingDistance <= _agent.stoppingDistance &&
-        //         (!_agent.hasPath || _agent.velocity.sqrMagnitude < 0.01f))
-        //     {
-        //         isMoving = false;
-        //         MoveToPosition(GetRandomPosition());
-        //     }
-        // }
+        //Debug.Log(meleeSensor.IsHasUnits());
+        if (isMoving && !_agent.pathPending)
+        {
+            if (_agent.remainingDistance <= _agent.stoppingDistance &&
+                (!_agent.hasPath || _agent.velocity.sqrMagnitude < 0.01f))
+            {
+                isMoving = false;
+                MoveToPosition(GetRandomPosition());
+            }
+        }
 
-        // if (meleeSensor.IsHasUnits())
-        // {
-        //     _playerCharacter.CastRandomMeleeSpell();
-        // }
+        if (meleeSensor.IsHasUnits())
+        {
+            _playerCharacter.GetSpellController().CastRandomMeleeSpell();
+        }
     }
 
     private Vector3 GetRandomPosition()

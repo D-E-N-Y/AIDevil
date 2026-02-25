@@ -25,19 +25,20 @@ public class SR_Cannon : SpellRange
 
         cannonFireEffect.Play();
 
-        Projectile _projectile = GetAvaliableProjectile();
+        Projectile _avaliableProjectile = GetAvaliableProjectile();
 
-        if (_projectile == null)
+        if (_avaliableProjectile == null)
         {
-            _projectile = Instantiate(projectile);
-            projectiles.Add(_projectile);
-            _projectile.Initialize(_unitFaction);
+            _avaliableProjectile = Instantiate(_projectile);
+            _projectiles.Add(_avaliableProjectile);
+            _avaliableProjectile.Initialize(_unitFaction);
 
-            _projectile.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
+            _avaliableProjectile.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
         }
 
-        _projectile.SetToFire(firePosition.position);
-        _projectile.Fire(_targetPosition);
+        _avaliableProjectile.PrepareAttack(_damageModifier, _criticalDamageChance, _criticalDamageModifier, _areaModifier);
+        _avaliableProjectile.SetToFire(firePosition.position);
+        _avaliableProjectile.Fire(_targetPosition);
 
         yield return null;
     }

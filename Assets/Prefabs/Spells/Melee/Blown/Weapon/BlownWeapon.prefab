@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 7385479989273016251}
   - component: {fileID: 195725805001534399}
   - component: {fileID: 6596870413650432094}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: BlownWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7385479989273016251
 Transform:
   m_ObjectHideFlags: 0
@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 30
+  _radiusAttack: 2
   blownEffect: {fileID: 9161728015521451058}
 --- !u!1001 &3268331958307465476
 PrefabInstance:

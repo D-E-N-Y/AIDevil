@@ -52,6 +52,8 @@ public class Boss : Agent, IUnit
 
     public virtual void Death()
     {
+        OnDead?.Invoke(this);
+
         gameObject.SetActive(false);
     }
 

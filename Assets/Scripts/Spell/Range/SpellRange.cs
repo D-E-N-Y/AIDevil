@@ -5,10 +5,10 @@ using UnityEngine;
 
 public abstract class SpellRange : Spell
 {
-    [SerializeField] protected Projectile projectile;
-    protected List<Projectile> projectiles;
+    protected Projectile _projectile;
+    protected List<Projectile> _projectiles;
 
-    [SerializeField] protected Sensor sensor;
+    [SerializeField] protected Sensor _sensor;
 
     protected Vector3 _targetPosition;
 
@@ -18,11 +18,10 @@ public abstract class SpellRange : Spell
     {
         base.Initialize(unitFaction, stats);
 
-        projectiles = new List<Projectile>();
+        _projectile = _weapon as Projectile;
+        _projectiles = new List<Projectile>();
 
-        RemoveSubsriptions();
-        sensor.Initialize(_unitFaction, rangeAttack);
-        SetSubsriptions();
+        _sensor.Initialize(_unitFaction, rangeAttack);
     }
 
     public override void Cast()
@@ -35,7 +34,7 @@ public abstract class SpellRange : Spell
 
     protected Projectile GetAvaliableProjectile()
     {
-        Projectile _avaliableProjectile = projectiles
+        Projectile _avaliableProjectile = _projectiles
             .Where(x => x.isAvaliable)
             .FirstOrDefault();
 
@@ -49,7 +48,7 @@ public abstract class SpellRange : Spell
 
         while (IsCanAttack)
         {
-            _targetPosition = sensor.GetNearestTarget().position;
+            _targetPosition = _sensor.GetNearestTarget().position;
 
             if (_unitFaction == UnitFaction.Enemy) yield return Cooldown();
 
@@ -66,23 +65,19 @@ public abstract class SpellRange : Spell
 
     protected override void SetSubsriptions()
     {
-        sensor.OnUnitEnter += (_) => SetValiableAttack();
-        sensor.OnUnitExit += (_) => SetValiableAttack();
-
-        _stats.OnStatChanged += UpdateStats;
+        _sensor.OnUnitEnter += (_) => SetValiableAttack();
+        _sensor.OnUnitExit += (_) => SetValiableAttack();
     }
 
     protected override void RemoveSubsriptions()
     {
-        sensor.OnUnitEnter -= (_) => SetValiableAttack();
-        sensor.OnUnitExit -= (_) => SetValiableAttack();
-
-        _stats.OnStatChanged -= UpdateStats;
+        _sensor.OnUnitEnter -= (_) => SetValiableAttack();
+        _sensor.OnUnitExit -= (_) => SetValiableAttack();
     }
 
     private void SetValiableAttack()
     {
-        IsCanAttack = sensor.IsHasUnits();
+        IsCanAttack = _sensor.IsHasUnits();
 
         if (IsCanAttack && _unitFaction == UnitFaction.Player)
         {
