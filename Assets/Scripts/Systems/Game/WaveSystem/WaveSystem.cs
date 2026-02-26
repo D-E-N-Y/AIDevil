@@ -16,6 +16,7 @@ public class WaveSystem : MonoBehaviour
     [SerializeField, Range(1f, 50f)] private float maxSpawnRadius;
     [SerializeField, Range(0.1f, 10f)] private float spawnSpeed;
     [SerializeField] List<Wave> waves;
+
     private int currentWave;
     private Coroutine spawningEnemies;
     private int countWaveEnemies;

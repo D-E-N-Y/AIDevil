@@ -1,5 +1,6 @@
-using System;
 using System.Collections.Generic;
+using System;
+using UnityEngine;
 
 public class Inventory
 {
@@ -48,31 +49,35 @@ public class Inventory
             return;
         }
         
+        InventorySlot _slot = GetSlotWithItem(item);
+        if (_slot == null)
+        {
+            _slot = new InventorySlot(_context, item);
+            _slots[item.Type].Add(_slot);
+        }
+        else
+        {
+            _slot.AddItem();
+        }
+
+        if (item.Type == ItemType.Spell)
+        {
+            _currentSpellsCount++;
+        }
+
+        OnInventoryChanged?.Invoke();
+    }
+
+    private InventorySlot GetSlotWithItem(Item item)
+    {
         foreach (var slot in _slots[item.Type])
         {
             if (slot.Item != null && slot.Item == item)
             {
-                if (item.Type == ItemType.Spell)
-                {
-                    if (_currentSpellsCount >= _maxSpellsCount)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        _currentSpellsCount++;
-                    }
-                }
-                
-                slot.AddItem();
-                OnInventoryChanged?.Invoke();
-                return;
+                return slot;
             }
         }
-
-        var newSlot = new InventorySlot(_context, item);
-        _slots[item.Type].Add(newSlot);
-        OnInventoryChanged?.Invoke();
+        return null;
     }
 
     public void AddItems(List<Item> items)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class UnitHealth : IHealth
 {
@@ -9,11 +10,23 @@ public class UnitHealth : IHealth
     private float _armor;
     private float _dodgeChance;
 
+    private Dictionary<StatType, Action> _updateStats;
+
     public UnitHealth(UnitStats stats)
     {
         _stats = stats;
         
-        SetStats();
+        _updateStats = new Dictionary<StatType, Action>()
+        {
+            {StatType.MaxHP, SetMaxHP},
+            {StatType.Armor, SetArmor},
+            {StatType.DodgeChance, SetDodgeChance}  
+        };
+        
+        _maxHP = _stats.MaxHP;
+        _armor = _stats.Armor;
+        _dodgeChance = _stats.DodgeChance;
+        
         _currentHP = _maxHP;
 
         _stats.OnStatChanged += UpdateStats;
@@ -21,19 +34,35 @@ public class UnitHealth : IHealth
 
     private void UpdateStats(StatType statType)
     {
-        if (statType == StatType.MaxHP || statType == StatType.Armor || statType == StatType.DodgeChance)
+        if(_updateStats.ContainsKey(statType))
         {
-            SetStats();
+            _updateStats[statType]?.Invoke();
         }
     }
 
-    private void SetStats()
+    private void SetMaxHP()
     {
-        _maxHP = _stats.MaxHP;
-        _armor = _stats.Armor;
-        _dodgeChance = _stats.DodgeChance;
+        int _heal = _stats.MaxHP - _maxHP;
 
-        OnHpChanged?.Invoke();
+        _maxHP = _stats.MaxHP;
+        
+        Heal(_heal);
+
+        if(_currentHP > _maxHP)
+        {
+            _currentHP = _maxHP;
+            OnHpChanged?.Invoke();
+        }
+    }
+
+    private void SetArmor()
+    {
+        _armor = _stats.Armor;
+    }
+
+    private void SetDodgeChance()
+    {
+        _dodgeChance = _stats.DodgeChance;
     }
     
     public int CurrentHP => _currentHP;

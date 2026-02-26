@@ -10,10 +10,12 @@ public class TradeZone : MonoBehaviour
     [SerializeField] private List<ItemStand> _itemStands;
     [SerializeField] private FinishTrade _finishTrade;
 
-    public void Initialize(GameInstance gameInstance, UI_Trade ui_trade)
+    public void Initialize(GameInstance gameInstance, UI_Trade ui_trade, UI_FinishTrade ui_finishTrade)
     {
         _trader.Initilaize(gameInstance);
         _itemStands.ForEach(stand => stand.Initialize(ui_trade));
+        
+        _finishTrade.Initialize(ui_finishTrade);
         _finishTrade.OnFinishTrade += CompleteTrade;
 
         Despawn();

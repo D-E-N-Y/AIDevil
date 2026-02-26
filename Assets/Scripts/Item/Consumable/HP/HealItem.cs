@@ -5,6 +5,8 @@ public class HealItem : ConsumableItem
 {
     [SerializeField, Range(1, 1000)] private int healAmount;
 
+    public override ConsumableEffect Effect => ConsumableEffect.Heal;
+
     public override void Apply(ItemContext context)
     {
         context.UnitHealth.Heal(healAmount);

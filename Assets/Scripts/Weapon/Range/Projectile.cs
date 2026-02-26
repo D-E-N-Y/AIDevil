@@ -66,7 +66,8 @@ public class Projectile : Weapon
             _targetPosition = Vector3.zero;
             mesh.gameObject.SetActive(false);
 
-            StartCoroutine(nameof(ImpactEffect));
+            isAvaliable = true;
+            gameObject.SetActive(false);
         }
     }
 
