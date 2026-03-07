@@ -42,6 +42,9 @@ public class UnitStats
     public float DodgeChance => dodgeChance;
 
     protected Dictionary<StatType, Action<float>> _modifyStat;
+    
+    protected Dictionary<StatType, float> _currentStats;
+    public IReadOnlyDictionary<StatType, float> CurrentStats => _currentStats;
 
     public virtual void Initialize()
     {
@@ -58,6 +61,21 @@ public class UnitStats
             { StatType.MultiattackChance, ModifyMultiattackChance },
             { StatType.AreaModifier, ModifyAreaModifier },
             { StatType.DodgeChance, ModifyDodgeChance }
+        };
+
+        _currentStats = new Dictionary<StatType, float>
+        {
+            { StatType.MaxHP, maxHP },
+            { StatType.BaseMoveSpeed, baseMoveSpeed },
+            { StatType.MoveSpeedModifier, moveSpeedModifier },
+            { StatType.Armor, armor },
+            { StatType.DamageModifier, damageModifier },
+            { StatType.SpeedAttackModifier, speedAttackModifier },
+            { StatType.CriticalDamageChance, criticalDamageChance },
+            { StatType.CriticalDamageModifier, criticalDamageModifier },
+            { StatType.MultiattackChance, multiattackChance },
+            { StatType.AreaModifier, areaModifier },
+            { StatType.DodgeChance, dodgeChance }
         };
     }
 

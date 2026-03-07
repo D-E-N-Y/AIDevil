@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Gameplay : UI_Panel 
 {
@@ -14,6 +15,8 @@ public class UI_Gameplay : UI_Panel
 
     [SerializeField] private UI_Trade ui_trade;
     [SerializeField] private UI_FinishTrade ui_finishTrade;
+
+    [SerializeField] private Button ui_pauseButton;
 
     public void Initialize(PlayerCharacter playerCharacter, WaveSystem waveSystem)
     {
@@ -38,4 +41,6 @@ public class UI_Gameplay : UI_Panel
 
     public UI_Trade UITrade => ui_trade;
     public UI_FinishTrade UIFinishTrade => ui_finishTrade;
+
+    public Button UIPauseButton => ui_pauseButton;
 }

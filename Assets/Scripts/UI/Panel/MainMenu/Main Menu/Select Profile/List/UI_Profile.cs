@@ -9,10 +9,9 @@ public class UI_Profile : UI_Panel
     public Action<UI_Profile> onSelect;
     
     [SerializeField] private Image ui_selectImage;
-    [SerializeField] private TextMeshProUGUI ui_nameProfileText;
+    [SerializeField] private Image ui_unselectImage;
 
-    private Color _selectColorText;
-    private Color _defaultColorText;
+    [SerializeField] private TextMeshProUGUI ui_nameProfileText;
 
     private bool isSelect;
 
@@ -26,9 +25,6 @@ public class UI_Profile : UI_Panel
 
         ui_nameProfileText.text = _profile.name;
 
-        _selectColorText = new Color(255f / 255f, 243f / 255f, 208f / 255f);
-        _defaultColorText = new Color(32f / 255f, 18f / 255f, 6f / 255f);
-
         GetComponent<Button>().onClick.RemoveAllListeners();
         GetComponent<Button>().onClick.AddListener(() => Select());
 
@@ -40,9 +36,8 @@ public class UI_Profile : UI_Panel
         isSelect = true;
 
         ui_selectImage.gameObject.SetActive(isSelect);
-
-        ui_nameProfileText.color = _selectColorText;
-        ui_nameProfileText.fontStyle = FontStyles.Bold;
+        ui_unselectImage.gameObject.SetActive(!isSelect);
+        
 
         onSelect?.Invoke(this);
     }
@@ -52,9 +47,7 @@ public class UI_Profile : UI_Panel
         isSelect = false;
 
         ui_selectImage.gameObject.SetActive(isSelect);
-        
-        ui_nameProfileText.color = _defaultColorText;
-        ui_nameProfileText.fontStyle = FontStyles.Normal;
+        ui_unselectImage.gameObject.SetActive(!isSelect);
     }
 
     public Profile GetProfile() => _profile;

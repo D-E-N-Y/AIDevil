@@ -7,9 +7,7 @@ public class UI_Character : UI_Panel
     
     [SerializeField] private Image ui_characterImage;
     [SerializeField] private Image ui_selectImage;
-    private Color selectedColor;
-    private Color unselectedColor;
-
+    [SerializeField] private Image ui_unselectImage;
     private PlayerCharacter _playerCharacter;
     private bool isSelect;
 
@@ -19,9 +17,6 @@ public class UI_Character : UI_Panel
     {
         _playerCharacter = playerCharacter;
         _ui_charactersList = ui_charactersList;
-        
-        selectedColor = new Vector4(255f / 255f, 243f / 255f, 208f / 255f, 1f);
-        unselectedColor = new Vector4(32f / 255f, 18f / 255f, 6f / 255f, 1f);
 
         ui_selectButton.onClick.RemoveAllListeners();
         ui_selectButton.onClick.AddListener(() => Select());
@@ -32,8 +27,9 @@ public class UI_Character : UI_Panel
     public void Select()
     {
         isSelect = true;
+        
         ui_selectImage.gameObject.SetActive(isSelect);
-        ui_characterImage.color = selectedColor;
+        ui_unselectImage.gameObject.SetActive(!isSelect);
 
         _ui_charactersList.Select(this);
     }
@@ -43,7 +39,7 @@ public class UI_Character : UI_Panel
         isSelect = false;
 
         ui_selectImage.gameObject.SetActive(isSelect);
-        ui_characterImage.color = unselectedColor;
+        ui_unselectImage.gameObject.SetActive(!isSelect);
     }
 
     public PlayerCharacter GetCharacter() => _playerCharacter;

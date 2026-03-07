@@ -16,6 +16,9 @@ public class PlayerCharacterStats : UnitStats
 
         _modifyStat.Add(StatType.PickUpRangeModifier, ModifyPickUpRangeModifier);
         _modifyStat.Add(StatType.MoneyModifier, ModifyMoneyModifier);
+
+        _currentStats.Add(StatType.PickUpRangeModifier, pickUpRangeModifier);
+        _currentStats.Add(StatType.MoneyModifier, moneyModifier);
     }
 
     private void ModifyPickUpRangeModifier(float value)

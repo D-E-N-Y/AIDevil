@@ -8,10 +8,7 @@ public class UI_Enemy : UI_Panel
     public Action<UI_Enemy> onSelect;
 
     [SerializeField] private Image ui_selectImage;
-    [SerializeField] private Image ui_iconImage;
-
-    private Color selectColor;
-    private Color defaultColor;
+    [SerializeField] private Image ui_unselectImage;
 
     private Enemy _enemy;
 
@@ -20,9 +17,6 @@ public class UI_Enemy : UI_Panel
         _enemy = enemy;
 
         onSelect = null;
-
-        selectColor = new Vector4(255f / 255f, 243f / 255f, 208f / 255f, 1f);
-        defaultColor = new Vector4(32f / 255f, 18f / 255f, 6f / 255f, 1f);
 
         GetComponent<Button>().onClick.RemoveAllListeners();
         GetComponent<Button>().onClick.AddListener(Select);
@@ -33,7 +27,7 @@ public class UI_Enemy : UI_Panel
     public void Select()
     {
         ui_selectImage.gameObject.SetActive(true);
-        ui_iconImage.color = selectColor;
+        ui_unselectImage.gameObject.SetActive(false);
         
         onSelect?.Invoke(this);
     }
@@ -41,7 +35,7 @@ public class UI_Enemy : UI_Panel
     public void UnSelect()
     {
         ui_selectImage.gameObject.SetActive(false);
-        ui_iconImage.color = defaultColor;
+        ui_unselectImage.gameObject.SetActive(true);
     }
 
     public Enemy GetEnemy() => _enemy;

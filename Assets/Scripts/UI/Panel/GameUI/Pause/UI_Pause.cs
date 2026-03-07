@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class UI_Pause : UI_Panel 
 {
-    [SerializeField] private Button ui_pauseButton;
+    private Button ui_pauseButton;
     
     [SerializeField] private UI_PauseMenu ui_menu;
     [SerializeField] private UI_Stats ui_stats;
@@ -12,6 +12,7 @@ public class UI_Pause : UI_Panel
 
     public void Initialize(ItemContext context, UI_Gameplay ui_gameplay)
     {
+        ui_pauseButton = ui_gameplay.UIPauseButton;
         ui_pauseButton.onClick.RemoveAllListeners();
         ui_pauseButton.onClick.AddListener(() => {
             ui_gameplay.Hide();

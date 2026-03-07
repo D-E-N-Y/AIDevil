@@ -15,8 +15,10 @@ public class GameUICanvas : MonoBehaviour
         ui_pause.Initialize(playerCharacter.GetItemContext(), ui_gameplay);
 
         ui_gameplay.Show();
+
         ui_pause.Hide();
         ui_resultsSession.Hide();
+        ui_blackout.Hide();
     }
 
     public UI_Gameplay UIGameplay => ui_gameplay;

@@ -1,5 +1,6 @@
 public enum StatType
 {
+    // Base stats
     MaxHP,
     BaseMoveSpeed,
     MoveSpeedModifier,
@@ -11,6 +12,11 @@ public enum StatType
     MultiattackChance,
     AreaModifier,
     DodgeChance,
+
+    // PlayerCharacter specific stats
     PickUpRangeModifier,
-    MoneyModifier
+    MoneyModifier,
+
+    // Enemy specific stats
+    DropMoney
 }
