@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IUnit
 {
+    [SerializeField] protected EnemyType _type;
+    public EnemyType Type => _type;
+    
     [SerializeField] protected string _name;
     [SerializeField] protected EnemyStats _stats;
 
     protected UnitHealth _health;
     public event Action<IUnit> OnDead;
+
+    protected bool _isDead;
+    public bool IsDead => _isDead;
 
     [SerializeField] UI_UnitHPIndicator ui_unitHPIndicator;
 
@@ -36,6 +42,7 @@ public class Enemy : MonoBehaviour, IUnit
         spells.ForEach(x => x.Initialize(_unitFaction, _stats));
         ui_worldSpellCooldown.Initialize(spells[0]);
 
+        _isDead = false;
         gameObject.SetActive(true);
     }
 
@@ -50,6 +57,8 @@ public class Enemy : MonoBehaviour, IUnit
         GameInstance.current.GetProfile().bestiaryData.AddDiscoveredEnemy(_name);
         
         DropMoney();
+
+        _isDead = true;
 
         gameObject.SetActive(false);
         OnDead?.Invoke(this);

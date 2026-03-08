@@ -65,18 +65,33 @@ public class UnitStats
 
         _currentStats = new Dictionary<StatType, float>
         {
-            { StatType.MaxHP, maxHP },
-            { StatType.BaseMoveSpeed, baseMoveSpeed },
-            { StatType.MoveSpeedModifier, moveSpeedModifier },
-            { StatType.Armor, armor },
-            { StatType.DamageModifier, damageModifier },
-            { StatType.SpeedAttackModifier, speedAttackModifier },
-            { StatType.CriticalDamageChance, criticalDamageChance },
-            { StatType.CriticalDamageModifier, criticalDamageModifier },
-            { StatType.MultiattackChance, multiattackChance },
-            { StatType.AreaModifier, areaModifier },
-            { StatType.DodgeChance, dodgeChance }
+            { StatType.MaxHP, MaxHP },
+            { StatType.BaseMoveSpeed, BaseMoveSpeed },
+            { StatType.MoveSpeedModifier, MoveSpeedModifier },
+            { StatType.Armor, Armor },
+            { StatType.DamageModifier, DamageModifier },
+            { StatType.SpeedAttackModifier, SpeedAttackModifier },
+            { StatType.CriticalDamageChance, CriticalDamageChance },
+            { StatType.CriticalDamageModifier, CriticalDamageModifier },
+            { StatType.MultiattackChance, MultiattackChance },
+            { StatType.AreaModifier, AreaModifier },
+            { StatType.DodgeChance, DodgeChance }
         };
+    }
+
+    protected virtual void UpdateStarts()
+    {
+        _currentStats[StatType.MaxHP] = MaxHP;
+        _currentStats[StatType.BaseMoveSpeed] = BaseMoveSpeed;
+        _currentStats[StatType.MoveSpeedModifier] = MoveSpeedModifier;
+        _currentStats[StatType.Armor] = Armor;
+        _currentStats[StatType.DamageModifier] = DamageModifier;
+        _currentStats[StatType.SpeedAttackModifier] = SpeedAttackModifier;
+        _currentStats[StatType.CriticalDamageChance] = CriticalDamageChance;
+        _currentStats[StatType.CriticalDamageModifier] = CriticalDamageModifier;
+        _currentStats[StatType.MultiattackChance] = MultiattackChance;
+        _currentStats[StatType.AreaModifier] = AreaModifier;
+        _currentStats[StatType.DodgeChance] = DodgeChance;
     }
 
     public virtual void ModifyStat(StatType stat, float value)
@@ -85,6 +100,8 @@ public class UnitStats
         {
             modifier.Invoke(value);
             RaiseStatChanged(stat);
+
+            UpdateStarts();
         }
         else
         {

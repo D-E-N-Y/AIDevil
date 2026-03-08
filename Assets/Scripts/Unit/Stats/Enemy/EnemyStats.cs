@@ -13,7 +13,14 @@ public class EnemyStats : UnitStats
 
         _modifyStat.Add(StatType.DropMoney, ModifyDropMoney);
         
-        _currentStats.Add(StatType.DropMoney, dropMoney);
+        _currentStats.Add(StatType.DropMoney, DropMoney);
+    }
+
+    protected override void UpdateStarts()
+    {
+        base.UpdateStarts();
+
+        _currentStats[StatType.DropMoney] = DropMoney;
     }
 
     private void ModifyDropMoney(float value)

@@ -17,8 +17,16 @@ public class PlayerCharacterStats : UnitStats
         _modifyStat.Add(StatType.PickUpRangeModifier, ModifyPickUpRangeModifier);
         _modifyStat.Add(StatType.MoneyModifier, ModifyMoneyModifier);
 
-        _currentStats.Add(StatType.PickUpRangeModifier, pickUpRangeModifier);
-        _currentStats.Add(StatType.MoneyModifier, moneyModifier);
+        _currentStats.Add(StatType.PickUpRangeModifier, PickUpRangeModifier);
+        _currentStats.Add(StatType.MoneyModifier, MoneyModifier);
+    }
+
+    protected override void UpdateStarts()
+    {
+        base.UpdateStarts();
+
+        _currentStats[StatType.PickUpRangeModifier] = PickUpRangeModifier;
+        _currentStats[StatType.MoneyModifier] = MoneyModifier;
     }
 
     private void ModifyPickUpRangeModifier(float value)
