@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class WaveSystem : MonoBehaviour
 {
     public System.Action<SCompleteWaveInfo> sendResults;
-    public System.Action<ESessionResult> finishWaves;
+    public System.Action finishWaves;
     public System.Action OnCompleteWave;
     
     public System.Action<int> updateNumberWave;
@@ -26,6 +27,9 @@ public class WaveSystem : MonoBehaviour
 
     private PlayerCharacter playerTarget;
 
+    private bool _isInfinityWaves;
+    public bool IsInfinityWaves => _isInfinityWaves;
+
     public void Initialize(PlayerCharacter playerTarget)
     {
         this.playerTarget = playerTarget;
@@ -37,6 +41,14 @@ public class WaveSystem : MonoBehaviour
     {
         updateNumberWave?.Invoke(currentWave + 1);
         spawningEnemies = StartCoroutine(nameof(SpawningEnemies));
+    }
+
+    public void StartInfinityWaves()
+    {
+        _isInfinityWaves = true;
+
+        CreateNewWave();
+        StartWave();
     }
 
     private IEnumerator SpawningEnemies()
@@ -81,9 +93,14 @@ public class WaveSystem : MonoBehaviour
 
         SendWaveResults();
 
+        if(_isInfinityWaves)
+        {
+            CreateNewWave();
+        }
+
         if(currentWave >= waves.Count) 
         {
-            finishWaves?.Invoke(ESessionResult.WIN);
+            finishWaves?.Invoke();
         }
         else
         {
@@ -143,5 +160,14 @@ public class WaveSystem : MonoBehaviour
         {
             CompleteWave();
         }
+    }
+    
+    private void CreateNewWave()
+    {
+        List<Enemy> _enemies = waves.Last().Enemies;
+        int _count = Mathf.RoundToInt(waves.Last().Count * 1.1f);
+
+        Wave _wave = new Wave(_enemies, _count);
+        waves.Add(_wave);
     }
 }

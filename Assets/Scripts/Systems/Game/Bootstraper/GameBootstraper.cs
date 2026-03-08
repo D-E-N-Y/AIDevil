@@ -7,7 +7,10 @@ public class GameBootstraper : MonoBehaviour
     [SerializeField] private CameraOrigin cameraOrigin;
 
     [SerializeField] private WaveSystem waveSystem;
+
     [SerializeField] private TradeZone _tradeZone;
+    [SerializeField] private EndGame _endGame;
+
     private SessionSystem sessionSystem;
     
     private PlayerCharacter playerCharacter;
@@ -24,14 +27,15 @@ public class GameBootstraper : MonoBehaviour
 
         InitializePlayer();
 
-        cameraOrigin.Initialize(playerCharacter.transform);
+        waveSystem.Initialize(playerCharacter);
 
         gameUICanvas.Initialize(playerCharacter, waveSystem);
-        
-        waveSystem.Initialize(playerCharacter);
-        _tradeZone.Initialize(_gameInstance, gameUICanvas.UIGameplay.UITrade, gameUICanvas.UIGameplay.UIFinishTrade);
 
-        sessionSystem = new SessionSystem(playerCharacter, gameUICanvas.UIResultsSession, waveSystem, _tradeZone);
+        _tradeZone.Initialize(_gameInstance, gameUICanvas.UIGameplay.UITrade, gameUICanvas.UIGameplay.UIOffer);
+
+        sessionSystem = new SessionSystem(playerCharacter, gameUICanvas.UIResultsSession, gameUICanvas.UIPause, waveSystem, _tradeZone);
+
+        _endGame.Initialize(waveSystem, sessionSystem, gameUICanvas.UIGameplay.UIOffer);
 
         sessionSystem.StartSession();
     }
@@ -45,5 +49,7 @@ public class GameBootstraper : MonoBehaviour
         );
         playerCharacter.transform.position = new Vector3(0f, 1f, 0f);
         playerCharacter.Initialize(gameUICanvas.UIGameplay.UIJoystick); 
+
+        cameraOrigin.Initialize(playerCharacter.transform);
     }
 }

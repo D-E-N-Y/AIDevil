@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_Pause : UI_Panel 
 {
+    public event Action onExitSession;
+
     private Button ui_pauseButton;
     
     [SerializeField] private UI_PauseMenu ui_menu;
@@ -28,6 +31,11 @@ public class UI_Pause : UI_Panel
         ui_stats.Hide();
         ui_inventory.Hide();
         ui_settings.Hide();
+    }
+
+    public void OnExitSession()
+    {
+        onExitSession?.Invoke();
     }
 
     public override void Hide()

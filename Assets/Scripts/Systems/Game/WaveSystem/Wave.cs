@@ -6,7 +6,7 @@ using UnityEngine;
 public class Wave
 {
     [SerializeField] private List<Enemy> _enemies;
-    public List<Enemy> Enemies => Enemies;
+    public List<Enemy> Enemies => _enemies;
 
     [SerializeField, Range(1, 999)] private int _count;
     public int Count => _count;

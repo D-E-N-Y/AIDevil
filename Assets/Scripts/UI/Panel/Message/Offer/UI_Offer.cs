@@ -1,22 +1,28 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_FinishTrade : UI_Panel 
+public class UI_Offer : UI_Message 
 {
     [SerializeField] private Button ui_yesButton;
     [SerializeField] private Button ui_noButton;
 
-    public void Initialize(FinishTrade finishTrade)
+    public void SetActions(Action yesAction, Action noAction)
     {
         ui_yesButton.onClick.RemoveAllListeners();
         ui_yesButton.onClick.AddListener(() => 
             {
-                finishTrade.Finish();
+                yesAction?.Invoke();
                 Hide();
             }
         );
 
         ui_noButton.onClick.RemoveAllListeners();
-        ui_noButton.onClick.AddListener(() => Hide());
+        ui_noButton.onClick.AddListener(() => 
+            {
+                noAction?.Invoke();
+                Hide();
+            }
+        );
     }
 }

@@ -15,20 +15,24 @@ public class SessionSystem
     // temporary field
     private Wallet _wallet;
 
-    public SessionSystem(PlayerCharacter playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, WaveSystem waveSystem, TradeZone tradeZone)
+    public SessionSystem(PlayerCharacter playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, UI_Pause ui_pause, WaveSystem waveSystem, TradeZone tradeZone)
     {
         _sesionResult = new SSesionResult();
 
         _sesionResult.namePlayerCharacter = playerCharacter.GetName();
         _sesionResult.name = $"{playerCharacter.GetName()} - {DateTime.Now}";
 
-        playerCharacter.GetHealth().OnDead += DeathPlayerCharacter;
+        playerCharacter.GetHealth().OnDead += LoseFinish;
+        ui_pause.onExitSession += LoseFinish;
+
         _wallet = playerCharacter.GetWallet();
 
         _ui_sessionResultsGame = ui_sessionResultsGame;
 
         _waveSystem = waveSystem;
-        _waveSystem.finishWaves += CompleteSession;
+
+        // _waveSystem.finishWaves += CompleteSession;
+
         _waveSystem.OnCompleteWave += CompleteWave;
         _waveSystem.sendResults += SetResults;
 
@@ -53,7 +57,7 @@ public class SessionSystem
         _waveSystem.StartWave();
     }
 
-    private void DeathPlayerCharacter()
+    public void LoseFinish()
     {
         _waveSystem.StopWave();
         _waveSystem.SendWaveResults();
@@ -68,7 +72,7 @@ public class SessionSystem
         _sesionResult.completedWaves = waveInfo.completedWaves;
     }
 
-    private void CompleteSession(ESessionResult result)
+    public void CompleteSession(ESessionResult result)
     {
         _endTimeSession = Time.unscaledTime;
 

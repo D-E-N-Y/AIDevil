@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,11 +9,11 @@ public class UI_SessionResultsGame : UI_Panel
     [SerializeField] private Button ui_exitButton;
     [SerializeField] private Button ui_restartButton;
 
-    private UI_Panel _ui_blackout;
+    private UI_Gameplay _ui_gamePlay;
 
-    public void Initialize(UI_Panel ui_blackout)
+    public void Initialize(UI_Gameplay ui_gamePlay)
     {
-        _ui_blackout = ui_blackout;
+        _ui_gamePlay = ui_gamePlay;
         Hide();
 
         ui_restartButton.onClick.RemoveAllListeners();
@@ -27,7 +26,7 @@ public class UI_SessionResultsGame : UI_Panel
     public override void Hide()
     {
         base.Hide();
-        _ui_blackout.Hide();
+        _ui_gamePlay.Show();
 
         Time.timeScale = 1f;
     }
@@ -35,7 +34,7 @@ public class UI_SessionResultsGame : UI_Panel
     public override void Show()
     {
         base.Show();
-        _ui_blackout.Show();
+        _ui_gamePlay.Hide();
 
         Time.timeScale = 0f;
     }

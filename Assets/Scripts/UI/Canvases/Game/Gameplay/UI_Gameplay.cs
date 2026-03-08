@@ -14,7 +14,8 @@ public class UI_Gameplay : UI_Panel
     [SerializeField] private UI_Wave ui_wave;
 
     [SerializeField] private UI_Trade ui_trade;
-    [SerializeField] private UI_FinishTrade ui_finishTrade;
+
+    [SerializeField] private UI_Offer ui_offer;
 
     [SerializeField] private Button ui_pauseButton;
 
@@ -27,7 +28,8 @@ public class UI_Gameplay : UI_Panel
         ui_wave.Initialize(waveSystem);
 
         ui_trade.Hide();
-        ui_finishTrade.Hide();
+
+        ui_offer.Hide();
     }
 
     public FixedJoystick UIJoystick => ui_joystick;
@@ -40,7 +42,7 @@ public class UI_Gameplay : UI_Panel
     public UI_Wave UIWave => ui_wave;
 
     public UI_Trade UITrade => ui_trade;
-    public UI_FinishTrade UIFinishTrade => ui_finishTrade;
+    public UI_Offer UIOffer => ui_offer;
 
     public Button UIPauseButton => ui_pauseButton;
 }

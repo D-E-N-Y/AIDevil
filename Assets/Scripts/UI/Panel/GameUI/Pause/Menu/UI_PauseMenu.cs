@@ -45,6 +45,11 @@ public class UI_PauseMenu : UI_Panel
         ui_restartButton.onClick.AddListener(() => SceneManager.LoadScene("GameScene"));
         
         ui_exitButton.onClick.RemoveAllListeners();
-        ui_exitButton.onClick.AddListener(() => SceneManager.LoadScene("MainMenuScene"));
+        ui_exitButton.onClick.AddListener(() => 
+            {
+                ui_pause.OnExitSession();
+                ui_pause.Hide();
+            }
+        );
     }
 }

@@ -6,19 +6,16 @@ public class GameUICanvas : MonoBehaviour
     [SerializeField] private UI_Pause ui_pause;
     [SerializeField] private UI_SessionResultsGame ui_resultsSession;
 
-    [SerializeField] private UI_Panel ui_blackout;
-
     public void Initialize(PlayerCharacter playerCharacter, WaveSystem waveSystem)
     {
         ui_gameplay.Initialize(playerCharacter, waveSystem);
-        ui_resultsSession.Initialize(ui_blackout);
+        ui_resultsSession.Initialize(ui_gameplay);
         ui_pause.Initialize(playerCharacter.GetItemContext(), ui_gameplay);
 
         ui_gameplay.Show();
 
         ui_pause.Hide();
         ui_resultsSession.Hide();
-        ui_blackout.Hide();
     }
 
     public UI_Gameplay UIGameplay => ui_gameplay;
