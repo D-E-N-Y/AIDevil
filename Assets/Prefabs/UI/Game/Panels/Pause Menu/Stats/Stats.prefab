@@ -598,6 +598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2905308732804548371}
   - component: {fileID: 3823716489276551904}
+  - component: {fileID: 1259702137297267934}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -662,6 +663,21 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 5}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &1259702137297267934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835274664685529125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bb81293f686c5bacb218ddaf72f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statIcons: {fileID: 11400000, guid: c5ced15bd6a3fe6e688b7e8be9a077ae, type: 2}
+  ui_statsContainer: {fileID: 2905308732804548371}
+  ui_statPrefab: {fileID: 7731409991057797436, guid: 18a4291bacf3f800da1ce704069d53d8, type: 3}
 --- !u!1 &884699470803078698
 GameObject:
   m_ObjectHideFlags: 0
@@ -9544,7 +9560,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6283639406404256052}
   - component: {fileID: 3036478739546403829}
-  - component: {fileID: 1538149630027260251}
+  - component: {fileID: 8004261359881658076}
   m_Layer: 5
   m_Name: Stats
   m_TagString: Untagged
@@ -9599,7 +9615,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1538149630027260251
+--- !u!114 &8004261359881658076
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9608,13 +9624,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7169833051422365210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b1bb81293f686c5bacb218ddaf72f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 13ba69601cd1301a59cc84792d6f137b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statIcons: {fileID: 11400000, guid: c5ced15bd6a3fe6e688b7e8be9a077ae, type: 2}
   ui_backButton: {fileID: 5193003420930776505}
-  ui_statsContainer: {fileID: 2905308732804548371}
-  ui_statPrefab: {fileID: 7731409991057797436, guid: 18a4291bacf3f800da1ce704069d53d8, type: 3}
+  ui_stats: {fileID: 1259702137297267934}
 --- !u!1 &7306256273378380689
 GameObject:
   m_ObjectHideFlags: 0

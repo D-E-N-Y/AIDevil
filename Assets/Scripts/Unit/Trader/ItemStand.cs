@@ -52,7 +52,7 @@ public class ItemStand : MonoBehaviour
             return;
         }
         
-        _itemContext.Wallet.RemoveMoney(_item.Price);
+        _itemContext.Wallet.RemoveResource(ResourceType.Credits, _item.Price);
 
         _worldItem.AllowPickUp();
         _worldItem.PickUp(_itemContext);
@@ -67,7 +67,7 @@ public class ItemStand : MonoBehaviour
 
         _itemContext = other.gameObject.GetComponent<PlayerCharacter>().GetItemContext();
 
-        bool enoughMoney = _itemContext.Wallet.HasEnoughMoney(_item.Price);
+        bool enoughMoney = _itemContext.Wallet.HasEnoughResource(ResourceType.Credits, _item.Price);
         bool maxSpellsCount = true;
 
         if (_item.Type == ItemType.Spell && _itemContext.Inventory.IsSpellSlotsFull)

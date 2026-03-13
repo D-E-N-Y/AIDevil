@@ -12,6 +12,9 @@ public class GameInstance : MonoBehaviour
     private Profile _currentProfile;
     private List<Profile> _profiles;
 
+    private GameLevel _currentGameLevel;
+    public GameLevel CurrentGameLevel => _currentGameLevel;
+
     private SaveLoadSystem _saveLoadSystem;
     private DataBase _dataBase;
 
@@ -174,6 +177,21 @@ public class GameInstance : MonoBehaviour
     #region DataBase Management
 
     public DataBase GetDataBase() => _dataBase;
+
+    #endregion
+
+
+    #region Game Levels
+
+    public void SetCurrentGameLevel(string nameGameLevel)
+    {
+        _currentGameLevel = _dataBase.GameLevels.GetGameLevelByName(nameGameLevel);
+    }
+
+        public void SetCurrentGameLevel(GameLevel gameLevel)
+    {
+        _currentGameLevel = gameLevel;
+    }
 
     #endregion
 

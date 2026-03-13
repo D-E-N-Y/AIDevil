@@ -204,27 +204,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825bf3e1b37150103b0eb29b96cc90de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
   _name: Melee Enemy
-  _stats:
-    maxHP: 50
-    baseMoveSpeed: 3
-    moveSpeedModifier: 1
-    armor: 10
-    damageModifier: 1
-    speedAttackModifier: 1
-    criticalDamageChance: 0
-    criticalDamageModifier: 0
-    multiattackChance: 0
-    areaModifier: 1
-    dodgeChance: 0
-    dropMoney: 10
+  _stats: {fileID: 11400000, guid: 61152f54d6bdfc68ba6dba2aff2b9fe7, type: 2}
   ui_unitHPIndicator: {fileID: 5447561066302684890}
   playerCharacterTarget: {fileID: 0}
   spells:
   - {fileID: 1116532717622906396}
   ui_worldSpellCooldown: {fileID: 2427886636802672106}
   attackRange: 1.5
-  worldMoney: {fileID: -4757561662637665533, guid: dd87ee4a29cc034c89d03a61d6be45a5, type: 3}
+  worldResource: {fileID: -4757561662637665533, guid: dd87ee4a29cc034c89d03a61d6be45a5, type: 3}
 --- !u!1001 &1752557879287822902
 PrefabInstance:
   m_ObjectHideFlags: 0

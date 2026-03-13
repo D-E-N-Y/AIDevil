@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[Serializable]
+[Serializable, CreateAssetMenu(fileName = "Enemy Stats", menuName = "UnitStats/EnemyStats")]
 public class EnemyStats : UnitStats
 {
     [SerializeField, Range(0, 1000)] private int dropMoney;

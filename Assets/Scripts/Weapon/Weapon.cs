@@ -44,7 +44,7 @@ public abstract class Weapon : MonoBehaviour
         return roll < _criticalDamageChance;
     }
 
-    protected void ApplyDamage(IUnit targetUnit)
+    protected void ApplyDamage(IHealth targetUnit)
     {
         int finalDamage = Mathf.RoundToInt(damage * _damageModifier);
 
@@ -53,7 +53,7 @@ public abstract class Weapon : MonoBehaviour
             finalDamage = Mathf.RoundToInt(finalDamage * _criticalDamageModifier);
         }
 
-        targetUnit.GetHealth().TakeDamage(finalDamage);
+        targetUnit.TakeDamage(finalDamage);
         onSuccessfulAttack?.Invoke();
     }
 }

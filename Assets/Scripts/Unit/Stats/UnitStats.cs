@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class UnitStats 
+public class UnitStats : ScriptableObject
 {
     public event Action OnStatsChanged;
     public event Action<StatType> OnStatChanged;
@@ -44,6 +44,7 @@ public class UnitStats
     protected Dictionary<StatType, Action<float>> _modifyStat;
     
     protected Dictionary<StatType, float> _currentStats;
+
     public IReadOnlyDictionary<StatType, float> CurrentStats => _currentStats;
 
     public virtual void Initialize()

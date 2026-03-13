@@ -7,6 +7,8 @@ public class GameBootstraper : MonoBehaviour
     [SerializeField] private CameraOrigin cameraOrigin;
 
     [SerializeField] private WaveSystem waveSystem;
+    [SerializeField] private LandSystem landSystem;
+    [SerializeField] private ResourceSystem resourceSystem;
 
     [SerializeField] private TradeZone _tradeZone;
     [SerializeField] private EndGame _endGame;
@@ -27,7 +29,10 @@ public class GameBootstraper : MonoBehaviour
 
         InitializePlayer();
 
-        waveSystem.Initialize(playerCharacter);
+        waveSystem.Initialize(_gameInstance.CurrentGameLevel.WaveConfig.Waves, playerCharacter);
+
+        landSystem.Initialize();
+        resourceSystem.Initialize(_gameInstance.CurrentGameLevel.Resources, landSystem);
 
         gameUICanvas.Initialize(playerCharacter, waveSystem);
 
@@ -38,6 +43,7 @@ public class GameBootstraper : MonoBehaviour
         _endGame.Initialize(waveSystem, sessionSystem, gameUICanvas.UIGameplay.UIOffer);
 
         sessionSystem.StartSession();
+        resourceSystem.SpawnResoure.StartSpawn();
     }
 
     private void InitializePlayer()

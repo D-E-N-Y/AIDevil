@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[Serializable]
+[Serializable, CreateAssetMenu(fileName = "Player Character Stats", menuName = "UnitStats/PlayerCharacter")]
 public class PlayerCharacterStats : UnitStats 
 {
     [SerializeField, Range(0f, 1f)] private float pickUpRangeModifier;

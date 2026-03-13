@@ -34,6 +34,16 @@ public class UI_Character : UI_Panel
         _ui_charactersList.Select(this);
     }
 
+    public void SelectWithoutMessage()
+    {
+        isSelect = true;
+        
+        ui_selectImage.gameObject.SetActive(isSelect);
+        ui_unselectImage.gameObject.SetActive(!isSelect);
+
+        _ui_charactersList.Select(this);
+    }
+
     public void UnSelect()
     {
         isSelect = false;

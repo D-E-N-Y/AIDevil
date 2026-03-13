@@ -19,7 +19,7 @@ public class UI_MoneyAmount : UI_Panel
 
     private void UpdateMoneyAmountText()
     {
-        ui_moneyAmountText.text = _wallet.Money.ToString();
+        ui_moneyAmountText.text = _wallet.Resources[ResourceType.Credits].ToString();
     }
 
     protected override void AddSubscriptions()

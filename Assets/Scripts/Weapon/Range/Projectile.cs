@@ -77,7 +77,15 @@ public class Projectile : Weapon
         {
             if(!isCanAttack) return;
             
-            ApplyDamage(unit);
+            ApplyDamage(unit.GetHealth());
+
+            isCanAttack = false;
+        }
+        else if (other.gameObject.TryGetComponent<IHealth>(out IHealth actor))
+        {
+            if(!isCanAttack) return;
+            
+            ApplyDamage(actor);
 
             isCanAttack = false;
         }

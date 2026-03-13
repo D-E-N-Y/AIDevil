@@ -24,7 +24,11 @@ public abstract class MeleeWeapon : Weapon
     {
         if (other.gameObject.TryGetComponent<IUnit>(out IUnit unit))
         {
-            ApplyDamage(unit);
+            ApplyDamage(unit.GetHealth());
+        }
+        else if (other.gameObject.TryGetComponent<IHealth>(out IHealth actor))
+        {
+            ApplyDamage(actor);
         }
     }
 }

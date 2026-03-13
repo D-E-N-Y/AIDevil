@@ -1,36 +1,36 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UI_Stats : UI_Panel 
 {
     [SerializeField] private StatIcons statIcons;
-    
-    [SerializeField] private Button ui_backButton;
 
     [SerializeField] private Transform ui_statsContainer;
     [SerializeField] private UI_Stat ui_statPrefab;
 
     private Dictionary<StatType, UI_Stat> ui_stats;
 
-    private PlayerCharacterStats _stats;
+    private UnitStats _stats;
 
-    public void Initialize(PlayerCharacterStats stats, UI_PauseMenu ui_pauseMenu)
+    private static readonly StatType[] allstats = (StatType[])Enum.GetValues(typeof(StatType));
+
+    public void Initialize()
     {
-        _stats = stats;
-
-        if (ui_pauseMenu != null)
-        {
-            ui_backButton.onClick.RemoveAllListeners();
-            ui_backButton.onClick.AddListener(() => {
-                ui_pauseMenu.Show();
-                Hide();
-            });
-        }
+        ui_stats = new Dictionary<StatType, UI_Stat>();
 
         DisableAllObjectsInContainer();
         CreateUIStats();
+    }
+
+    public void SetStats(UnitStats stats)
+    {
+        _stats = stats;
+
+        if (_stats.CurrentStats == null)
+        {
+            _stats.Initialize();
+        }
     }
 
     private void DisableAllObjectsInContainer()
@@ -43,33 +43,33 @@ public class UI_Stats : UI_Panel
 
     private void CreateUIStats()
     {
-        ui_stats = new Dictionary<StatType, UI_Stat>();
-
-        foreach (StatType stat in Enum.GetValues(typeof(StatType)))
+        foreach (StatType stat in allstats)
         {
-            if(_stats.CurrentStats.ContainsKey(stat))
+            if (!ui_stats.ContainsKey(stat))
             {
                 UI_Stat ui_stat = Instantiate(ui_statPrefab, ui_statsContainer);
-                ui_stat.Initialize(statIcons.GetStatIcon(stat), _stats.CurrentStats[stat]);
+                ui_stat.Initialize(statIcons.GetStatIcon(stat));
                 ui_stats.Add(stat, ui_stat);
             }
         }
     }
     
-    public void SetData()
+    public void UpdateUI()
     {
-        foreach (StatType stat in Enum.GetValues(typeof(StatType)))
+        foreach (StatType stat in allstats)
         {
             if(ui_stats.ContainsKey(stat))
             {
-                ui_stats[stat].Initialize(statIcons.GetStatIcon(stat), _stats.CurrentStats[stat]);
+                if (_stats.CurrentStats.ContainsKey(stat))
+                {
+                    ui_stats[stat].SetValue(_stats.CurrentStats[stat]);
+                    ui_stats[stat].Show();
+                }
+                else
+                {
+                    ui_stats[stat].Hide();
+                }
             }
         }
-    }
-
-    public override void Show()
-    {
-        base.Show();
-        SetData();
     }
 }

@@ -7,12 +7,17 @@ public class UI_SpellsList : UI_Panel
     [SerializeField] private UI_Spell ui_spellPrefab;
     [SerializeField] private Transform ui_spellsContainer;
 
+    private List<UI_Spell> ui_spells;
+
+    public void Initialize()
+    {
+        ui_spells = new List<UI_Spell>();
+        ui_spells = ui_spellsContainer.GetComponentsInChildren<UI_Spell>(true).ToList();
+    }
+
     public void SetInfo(List<Spell> spells)
     {
-        List<UI_Spell> ui_spells = new List<UI_Spell>();
-        ui_spells = ui_spellsContainer.GetComponentsInChildren<UI_Spell>(true).ToList();
-
-        int residue = Mathf.Abs(ui_spells.Count - spells.Count);
+        int residue = spells.Count - ui_spells.Count;
         if(residue > 0)
         {
             for(int i = 0; i < residue; i++)

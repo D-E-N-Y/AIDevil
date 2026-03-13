@@ -11,7 +11,7 @@ public class UI_Stat : UI_Panel
 
     private float _percentageModifier;
 
-    public void Initialize(StatIcons.StatIcon statIcon, float value)
+    public void Initialize(StatIcons.StatIcon statIcon)
     {
         SetPercentage(statIcon);
         
@@ -19,7 +19,10 @@ public class UI_Stat : UI_Panel
         ui_icon.color = statIcon.color;
         
         ui_nameText.text = statIcon.stat.ToString();
+    }
 
+    public void SetValue(float value)
+    {
         ui_valueText.text = (value * _percentageModifier).ToString();
     }
 
@@ -27,7 +30,8 @@ public class UI_Stat : UI_Panel
     {
         if (statIcon.stat == StatType.MaxHP ||
             statIcon.stat == StatType.BaseMoveSpeed ||
-            statIcon.stat == StatType.Armor)
+            statIcon.stat == StatType.Armor ||
+            statIcon.stat == StatType.DropMoney)
         {
             ui_percentageText.gameObject.SetActive(false);
             _percentageModifier = 1f;

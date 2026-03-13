@@ -17,6 +17,8 @@ public class UI_BestiaryMenu : UI_Panel
         ui_buttonClose.onClick.RemoveAllListeners();
         ui_buttonClose.onClick.AddListener(Hide);
 
+        ui_enemyDescription.Initialize();
+
         ui_enemyList.Initialize(gameInstance);
         ui_enemyList.onSelect += ui_enemyDescription.SetUnitInfo;
         

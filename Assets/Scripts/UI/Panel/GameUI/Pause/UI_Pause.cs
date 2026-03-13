@@ -9,7 +9,7 @@ public class UI_Pause : UI_Panel
     private Button ui_pauseButton;
     
     [SerializeField] private UI_PauseMenu ui_menu;
-    [SerializeField] private UI_Stats ui_stats;
+    [SerializeField] private UI_StatsMenu ui_statsMenu;
     [SerializeField] private UI_Inventory ui_inventory;
     [SerializeField] private UI_Settings ui_settings;
 
@@ -22,13 +22,13 @@ public class UI_Pause : UI_Panel
             Show();
         });
         
-        ui_menu.Initialize(this, ui_gameplay, ui_stats, ui_inventory, ui_settings);
-        ui_stats.Initialize((PlayerCharacterStats)context.Stats, ui_menu);
+        ui_menu.Initialize(this, ui_gameplay, ui_statsMenu, ui_inventory, ui_settings);
+        ui_statsMenu.Initialize((PlayerCharacterStats)context.Stats, ui_menu);
         ui_inventory.Initialize(context.Inventory ,ui_menu);
         ui_settings.Initialize(ui_menu);
 
         ui_menu.Show();
-        ui_stats.Hide();
+        ui_statsMenu.Hide();
         ui_inventory.Hide();
         ui_settings.Hide();
     }

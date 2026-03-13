@@ -5,6 +5,7 @@ public class UI_MainMenuCanvas : MonoBehaviour
     [SerializeField] private UI_MainMenu ui_mainMenu;
     [SerializeField] private UI_ProfiliesMenu ui_profiliesMenu;
     [SerializeField] private UI_CharactersMenu ui_charactersMenu;
+    [SerializeField] private UI_GameLevelsMenu ui_gameLevelsMenu;
     [SerializeField] private UI_BestiaryMenu ui_bestiaryMenu;  
     [SerializeField] private UI_SessionResultsMenu ui_sessionResultsMenu;
 
@@ -20,7 +21,10 @@ public class UI_MainMenuCanvas : MonoBehaviour
         ui_bestiaryMenu.Initialize(_gameInstance);
         ui_bestiaryMenu.Hide();
 
-        ui_charactersMenu.Initialize(_gameInstance);
+        ui_gameLevelsMenu.Initialize(_gameInstance);
+        ui_gameLevelsMenu.Hide();
+
+        ui_charactersMenu.Initialize(_gameInstance, ui_gameLevelsMenu);
         ui_charactersMenu.Hide();
 
         ui_profiliesMenu.Initialize(_gameInstance);

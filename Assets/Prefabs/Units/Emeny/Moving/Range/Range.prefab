@@ -174,26 +174,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 1
   _name: Range Enemy
-  _stats:
-    maxHP: 50
-    baseMoveSpeed: 5
-    moveSpeedModifier: 1
-    armor: 5
-    damageModifier: 1
-    speedAttackModifier: 1
-    criticalDamageChance: 0
-    criticalDamageModifier: 0
-    multiattackChance: 0
-    areaModifier: 1
-    dodgeChance: 0
-    dropMoney: 5
+  _stats: {fileID: 11400000, guid: 1d73578f0a2a99f8cafcc566cee9ed2a, type: 2}
   ui_unitHPIndicator: {fileID: 307832241562989812}
   playerCharacterTarget: {fileID: 0}
   spells:
   - {fileID: 3549126975990371772}
   ui_worldSpellCooldown: {fileID: 3522864599326716504}
   attackRange: 6.5
-  worldMoney: {fileID: -4757561662637665533, guid: dd87ee4a29cc034c89d03a61d6be45a5, type: 3}
+  worldResource: {fileID: -4757561662637665533, guid: dd87ee4a29cc034c89d03a61d6be45a5, type: 3}
 --- !u!1 &9206541884789591435
 GameObject:
   m_ObjectHideFlags: 0

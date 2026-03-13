@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour, IUnit
 
     [SerializeField, Range(1f, 20f)] protected float attackRange;
 
-    [SerializeField] protected WorldMoney worldMoney;
+    [SerializeField] protected WorldResource worldResource;
 
     protected UnitFaction _unitFaction;
 
@@ -66,8 +66,8 @@ public class Enemy : MonoBehaviour, IUnit
 
     protected void DropMoney()
     {
-        WorldMoney _worldMoney = Instantiate(worldMoney, transform.position, Quaternion.identity);
-        _worldMoney.Initialize(_stats.DropMoney);
+        WorldResource _worldResource = Instantiate(worldResource, transform.position, Quaternion.identity);
+        _worldResource.Initialize(ResourceType.Credits, _stats.DropMoney);
     }
 
     public virtual void SetPlayerTarget(PlayerCharacter playerTarget) => this.playerCharacterTarget = playerTarget;
