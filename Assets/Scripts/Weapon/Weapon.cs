@@ -50,7 +50,7 @@ public abstract class Weapon : MonoBehaviour
 
         if (IsCriticalHit())
         {
-            finalDamage = Mathf.RoundToInt(finalDamage * _criticalDamageModifier);
+            finalDamage = finalDamage + Mathf.RoundToInt(finalDamage * _criticalDamageModifier);
         }
 
         targetUnit.TakeDamage(finalDamage);

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SpawnResoure : MonoBehaviour 
 {
+    public event Action<HintType, Vector3, Action<Action>, Action<Action>> onStartHint;
+    
     [SerializeField] private List<Resource> _resourcePrefabs;
     private List<Resource> _avaliableResourcePrefabs;
     private IReadOnlyList<ResourceType> _resources;
@@ -19,12 +21,14 @@ public class SpawnResoure : MonoBehaviour
 
     private LandSystem _landSystem;
 
-    public void Initialize(IReadOnlyList<ResourceType> resources, LandSystem landSystem)
+    public void Initialize(IReadOnlyList<ResourceType> resources, LandSystem landSystem, UI_HintController ui_hintController)
     {
         _resources = resources;
         SetAvaliableReources();
 
         _landSystem = landSystem;
+
+        onStartHint += ui_hintController.ShowHint;
     }
 
     private void SetAvaliableReources()
@@ -95,6 +99,13 @@ public class SpawnResoure : MonoBehaviour
 
         Resource resource = Instantiate(randomResource, spawnPosition, spawnRotation);
         resource.Initialize();
+
+        onStartHint?.Invoke(
+            HintType.Resource, 
+            spawnPosition, 
+            h => resource.OnDead += h,
+            h => resource.OnDead -= h
+        );
     }
 
     private Resource GetRandomResource()

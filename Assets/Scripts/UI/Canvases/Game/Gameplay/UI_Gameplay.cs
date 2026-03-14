@@ -17,6 +17,8 @@ public class UI_Gameplay : UI_Panel
 
     [SerializeField] private UI_Offer ui_offer;
 
+    [SerializeField] private UI_HintController ui_hintController;
+
     [SerializeField] private Button ui_pauseButton;
 
     public void Initialize(PlayerCharacter playerCharacter, WaveSystem waveSystem)
@@ -30,6 +32,9 @@ public class UI_Gameplay : UI_Panel
         ui_trade.Hide();
 
         ui_offer.Hide();
+
+        ui_hintController.Initialize();
+        ui_hintController.Show();
     }
 
     public FixedJoystick UIJoystick => ui_joystick;
@@ -43,6 +48,8 @@ public class UI_Gameplay : UI_Panel
 
     public UI_Trade UITrade => ui_trade;
     public UI_Offer UIOffer => ui_offer;
+
+    public UI_HintController UIHintController => ui_hintController;
 
     public Button UIPauseButton => ui_pauseButton;
 }

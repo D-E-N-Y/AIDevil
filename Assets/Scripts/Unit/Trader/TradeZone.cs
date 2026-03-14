@@ -5,18 +5,21 @@ using UnityEngine;
 public class TradeZone : MonoBehaviour 
 {
     public event Action OnCompleteTrade;
+    public event Action<HintType, Vector3, Action<Action>, Action<Action>> onStartHint;
     
     [SerializeField] private Trader _trader;
     [SerializeField] private List<ItemStand> _itemStands;
     [SerializeField] private OfferStand _finishTrade;
 
-    public void Initialize(GameInstance gameInstance, UI_Trade ui_trade, UI_Offer ui_offer)
+    public void Initialize(GameInstance gameInstance, UI_Trade ui_trade, UI_Offer ui_offer, UI_HintController ui_hintController)
     {
         _trader.Initilaize(gameInstance);
         _itemStands.ForEach(stand => stand.Initialize(ui_trade));
         
         _finishTrade.Initialize(ui_offer);
         _finishTrade.onYes += CompleteTrade;
+
+        onStartHint += ui_hintController.ShowHint;
 
         Despawn();
     }
@@ -26,6 +29,13 @@ public class TradeZone : MonoBehaviour
         GenerateTradeItems();
 
         gameObject.SetActive(true);
+
+        onStartHint?.Invoke(
+            HintType.Trader, 
+            _trader.transform.position, 
+            h => OnCompleteTrade += h,
+            h => OnCompleteTrade -= h
+        );
     }
 
     public void Despawn()

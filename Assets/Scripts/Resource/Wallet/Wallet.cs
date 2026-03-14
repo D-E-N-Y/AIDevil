@@ -30,7 +30,7 @@ public class Wallet
     public void RemoveResource(ResourceType resource, int amount)
     {
         amount = Mathf.Max(0, amount);
-        _resources[resource] += amount;
+        _resources[resource] -= amount;
 
         OnMoneyAmountChanged?.Invoke();
     }

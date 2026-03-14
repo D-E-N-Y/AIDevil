@@ -17,9 +17,18 @@ public class UI_AttackRangeContainer : UI_Panel
 
     private void UpdateUI()
     {
-        ui_spells.ForEach(x => x.Hide()); 
-
         List<SpellRange> _spellRanges = _playerCharacter.GetSpellController().GetSpellRanges();
+        
+        if (_spellRanges.Count <= 0)
+        {
+            Hide();
+        }
+        else
+        {
+            Show();
+        }
+
+        ui_spells.ForEach(x => x.Hide());
 
         for (int i = 0; i < _spellRanges.Count; i++)
         {

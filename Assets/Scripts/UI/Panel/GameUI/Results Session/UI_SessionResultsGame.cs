@@ -17,7 +17,7 @@ public class UI_SessionResultsGame : UI_Panel
         Hide();
 
         ui_restartButton.onClick.RemoveAllListeners();
-        ui_restartButton.onClick.AddListener(() => SceneManager.LoadScene("GameScene"));
+        ui_restartButton.onClick.AddListener(() => SceneManager.LoadScene(GameInstance.current.CurrentGameLevel.Name)); 
         
         ui_exitButton.onClick.RemoveAllListeners();
         ui_exitButton.onClick.AddListener(() => SceneManager.LoadScene("MainMenuScene"));
