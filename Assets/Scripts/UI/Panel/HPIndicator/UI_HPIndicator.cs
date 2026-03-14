@@ -1,17 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_UnitHPIndicator : UI_Panel
+public class UI_HPIndicator : UI_Panel
 {
     [SerializeField] private Slider ui_hpSlider;
-    private IHealth unit;
+    private IHealth _health;
     private Camera _camera;
 
 
-    public void Initialize(IHealth unit)
+    public void Initialize(IHealth health)
     {
-        this.unit = unit;
-        unit.OnHpChanged += UpdateHP;
+        _health = health;
+        health.OnHpChanged += UpdateHP;
         UpdateHP();
 
         _camera = Camera.main;
@@ -19,7 +19,7 @@ public class UI_UnitHPIndicator : UI_Panel
 
     private void UpdateHP()
     {
-        ui_hpSlider.value = (float)unit.CurrentHP / (float)unit.MaxHP;
+        ui_hpSlider.value = (float)_health.CurrentHP / (float)_health.MaxHP;
     }
 
     private void Update()

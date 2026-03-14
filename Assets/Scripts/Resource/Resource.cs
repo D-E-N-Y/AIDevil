@@ -17,6 +17,8 @@ public class Resource : MonoBehaviour, IHealth
 
     [SerializeField] protected WorldResource worldResourcePrefab;
 
+    [SerializeField] private UI_HPIndicator ui_hpIndicator;
+
     public event Action OnHpChanged;
     public event Action OnDead;
 
@@ -24,6 +26,8 @@ public class Resource : MonoBehaviour, IHealth
     {
         _currentHP = _maxHP;
 
+        ui_hpIndicator.Initialize(this);
+        
         Debug.Log($"Initialize {_type} {_currentHP}");
     }
 

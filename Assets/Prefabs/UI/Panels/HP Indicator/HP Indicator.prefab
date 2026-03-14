@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 247086090397704565}
   - component: {fileID: 1105977117399833012}
   m_Layer: 5
-  m_Name: Unit HP Indicator
+  m_Name: HP Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui_hpSlider: {fileID: 5705840247015071702}
-  unit: {fileID: 0}
 --- !u!1 &2069413490896066898
 GameObject:
   m_ObjectHideFlags: 0

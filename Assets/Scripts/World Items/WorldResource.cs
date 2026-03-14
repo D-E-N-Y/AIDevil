@@ -25,12 +25,12 @@ public class WorldResource : WorldPickup
 
     public override void PickUp(ItemContext context)
     {
-        int finalAmount = 0; 
+        int finalAmount = _amount; 
 
         if (_resource == ResourceType.Credits)
         {
             float modifier = ((PlayerCharacterStats)context.Stats).MoneyModifier;
-            finalAmount = Mathf.RoundToInt(_amount * modifier);
+            finalAmount = Mathf.RoundToInt(finalAmount * modifier);
         }
 
         context.Wallet.AddResource(_resource, finalAmount);

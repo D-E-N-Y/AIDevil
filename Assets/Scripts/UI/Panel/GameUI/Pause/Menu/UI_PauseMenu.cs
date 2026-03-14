@@ -12,7 +12,7 @@ public class UI_PauseMenu : UI_Panel
     [SerializeField] private Button ui_restartButton;
 
 
-    public void Initialize(UI_Pause ui_pause, UI_Gameplay ui_gameplay, UI_StatsMenu ui_statsMenu, UI_Inventory ui_inventory, UI_Settings ui_settings)
+    public void Initialize(UI_Pause ui_pause, UI_Gameplay ui_gameplay, UI_StatsMenu ui_statsMenu, UI_InventoryMenu ui_inventoryMenu, UI_Settings ui_settings)
     {
         ui_statsButton.onClick.RemoveAllListeners();
         ui_statsButton.onClick.AddListener(() =>
@@ -24,7 +24,7 @@ public class UI_PauseMenu : UI_Panel
         ui_inventoryButton.onClick.RemoveAllListeners();
         ui_inventoryButton.onClick.AddListener(() =>
         {
-            ui_inventory.Show();
+            ui_inventoryMenu.Show();
             Hide();
         });
 

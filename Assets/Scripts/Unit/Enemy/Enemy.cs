@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour, IUnit
     protected bool _isDead;
     public bool IsDead => _isDead;
 
-    [SerializeField] UI_UnitHPIndicator ui_unitHPIndicator;
+    [SerializeField] UI_HPIndicator ui_hpIndicator;
 
     [SerializeField] protected PlayerCharacter playerCharacterTarget;
 
@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour, IUnit
         _health = new UnitHealth(_stats);
         _health.OnDead += Death;
 
-        ui_unitHPIndicator.Initialize(_health);
+        ui_hpIndicator.Initialize(_health);
 
         spells.ForEach(x => x.Initialize(_unitFaction, _stats));
         ui_worldSpellCooldown.Initialize(spells[0]);

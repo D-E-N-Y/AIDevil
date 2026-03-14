@@ -13,7 +13,7 @@ public class Boss : Agent, IUnit
     protected UnitHealth _health;
     public event Action<IUnit> OnDead;
 
-    [SerializeField] UI_UnitHPIndicator ui_unitHPIndicator;
+    [SerializeField] UI_HPIndicator ui_hpIndicator;
 
     protected Vector3 oldPosition, newPosition;
 
@@ -33,7 +33,7 @@ public class Boss : Agent, IUnit
         _health = new UnitHealth(_stats);
         _health.OnDead += Death;
 
-        ui_unitHPIndicator.Initialize(_health);
+        ui_hpIndicator.Initialize(_health);
 
         meleeSpells = new List<SpellMelee>();
         foreach (Spell spell in spells)

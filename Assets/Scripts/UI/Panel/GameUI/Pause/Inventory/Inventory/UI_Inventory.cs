@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class UI_Inventory : UI_Panel 
 {
-    [SerializeField] private Button ui_backButton;
-
     [SerializeField] private UI_ContainerInventorySlots _spellsContainer;
     [SerializeField] private UI_ContainerInventorySlots _equipmentContainer;
 
@@ -13,15 +11,9 @@ public class UI_Inventory : UI_Panel
 
     private Inventory _inventory;
 
-    public void Initialize(Inventory inventory, UI_PauseMenu ui_pauseMenu)
+    public void Initialize(Inventory inventory)
     {
         _inventory = inventory;
-        
-        ui_backButton.onClick.RemoveAllListeners();
-        ui_backButton.onClick.AddListener(() => {
-            ui_pauseMenu.Show();
-            Hide();
-        });
 
         _spellsContainer.Initiaalize(ui_inventorySlotPrefab);
         _equipmentContainer.Initiaalize(ui_inventorySlotPrefab);
@@ -44,9 +36,8 @@ public class UI_Inventory : UI_Panel
         }
     }
 
-    public override void Show()
+    private void OnEnable()
     {
-        base.Show();
         UpdateData();
     }
 }

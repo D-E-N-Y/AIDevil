@@ -40,4 +40,9 @@ public class Wallet
         amount = Mathf.Max(0, amount);
         return _resources[resource] >= amount;
     }
+
+    public int GetAmountByResource(ResourceType resource)
+    {
+        return _resources[resource];
+    }
 }
