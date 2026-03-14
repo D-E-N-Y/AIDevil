@@ -28,6 +28,8 @@ public class UI_GameLevel : UI_Panel
 
         ui_selectButton.onClick.RemoveAllListeners();
         ui_selectButton.onClick.AddListener(() => Select());
+
+        UnSelect();
     }
 
     public void Select()
