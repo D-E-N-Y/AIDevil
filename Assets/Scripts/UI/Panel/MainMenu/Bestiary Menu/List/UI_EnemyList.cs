@@ -48,7 +48,7 @@ public class UI_EnemyList : UI_Panel
 
     public void UpdateData()
     {
-        List<Enemy> discoveredEnemies = _gameInstance.GetDataBase().Enemies.GetEnemiesByNames(GameInstance.current.GetProfile().bestiaryData.discoveredEnemiesNames);
+        List<Enemy> discoveredEnemies = _gameInstance.GetDataBase().Enemies.GetEnemiesByNames(_gameInstance.GetProfile().bestiaryData.discoveredEnemiesNames);
 
         UpdateList(discoveredEnemies);
         UpdateProgress(allEnemies.Count, discoveredEnemies.Count);
@@ -57,7 +57,7 @@ public class UI_EnemyList : UI_Panel
     private void UpdateList(List<Enemy> enemies)
     {
         selected_ui_enemy = null;
-
+        
         ui_enemies.ForEach(x => x.Hide());
 
         for(int i = 0; i < enemies.Count; i++)

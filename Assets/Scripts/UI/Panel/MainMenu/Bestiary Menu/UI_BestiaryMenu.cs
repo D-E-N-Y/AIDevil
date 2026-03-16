@@ -12,6 +12,8 @@ public class UI_BestiaryMenu : UI_Panel
 
     public void Initialize(GameInstance gameInstance)
     {
+        ClearSubscriptions();
+        
         _gameInstance = gameInstance;
         
         ui_buttonClose.onClick.RemoveAllListeners();
@@ -51,7 +53,15 @@ public class UI_BestiaryMenu : UI_Panel
     protected override void ClearSubscriptions()
     {
         base.ClearSubscriptions();
-        _gameInstance.onCurrentProfileChanged -= UpdateData;
-        ui_enemyList.onSelect += ui_enemyDescription.SetUnitInfo;
+        
+        if (_gameInstance != null)
+        {
+            _gameInstance.onCurrentProfileChanged -= UpdateData;
+        }
+
+        if (ui_enemyList != null)
+        {
+            ui_enemyList.onSelect += ui_enemyDescription.SetUnitInfo;
+        }
     }
 }

@@ -47,8 +47,8 @@ public class UI_PauseMenu : UI_Panel
         ui_exitButton.onClick.RemoveAllListeners();
         ui_exitButton.onClick.AddListener(() => 
             {
-                ui_pause.OnExitSession();
                 ui_pause.Hide();
+                ui_pause.OnExitSession();
             }
         );
     }

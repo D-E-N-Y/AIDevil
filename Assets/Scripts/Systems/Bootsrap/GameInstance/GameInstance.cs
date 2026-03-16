@@ -199,5 +199,6 @@ public class GameInstance : MonoBehaviour
     public void ClearSubscriptions()
     {
         onUpdateProfiles = null;
+        onCurrentProfileChanged = null;
     }
 }
