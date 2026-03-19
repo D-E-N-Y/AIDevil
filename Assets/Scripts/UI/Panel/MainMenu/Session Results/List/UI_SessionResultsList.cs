@@ -50,8 +50,14 @@ public class UI_SessionResultsList : UI_Panel
     public void UpdateData()
     {
         selected_ui_sessionResult = null;
-        IReadOnlyList<SSesionResult> _sessionResults = _gameInstance.GetSessionResultsCurrentProfile();
-        
+        IReadOnlyList<SSesionResult> _sessionResults = _gameInstance.GetSesionResults();
+
+        if (_sessionResults == null)
+        {
+            Debug.LogWarning("Session Results in current Profile is null!!!");
+            return;
+        }
+
         // stop function if session results is none
         if(_sessionResults.Count <= 0) return;
 

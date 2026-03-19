@@ -19,7 +19,7 @@ public class UI_SessionResultsDescription : UI_Panel
         ui_hoursText.text = result.time.hours.ToString();
         ui_minutesText.text = CorrectTimeFormat(result.time.minutes);
         ui_secondsText.text = CorrectTimeFormat(result.time.seconds);
-        ui_collectCoins.text = result.collectCoins.ToString();
+        // ui_collectCoins.text = result.collectCoins.ToString();
         ui_defeatEnemies.text = result.defeatEnemies.ToString();
         ui_completedWaves.text = result.completedWaves.ToString();
     }

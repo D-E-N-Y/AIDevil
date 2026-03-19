@@ -23,7 +23,7 @@ public class UI_Profile : UI_Panel
         
         _profile = profile;
 
-        ui_nameProfileText.text = _profile.name;
+        ui_nameProfileText.text = _profile.Name;
 
         GetComponent<Button>().onClick.RemoveAllListeners();
         GetComponent<Button>().onClick.AddListener(() => Select());

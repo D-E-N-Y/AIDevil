@@ -56,7 +56,7 @@ public class UI_ProfiliesList : UI_Panel
         if(_gameInstance.IsValidProfile())
         {
             Profile currentProfile = _gameInstance.GetProfile();
-            UI_Profile ui_profile = _ui_profiles.Find(x => x.GetProfile().name == currentProfile.name);
+            UI_Profile ui_profile = _ui_profiles.Find(x => x.GetProfile().Name == currentProfile.Name);
             ui_profile.Select();
         }
         else

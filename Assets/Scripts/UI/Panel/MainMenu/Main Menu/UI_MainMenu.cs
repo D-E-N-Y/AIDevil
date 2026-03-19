@@ -73,7 +73,7 @@ public class UI_MainMenu : UI_Panel
 
     private void UpdateNameProfile()
     {
-        ui_nameProfileText.text = _gameInstance.GetProfile().name;
+        ui_nameProfileText.text = _gameInstance.GetProfile().Name;
     }
 
     protected override void AddSubscriptions()

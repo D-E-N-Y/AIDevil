@@ -48,7 +48,7 @@ public class UI_EnemyList : UI_Panel
 
     public void UpdateData()
     {
-        List<Enemy> discoveredEnemies = _gameInstance.GetDataBase().Enemies.GetEnemiesByNames(_gameInstance.GetProfile().bestiaryData.discoveredEnemiesNames);
+        List<Enemy> discoveredEnemies = _gameInstance.GetDataBase().Enemies.GetEnemiesByNames(_gameInstance.GetProfile().BestiaryData.discoveredEnemiesNames);
 
         UpdateList(discoveredEnemies);
         UpdateProgress(allEnemies.Count, discoveredEnemies.Count);

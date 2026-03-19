@@ -33,7 +33,7 @@ public class UI_BestiaryMenu : UI_Panel
     {
         ui_enemyList.UpdateData();
         
-        if(GameInstance.current.GetProfile().bestiaryData.HasAnyDiscoveredEnemies())
+        if(GameInstance.current.GetProfile().BestiaryData.HasAnyDiscoveredEnemies())
         {
             ui_enemyDescription.Show();
         }

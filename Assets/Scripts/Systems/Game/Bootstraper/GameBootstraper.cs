@@ -50,7 +50,7 @@ public class GameBootstraper : MonoBehaviour
     {
         playerCharacter = Instantiate(
             _gameInstance.GetDataBase().Characters.GetCharacterByName(
-                _gameInstance.GetProfile().playerCharacterName
+                _gameInstance.GetProfile().PlayerCharacterName
             )
         );
         playerCharacter.transform.position = new Vector3(0f, 1f, 0f);

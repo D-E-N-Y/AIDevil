@@ -38,7 +38,7 @@ public class DB_Profilies
 
     public void UpdateProfile(Profile profile)
     {
-        int index = profiles.FindIndex(p => p.name == profile.name);
+        int index = profiles.FindIndex(p => p.Name == profile.Name);
         if(index != -1)
         {
             profiles[index] = profile;
@@ -48,12 +48,12 @@ public class DB_Profilies
 
     public bool HasProfilieByName(string name)
     {
-        return profiles.Exists(profile => profile.name == name);
+        return profiles.Exists(profile => profile.Name == name);
     }
 
     public Profile GetProfileByName(string name)
     {
-        return profiles.Find(profile => profile.name == name);
+        return profiles.Find(profile => profile.Name == name);
     }
 
     public List<Profile> GetProfiles() => profiles;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SessionSystem
@@ -67,7 +68,6 @@ public class SessionSystem
 
     private void SetResults(SCompleteWaveInfo waveInfo)
     {
-        _sesionResult.collectCoins = waveInfo.collectCoins;
         _sesionResult.defeatEnemies = waveInfo.defeatEnemies;
         _sesionResult.completedWaves = waveInfo.completedWaves;
     }
@@ -79,11 +79,30 @@ public class SessionSystem
         _sesionResult.result = result;
         _sesionResult.time = new STime((int)(_endTimeSession - _startTimeSession));
         // _sesionResult.collectCoins = _wallet.AllCollectedMoney;
-        _sesionResult.collectCoins = 0;
+        
+        _sesionResult.collectResources = GetColletResources();
 
         GameInstance.current.AddSessionResult(_sesionResult);
+        GameInstance.current.ProfileWallet.AddResources(GetColletResources());
 
         _ui_sessionResultsGame.SetResult(_sesionResult);
         _ui_sessionResultsGame.Show();
+    }
+
+    private Dictionary<ResourceType, int> GetColletResources()
+    {
+        Dictionary<ResourceType, int> resources = new Dictionary<ResourceType, int>();
+
+        foreach (ResourceType resource in Enum.GetValues(typeof(ResourceType)))
+        {
+            if (resource == ResourceType.Credits) continue;
+
+            if (_wallet.HasResources(resource))
+            {
+                resources[resource] = _wallet.Resources[resource];
+            }
+        }
+
+        return resources;
     }
 }
