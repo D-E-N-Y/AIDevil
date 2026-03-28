@@ -29,16 +29,16 @@ public class GameBootstraper : MonoBehaviour
 
         InitializePlayer();
 
-        waveSystem.Initialize(_gameInstance.CurrentGameLevel.WaveConfig.Waves, playerCharacter);
+        waveSystem.Initialize(_gameInstance.GameLevelsManager.CurrentGameLevel.WaveConfig.Waves, playerCharacter);
 
         landSystem.Initialize();
-        resourceSystem.Initialize(_gameInstance.CurrentGameLevel.Resources, landSystem, gameUICanvas.UIGameplay.UIHintController);
+        resourceSystem.Initialize(_gameInstance.GameLevelsManager.CurrentGameLevel.Resources, landSystem, gameUICanvas.UIGameplay.UIHintController);
 
         gameUICanvas.Initialize(playerCharacter, waveSystem);
 
         _tradeZone.Initialize(_gameInstance, gameUICanvas.UIGameplay.UITrade, gameUICanvas.UIGameplay.UIOffer, gameUICanvas.UIGameplay.UIHintController);
 
-        sessionSystem = new SessionSystem(playerCharacter, gameUICanvas.UIResultsSession, gameUICanvas.UIPause, waveSystem, _tradeZone);
+        sessionSystem = new SessionSystem(_gameInstance, playerCharacter, gameUICanvas.UIResultsSession, gameUICanvas.UIPause, waveSystem, _tradeZone);
 
         _endGame.Initialize(waveSystem, sessionSystem, gameUICanvas.UIGameplay.UIOffer);
 
@@ -49,8 +49,8 @@ public class GameBootstraper : MonoBehaviour
     private void InitializePlayer()
     {
         playerCharacter = Instantiate(
-            _gameInstance.GetDataBase().Characters.GetCharacterByID(
-                _gameInstance.GetProfile().PlayerCharacter_ID
+            _gameInstance.DataBase.Characters.GetCharacterByID(
+                _gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID
             )
         );
         playerCharacter.transform.position = new Vector3(0f, 1f, 0f);

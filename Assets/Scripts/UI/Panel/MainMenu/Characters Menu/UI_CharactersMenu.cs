@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_CharactersMenu : UI_Panel
@@ -34,6 +33,6 @@ public class UI_CharactersMenu : UI_Panel
     public void Select(PlayerCharacter character)
     {
         ui_characterDescription.SetCharacterInfo(character);
-        _gameInstance.SetPlayer(character);
+        _gameInstance.ProfileManager.CurrentProfile.CharacterManager.SetCharacter(character.ID);
     }
 }

@@ -29,7 +29,7 @@ public class UI_EnemyList : UI_Panel
 
     private void CreateElements()
     {
-        allEnemies = _gameInstance.GetDataBase().Enemies.GetAllEnemies();
+        allEnemies = _gameInstance.DataBase.Enemies.GetAllEnemies();
         
         ui_enemies = new List<UI_Enemy>();
         ui_enemies = contentTransform.GetComponentsInChildren<UI_Enemy>(true).ToList();
@@ -48,7 +48,9 @@ public class UI_EnemyList : UI_Panel
 
     public void UpdateData()
     {
-        List<Enemy> discoveredEnemies = _gameInstance.GetDataBase().Enemies.GetEnemiesByNames(_gameInstance.GetProfile().BestiaryData.discoveredEnemiesNames);
+        List<Enemy> discoveredEnemies = _gameInstance.DataBase.Enemies.GetEnemiesByNames(
+            _gameInstance.ProfileManager.CurrentProfile.BestiaryProgress.DiscoveredEnemiesNames
+        );
 
         UpdateList(discoveredEnemies);
         UpdateProgress(allEnemies.Count, discoveredEnemies.Count);

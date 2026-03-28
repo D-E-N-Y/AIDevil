@@ -16,8 +16,12 @@ public class SessionSystem
     // temporary field
     private Wallet _wallet;
 
-    public SessionSystem(PlayerCharacter playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, UI_Pause ui_pause, WaveSystem waveSystem, TradeZone tradeZone)
+    GameInstance _gameInstance;
+
+    public SessionSystem(GameInstance gameInstance, PlayerCharacter playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, UI_Pause ui_pause, WaveSystem waveSystem, TradeZone tradeZone)
     {
+        _gameInstance = gameInstance;
+        
         _sesionResult = new SSesionResult();
 
         _sesionResult.namePlayerCharacter = playerCharacter.GetName();
@@ -82,8 +86,8 @@ public class SessionSystem
         
         _sesionResult.collectResources = GetColletResources();
 
-        GameInstance.current.AddSessionResult(_sesionResult);
-        GameInstance.current.ProfileWallet.AddResources(GetColletResources());
+        _gameInstance.ProfileManager.CurrentProfile.SessionResultsProgress.AddSessionResult(_sesionResult);
+        _gameInstance.ProfileManager.CurrentProfile.Wallet.AddResources(GetColletResources());
 
         _ui_sessionResultsGame.SetResult(_sesionResult);
         _ui_sessionResultsGame.Show();

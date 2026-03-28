@@ -42,7 +42,7 @@ public class UI_PauseMenu : UI_Panel
         });
 
         ui_restartButton.onClick.RemoveAllListeners();
-        ui_restartButton.onClick.AddListener(() => SceneManager.LoadScene(GameInstance.current.CurrentGameLevel.Name));
+        ui_restartButton.onClick.AddListener(() => SceneManager.LoadScene(GameInstance.current.GameLevelsManager.CurrentGameLevel.Name));
         
         ui_exitButton.onClick.RemoveAllListeners();
         ui_exitButton.onClick.AddListener(() => 

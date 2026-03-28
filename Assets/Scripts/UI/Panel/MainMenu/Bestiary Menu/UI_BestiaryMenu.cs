@@ -33,7 +33,7 @@ public class UI_BestiaryMenu : UI_Panel
     {
         ui_enemyList.UpdateData();
         
-        if(GameInstance.current.GetProfile().BestiaryData.HasAnyDiscoveredEnemies())
+        if(_gameInstance.ProfileManager.CurrentProfile.BestiaryProgress.HasAnyDiscoveredEnemies())
         {
             ui_enemyDescription.Show();
         }
@@ -46,7 +46,7 @@ public class UI_BestiaryMenu : UI_Panel
     protected override void AddSubscriptions()
     {
         base.AddSubscriptions();
-        _gameInstance.onCurrentProfileChanged += UpdateData;
+        _gameInstance.ProfileManager.onCurrentProfileChanged += UpdateData;
         ui_enemyList.onSelect += ui_enemyDescription.SetUnitInfo;
     }
 
@@ -56,7 +56,7 @@ public class UI_BestiaryMenu : UI_Panel
         
         if (_gameInstance != null)
         {
-            _gameInstance.onCurrentProfileChanged -= UpdateData;
+            _gameInstance.ProfileManager.onCurrentProfileChanged -= UpdateData;
         }
 
         if (ui_enemyList != null)

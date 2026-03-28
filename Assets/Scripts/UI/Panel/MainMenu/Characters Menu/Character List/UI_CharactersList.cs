@@ -31,7 +31,7 @@ public class UI_CharactersList : UI_Panel
 
     private void CreateElements()
     {
-        List<PlayerCharacter> characters = _gameInstance.GetDataBase().Characters.GetCharacters();
+        List<PlayerCharacter> characters = _gameInstance.DataBase.Characters.GetCharacters();
         
         ui_characters = new List<UI_Character>();
         ui_characters = container.GetComponentsInChildren<UI_Character>(true).ToList();
@@ -60,17 +60,6 @@ public class UI_CharactersList : UI_Panel
             selected_ui_Character.UnSelect();
         }
         selected_ui_Character = null;
-
-        if(_gameInstance.GetPlayerCharacter() != null)
-        {
-            PlayerCharacter _playerCharacter = _gameInstance.GetPlayerCharacter();
-            UI_Character ui_character = ui_characters.Find(x => x.GetCharacter() == _playerCharacter);
-            ui_character.Select();
-        }
-        else
-        {
-            ui_characters[0].Select();
-        }
     }
 
     public void Select(UI_Character ui_character)
@@ -95,12 +84,12 @@ public class UI_CharactersList : UI_Panel
     protected override void AddSubscriptions()
     {
         base.AddSubscriptions();
-        _gameInstance.onCurrentProfileChanged += UpdateData;
+        _gameInstance.ProfileManager.onCurrentProfileChanged += UpdateData;
     }
 
     protected override void ClearSubscriptions()
     {
         base.ClearSubscriptions();
-        _gameInstance.onCurrentProfileChanged -= UpdateData;
+        _gameInstance.ProfileManager.onCurrentProfileChanged -= UpdateData;
     }
 }

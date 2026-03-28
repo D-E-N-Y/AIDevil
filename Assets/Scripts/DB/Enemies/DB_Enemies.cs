@@ -29,4 +29,23 @@ public class DB_Enemies : ScriptableObject
         }
         return selectedEnemies;
     }
+
+    public List<Enemy> GetEnemiesByNames(IReadOnlyList<string> names)
+    {
+        List<Enemy> selectedEnemies = new List<Enemy>();
+
+        if (names != null)
+        {
+            foreach (string name in names)
+            {
+                Enemy enemy = GetEnemyByName(name);
+                if (enemy != null)
+                {
+                    selectedEnemies.Add(enemy);
+                }
+            }
+        }
+        
+        return selectedEnemies;
+    }
 }

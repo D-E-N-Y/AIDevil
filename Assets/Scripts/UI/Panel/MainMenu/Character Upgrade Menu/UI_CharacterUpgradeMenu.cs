@@ -34,12 +34,12 @@ public class UI_CharacterUpgradeMenu : UI_Panel
         foreach (UI_UpgradeTree ui_upgradeTree in ui_upgradeTrees)
         {
             ui_upgradeTreesChash[ui_upgradeTree.UpgradeTree.PlayerCharacter.ID] = ui_upgradeTree;
-            ui_upgradeTree.Initialize(_gameInstance.UpgradeContainer);
+            ui_upgradeTree.Initialize(_gameInstance.ProfileManager.CurrentProfile.CharacterManager.UpgradeContainer);
             ui_upgradeTree.Hide();
         }
     }
 
-    private void SelectUpgradeTree()
+    private void UpdateTree()
     {
         if (_selectUIUpgradeTree != null)
         {
@@ -47,15 +47,15 @@ public class UI_CharacterUpgradeMenu : UI_Panel
             _selectUIUpgradeTree = null;
         }
 
-        if (ui_upgradeTreesChash.ContainsKey(_gameInstance.GetProfile().PlayerCharacter_ID))
+        if (ui_upgradeTreesChash.ContainsKey(_gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID))
         {
-            _selectUIUpgradeTree = ui_upgradeTreesChash[_gameInstance.GetProfile().PlayerCharacter_ID];
-            _selectUIUpgradeTree.UpdateTree(_gameInstance.UpgradeContainer);
+            _selectUIUpgradeTree = ui_upgradeTreesChash[_gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID];
+            _selectUIUpgradeTree.UpdateTree(_gameInstance.ProfileManager.CurrentProfile.CharacterManager.UpgradeContainer);
             _selectUIUpgradeTree.Show();
         }
         else
         {
-            Debug.LogWarning($"Upgrade Tree for {_gameInstance.GetProfile().PlayerCharacter_ID} not found!!!");
+            Debug.LogWarning($"Upgrade Tree for {_gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID} not found!!!");
         }
     }
 
@@ -72,8 +72,6 @@ public class UI_CharacterUpgradeMenu : UI_Panel
         {
             ui_upgradeTree.OnSelectUpgrade += SelectUpgrade;
         }
-
-        _gameInstance.OnChangePlayerCharacter += SelectUpgradeTree;
     }
 
     protected override void ClearSubscriptions()
@@ -84,7 +82,12 @@ public class UI_CharacterUpgradeMenu : UI_Panel
         {
             ui_upgradeTree.OnSelectUpgrade -= SelectUpgrade;
         }
+    }
 
-        _gameInstance.OnChangePlayerCharacter -= SelectUpgradeTree;
+    public override void Show()
+    {
+        UpdateTree();
+        
+        base.Show();
     }
 }

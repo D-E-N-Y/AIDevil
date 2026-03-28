@@ -19,7 +19,7 @@ public class UI_GameLevelsMenu : UI_Panel
         ui_gameLevelDescription.Initialize();
 
         ui_gameLevelsList.onSelectGameLevel += SelectGameLevel;
-        ui_gameLevelsList.Initialize(_gameInstance.GetDataBase().GameLevels.GameLevels);
+        ui_gameLevelsList.Initialize(_gameInstance.DataBase.GameLevels.GameLevels);
 
         ui_closeButton.onClick.RemoveAllListeners();
         ui_closeButton.onClick.AddListener(() => Hide());
@@ -27,8 +27,8 @@ public class UI_GameLevelsMenu : UI_Panel
 
     private void SelectGameLevel(string nameGameLevel)
     {
-        _gameInstance.SetCurrentGameLevel(nameGameLevel);
-        ui_gameLevelDescription.UpdateInfo(_gameInstance.CurrentGameLevel);
+        _gameInstance.GameLevelsManager.SetCurrentGameLevel(nameGameLevel);
+        ui_gameLevelDescription.UpdateInfo(_gameInstance.GameLevelsManager.CurrentGameLevel);
 
         UpdateFightButton(nameGameLevel);
     }

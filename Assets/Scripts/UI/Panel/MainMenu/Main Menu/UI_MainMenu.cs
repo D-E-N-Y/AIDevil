@@ -52,7 +52,7 @@ public class UI_MainMenu : UI_Panel
         
         ui_sessionResultsButton.onClick.RemoveAllListeners();
         ui_sessionResultsButton.onClick.AddListener(() => _ui_sessionResultsMenu.Show());
-        ui_sessionResultsButton.interactable = _gameInstance.HasSessionResultsCurrentProfile();
+        ui_sessionResultsButton.interactable = _gameInstance.ProfileManager.CurrentProfile.SessionResultsProgress.HasSessionResults();
 
         ui_quitButton.onClick.RemoveAllListeners();
         ui_quitButton.onClick.AddListener(() => QuitGame());
@@ -62,29 +62,29 @@ public class UI_MainMenu : UI_Panel
     {
         UpdateNameProfile();
         
-        ui_sessionResultsButton.interactable = _gameInstance.HasSessionResultsCurrentProfile();
+        ui_sessionResultsButton.interactable = _gameInstance.ProfileManager.CurrentProfile.SessionResultsProgress.HasSessionResults();
     }
 
     private void QuitGame()
     {
-        _gameInstance.SaveData();      
+        _gameInstance.SaveLoadSystem.SaveData();      
         Application.Quit();
     }
 
     private void UpdateNameProfile()
     {
-        ui_nameProfileText.text = _gameInstance.GetProfile().Name;
+        ui_nameProfileText.text = _gameInstance.ProfileManager.CurrentProfile.Name;
     }
 
     protected override void AddSubscriptions()
     {
         base.AddSubscriptions();
-        _gameInstance.onCurrentProfileChanged += UpdateData;
+        _gameInstance.ProfileManager.onCurrentProfileChanged += UpdateData;
     }
 
     protected override void ClearSubscriptions()
     {
         base.ClearSubscriptions();
-        _gameInstance.onCurrentProfileChanged -= UpdateData;
+        _gameInstance.ProfileManager.onCurrentProfileChanged -= UpdateData;
     }
 }

@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour, IUnit
 
     public virtual void Death()
     {
-        GameInstance.current.GetProfile().BestiaryData.AddDiscoveredEnemy(_name);
+        GameInstance.current.ProfileManager.CurrentProfile.BestiaryProgress.AddEnemy(_name);
         
         DropMoney();
 

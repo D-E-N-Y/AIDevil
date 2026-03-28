@@ -13,7 +13,7 @@ public class Trader : MonoBehaviour
 
     public void Initilaize(GameInstance gameInstance)
     {
-        _db_items = gameInstance.GetDataBase().Items;   
+        _db_items = gameInstance.DataBase.Items;   
     }
 
     public void GenerateItems(int itemCount = 3)

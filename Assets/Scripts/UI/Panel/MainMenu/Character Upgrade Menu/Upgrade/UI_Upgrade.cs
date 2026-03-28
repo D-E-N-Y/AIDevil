@@ -8,15 +8,19 @@ public class UI_Upgrade : UI_Panel
     public event Action<UI_Upgrade> OnSelect;
 
     // temporaly
+    [Header("Data (Temporaly)")]
     [SerializeField] private Upgrade _upgrade;
     public Upgrade Upgrade => _upgrade;
 
+    [Header("UI Status")]
     [SerializeField] private Image ui_iconImage;
     [SerializeField] private Image ui_lockImage;
     [SerializeField] private Image ui_purchasedImage;
 
+    [Header("Button")]
     [SerializeField] private Button ui_selectButton;
     
+    [Header("Selection")]
     [SerializeField] private Image ui_selectImage;
     [SerializeField] private Image ui_unSelectImage;
 
@@ -93,15 +97,11 @@ public class UI_Upgrade : UI_Panel
         if (isPurchased)
         {
             _isPurchased = true;
-
-            ui_iconImage.gameObject.SetActive(!_isPurchased);
             ui_purchasedImage.gameObject.SetActive(_isPurchased);
         }
         else
         {
             _isPurchased = false;
-
-            ui_iconImage.gameObject.SetActive(!_isPurchased);
             ui_purchasedImage.gameObject.SetActive(_isPurchased);
         }
     }

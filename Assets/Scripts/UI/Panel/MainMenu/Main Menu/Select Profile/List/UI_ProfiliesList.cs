@@ -26,7 +26,7 @@ public class UI_ProfiliesList : UI_Panel
     {
         selected_ui_profile = null;
         
-        IReadOnlyList<Profile> _profilies = _gameInstance.GetProfiles();
+        IReadOnlyList<Profile> _profilies = _gameInstance.ProfileManager.Profiles;
         
         List<UI_Profile> _ui_profiles = new List<UI_Profile>();
         _ui_profiles = containerUIProfilies.GetComponentsInChildren<UI_Profile>(true).ToList();
@@ -53,9 +53,9 @@ public class UI_ProfiliesList : UI_Panel
             _ui_profiles[i].Show();
         }
 
-        if(_gameInstance.IsValidProfile())
+        if(_gameInstance.ProfileManager.IsValidProfile())
         {
-            Profile currentProfile = _gameInstance.GetProfile();
+            Profile currentProfile = _gameInstance.ProfileManager.CurrentProfile;
             UI_Profile ui_profile = _ui_profiles.Find(x => x.GetProfile().Name == currentProfile.Name);
             ui_profile.Select();
         }
@@ -82,12 +82,12 @@ public class UI_ProfiliesList : UI_Panel
     protected override void AddSubscriptions()
     {
         base.AddSubscriptions();
-        _gameInstance.onUpdateProfiles += UpdateData;
+        _gameInstance.ProfileManager.onUpdateProfiles += UpdateData;
     }
 
     protected override void ClearSubscriptions()
     {
         base.ClearSubscriptions();
-        _gameInstance.onUpdateProfiles -= UpdateData;
+        _gameInstance.ProfileManager.onUpdateProfiles -= UpdateData;
     }
 }

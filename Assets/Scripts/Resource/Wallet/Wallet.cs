@@ -14,7 +14,6 @@ public class Wallet
     public Wallet()
     {
         resourceTypes = (ResourceType[])Enum.GetValues(typeof(ResourceType));
-        
         _resources = new Dictionary<ResourceType, int>();
 
         foreach (ResourceType resource in resourceTypes)
@@ -26,8 +25,12 @@ public class Wallet
     public Wallet(Dictionary<ResourceType, int> resources)
     {
         resourceTypes = (ResourceType[])Enum.GetValues(typeof(ResourceType));
-        
-        _resources = resources;
+        _resources = new Dictionary<ResourceType, int>();
+
+        foreach (ResourceType resource in resourceTypes)
+        {
+            _resources[resource] = resources.ContainsKey(resource) ? resources[resource] : 0;
+        }
     }
 
     public void AddResource(ResourceType resource, int amount)

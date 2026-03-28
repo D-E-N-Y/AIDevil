@@ -7,10 +7,15 @@ public class SaveLoadSystem
     private string fileName = "savegame.dat";
     private string FilePath =>
         Path.Combine(Application.persistentDataPath, fileName);
-    
-    private SaveData _saveData;
 
-    public void SaveGame(SaveData saveData)
+    private GameInstance _gameInstance;
+
+    public SaveLoadSystem(GameInstance gameInstance)
+    {
+        _gameInstance = gameInstance;
+    }
+
+    private void SaveGame(SaveData saveData)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         using (FileStream stream = new FileStream(FilePath, FileMode.Create))
@@ -19,7 +24,7 @@ public class SaveLoadSystem
         }
     }
 
-    public SaveData LoadGame()
+    private SaveData LoadGame()
     {
         // return null;
         
@@ -33,5 +38,15 @@ public class SaveLoadSystem
         {
             return (SaveData)formatter.Deserialize(stream);
         }
+    }
+
+    public SaveData LoadData()
+    {
+        return LoadGame();
+    }
+
+    public void SaveData()
+    {
+        SaveGame(_gameInstance.ProfileManager.GetData());
     }
 }

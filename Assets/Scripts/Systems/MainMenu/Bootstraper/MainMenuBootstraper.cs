@@ -13,22 +13,22 @@ public class MainMenuBootstraper : MonoBehaviour
         
         ui_mainMenuCanvas.Initialize(_gameInstance);
 
-        if(!_gameInstance.IsValidProfile())
+        if(!_gameInstance.ProfileManager.IsValidProfile())
         {
             ui_mainMenuCanvas.ShowProfiliesMenu();
         }
 
         foreach (ResourceType resource in Enum.GetValues(typeof(ResourceType)))
         {
-            if (_gameInstance.ProfileWallet.Resources.ContainsKey(resource))
+            if (_gameInstance.ProfileManager.CurrentProfile.Wallet.Resources.ContainsKey(resource))
             {
-                Debug.Log($"{resource} {_gameInstance.ProfileWallet.Resources[resource]}");
+                Debug.Log($"{resource} {_gameInstance.ProfileManager.CurrentProfile.Wallet.Resources[resource]}");
             }
         }
     }
 
     private void OnDestroy()
     {
-        _gameInstance.ClearSubscriptions();
+        _gameInstance.ProfileManager.ClearSubscriptions();
     }
 }

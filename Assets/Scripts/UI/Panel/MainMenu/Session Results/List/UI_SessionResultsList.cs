@@ -50,8 +50,9 @@ public class UI_SessionResultsList : UI_Panel
     public void UpdateData()
     {
         selected_ui_sessionResult = null;
-        IReadOnlyList<SSesionResult> _sessionResults = _gameInstance.GetSesionResults();
 
+        IReadOnlyList<SSesionResult> _sessionResults = _gameInstance.ProfileManager.CurrentProfile.SessionResultsProgress.SesionResults;
+ 
         if (_sessionResults == null)
         {
             Debug.LogWarning("Session Results in current Profile is null!!!");
@@ -89,12 +90,12 @@ public class UI_SessionResultsList : UI_Panel
     protected override void AddSubscriptions()
     {
         base.AddSubscriptions();
-        _gameInstance.onCurrentProfileChanged += UpdateData;
+        _gameInstance.ProfileManager.onCurrentProfileChanged += UpdateData;
     }
 
     protected override void ClearSubscriptions()
     {
         base.ClearSubscriptions();
-        _gameInstance.onCurrentProfileChanged -= UpdateData;
+        _gameInstance.ProfileManager.onCurrentProfileChanged -= UpdateData;
     }
 }

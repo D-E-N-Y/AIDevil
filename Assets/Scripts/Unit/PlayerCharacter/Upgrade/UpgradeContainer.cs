@@ -3,12 +3,24 @@ using UnityEngine;
 
 public class UpgradeContainer
 {
-    private List<Upgrade> _upgrades;
-    public IReadOnlyList<Upgrade> Upgrades => _upgrades;
+    private List<string> _upgradesID;
+    public IReadOnlyList<string> Upgrades_ID => _upgradesID;
 
     public UpgradeContainer()
     {
-        _upgrades = new List<Upgrade>();
+        _upgradesID = new List<string>();
+    }
+
+    public UpgradeContainer(List<string> upgradesID)
+    {
+        if (upgradesID == null)
+        {
+            _upgradesID = new List<string>();
+        }
+        else
+        {
+            _upgradesID = upgradesID;
+        }
     }
 
     public void AddUpgrade(Upgrade upgrade)
@@ -19,9 +31,23 @@ public class UpgradeContainer
             return;
         }
 
-        if (!_upgrades.Contains(upgrade))
+        if (!_upgradesID.Contains(upgrade.ID))
         {
-            _upgrades.Add(upgrade);
+            _upgradesID.Add(upgrade.ID);
+        }
+    }
+
+    public void AddUpgrade(string upgrade)
+    {
+        if (upgrade == null)
+        {
+            Debug.LogWarning("Upgrade at time add to list was NULL!!!");
+            return;
+        }
+
+        if (!_upgradesID.Contains(upgrade))
+        {
+            _upgradesID.Add(upgrade);
         }
     }
 
@@ -33,14 +59,14 @@ public class UpgradeContainer
             return;
         }
 
-        if (_upgrades.Contains(upgrade))
+        if (_upgradesID.Contains(upgrade.ID))
         {
-            _upgrades.Remove(upgrade);
+            _upgradesID.Remove(upgrade.ID);
         }
     }
 
     public bool HasUpgrade(Upgrade upgrade)
     {
-        return _upgrades.Contains(upgrade);
+        return _upgradesID.Contains(upgrade.ID);
     }
 }

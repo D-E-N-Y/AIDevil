@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,7 +28,7 @@ public class UI_CreateProfile : UI_Panel
 
     private void OnValidName(string name)
     {
-        if(_gameInstance.HasProfilieByName(name))
+        if(_gameInstance.ProfileManager.HasProfilieByName(name))
         {
             ui_createButton.interactable = false;
         }
@@ -48,11 +47,13 @@ public class UI_CreateProfile : UI_Panel
 
     private void CreateProfile()
     {
-        Profile newProfile = new Profile(
+        ProfileData profileData = new ProfileData(
             ui_nameInputField.text
         );
 
-        _gameInstance.AddProfile(newProfile);
+        Profile newProfile = new Profile(profileData);
+
+        _gameInstance.ProfileManager.AddProfile(newProfile);
 
         ui_nameInputField.text = string.Empty;
         OnValidName("");
