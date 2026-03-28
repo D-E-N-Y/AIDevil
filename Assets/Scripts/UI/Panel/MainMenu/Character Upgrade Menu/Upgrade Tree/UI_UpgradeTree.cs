@@ -19,8 +19,10 @@ public class UI_UpgradeTree : UI_Panel
             ui_upgrade.Initialize();
             ui_upgrade.OnSelect += SelectUpgrade;
 
-            ui_upgrade.SetLock(HasRequiredUpgrades(ui_upgrade.Upgrade, upgradeContainer));
-            ui_upgrade.SetPurchase(false);
+            ui_upgrade.SetStatus(
+                HasRequiredUpgrades(ui_upgrade.Upgrade, upgradeContainer),
+                false
+            );
         }
     }
 
@@ -47,8 +49,10 @@ public class UI_UpgradeTree : UI_Panel
     {
         foreach (UI_Upgrade ui_upgrade in ui_upgrades)
         {
-            ui_upgrade.SetLock(HasRequiredUpgrades(ui_upgrade.Upgrade, upgradeContainer));
-            ui_upgrade.SetPurchase(false);
+            ui_upgrade.SetStatus(
+                HasRequiredUpgrades(ui_upgrade.Upgrade, upgradeContainer),
+                upgradeContainer.HasUpgrade(ui_upgrade.Upgrade)
+            );
         }
     }
 

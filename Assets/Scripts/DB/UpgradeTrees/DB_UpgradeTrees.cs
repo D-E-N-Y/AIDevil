@@ -32,4 +32,36 @@ public class DB_UpgradeTrees : ScriptableObject
 
         return null;
     }
+
+    public Upgrade GetUpgradeByID(string upgradeID)
+    {
+        Upgrade upgrade = null;
+
+        foreach (UpgradeTree tree in upgradeTrees)
+        {
+            upgrade = tree.GetUpgradeByID(upgradeID);
+
+            if (upgrade != null)
+            {
+                break;
+            }
+        }
+
+        return upgrade;
+    }
+
+    public string GetCharacterIDByUpgradeID(string upgradeID)
+    {
+        foreach (UpgradeTree tree in upgradeTrees)
+        {
+            Upgrade upgrade = tree.GetUpgradeByID(upgradeID);
+
+            if (upgrade != null)
+            {
+                return tree.PlayerCharacter.ID;
+            }
+        }
+
+        return null;
+    }
 }

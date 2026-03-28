@@ -74,35 +74,13 @@ public class UI_Upgrade : UI_Panel
         ui_unSelectImage.gameObject.SetActive(!_isSelect);
     }
 
-    public void SetLock(bool isLock)
+    public void SetStatus(bool isLock, bool isPurchased)
     {
-        if (isLock)
-        {
-            _isLock = true;
+        _isLock = isLock;
+        _isPurchased = isPurchased;
 
-            ui_iconImage.gameObject.SetActive(!_isLock);
-            ui_lockImage.gameObject.SetActive(_isLock);
-        }
-        else
-        {
-            _isLock = false;
-
-            ui_iconImage.gameObject.SetActive(!_isLock);
-            ui_lockImage.gameObject.SetActive(_isLock);
-        }
-    }
-
-    public void SetPurchase(bool isPurchased)
-    {
-        if (isPurchased)
-        {
-            _isPurchased = true;
-            ui_purchasedImage.gameObject.SetActive(_isPurchased);
-        }
-        else
-        {
-            _isPurchased = false;
-            ui_purchasedImage.gameObject.SetActive(_isPurchased);
-        }
+        ui_iconImage.gameObject.SetActive(!_isLock && !_isPurchased);
+        ui_lockImage.gameObject.SetActive(_isLock && !isPurchased);
+        ui_purchasedImage.gameObject.SetActive(!_isLock && _isPurchased);
     }
 }

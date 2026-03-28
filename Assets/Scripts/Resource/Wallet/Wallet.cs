@@ -64,6 +64,14 @@ public class Wallet
         OnMoneyAmountChanged?.Invoke();
     }
 
+    public void RemoveResources(IReadOnlyList<Cost> costs)
+    {
+        foreach (Cost cost in costs)
+        {
+            RemoveResource(cost.resource, cost.amount);
+        }
+    }
+
     public bool HasEnoughResource(ResourceType resource, int amount)
     {
         amount = Mathf.Max(0, amount);
