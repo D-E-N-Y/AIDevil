@@ -8,6 +8,7 @@ public class GameInstance : MonoBehaviour
 
     public Action onUpdateProfiles;
     public Action onCurrentProfileChanged;
+    public event Action OnChangePlayerCharacter;
     
     private Profile _currentProfile;
     private List<Profile> _profiles;
@@ -96,7 +97,7 @@ public class GameInstance : MonoBehaviour
 
     public bool HasProfilies() => _profiles.Count > 0;
 
-    public bool IsValidProfile() => HasProfilieByName(_currentProfile.Name) && _currentProfile.PlayerCharacterName != string.Empty;
+    public bool IsValidProfile() => HasProfilieByName(_currentProfile.Name) && _currentProfile.PlayerCharacter_ID != string.Empty;
 
     public Profile GetProfile() => _currentProfile;
     public IReadOnlyList<Profile> GetProfiles() => _profiles;
@@ -120,6 +121,9 @@ public class GameInstance : MonoBehaviour
     
     #region Player Character Management
 
+    private UpgradeContainer _upgradeContainer;
+    public UpgradeContainer UpgradeContainer => _upgradeContainer;
+
     public void SetPlayer(PlayerCharacter player)
     {
         if (player == null)
@@ -128,12 +132,15 @@ public class GameInstance : MonoBehaviour
             return;
         }
 
-        _currentProfile.SetPlayerCharacterName(player.GetName());
+        _currentProfile.SetPlayerCharacterID(player.ID);
+        _upgradeContainer = new UpgradeContainer();
+        
+        OnChangePlayerCharacter?.Invoke();
     }
 
     public PlayerCharacter GetPlayerCharacter()
     {
-        return _dataBase.Characters.GetCharacterByName(_currentProfile.PlayerCharacterName);
+        return _dataBase.Characters.GetCharacterByID(_currentProfile.PlayerCharacter_ID);
     }
 
     #endregion
@@ -157,6 +164,8 @@ public class GameInstance : MonoBehaviour
 
             LoadData(saveData);
         }
+        
+        _upgradeContainer = new UpgradeContainer();
 
         if (_currentProfile == null)
         {
@@ -166,7 +175,7 @@ public class GameInstance : MonoBehaviour
 
     private void LoadData(SaveData saveData)
     {
-        Debug.Log($"{saveData.currentProfile} {saveData.currentProfile.Name} {saveData.currentProfile.SesionResults} {saveData.currentProfile.BestiaryData} {saveData.currentProfile.PlayerCharacterName} {saveData.currentProfile.Resources}");
+        Debug.Log($"{saveData.currentProfile} {saveData.currentProfile.Name} {saveData.currentProfile.SesionResults} {saveData.currentProfile.BestiaryData} {saveData.currentProfile.PlayerCharacter_ID} {saveData.currentProfile.Resources}");
 
         if (saveData.currentProfile.SesionResults == null || saveData.currentProfile.Resources == null)
         {

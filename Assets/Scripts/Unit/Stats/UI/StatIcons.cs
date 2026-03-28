@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StatIcons", menuName = "Stats/StatIcons", order = 0)]
+[CreateAssetMenu(fileName = "Stat Icons", menuName = "UI/Stat/StatIcons", order = 0)]
 public class StatIcons : ScriptableObject 
 {
     [System.Serializable]

@@ -49,8 +49,8 @@ public class GameBootstraper : MonoBehaviour
     private void InitializePlayer()
     {
         playerCharacter = Instantiate(
-            _gameInstance.GetDataBase().Characters.GetCharacterByName(
-                _gameInstance.GetProfile().PlayerCharacterName
+            _gameInstance.GetDataBase().Characters.GetCharacterByID(
+                _gameInstance.GetProfile().PlayerCharacter_ID
             )
         );
         playerCharacter.transform.position = new Vector3(0f, 1f, 0f);

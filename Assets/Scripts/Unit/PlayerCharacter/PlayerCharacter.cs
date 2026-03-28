@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour, IUnit
 {
+    [SerializeField] private string _id;
+    public string ID => _id;
+
     [SerializeField] private string _name;
     [SerializeField] private PlayerCharacterStats _stats;
     [SerializeField] private PlayerCharacterMovement _movement;

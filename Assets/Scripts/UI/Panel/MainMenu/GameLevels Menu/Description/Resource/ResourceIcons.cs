@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Resource Icons", menuName = "ResourceIcons")]
+[CreateAssetMenu(fileName = "Resource Icons", menuName = "UI/ResourceIcons")]
 public class ResourceIcons : ScriptableObject
 {
     [SerializeField] private List<ResourceIcon> _resourceIcons;

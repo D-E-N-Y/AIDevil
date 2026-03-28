@@ -9,10 +9,11 @@ public class UI_CharactersMenu : UI_Panel
 
     [SerializeField] private Button ui_closeButton;
     [SerializeField] private Button ui_chooseGameLevelButton;
+    [SerializeField] private Button ui_upgradeButton;
 
     private GameInstance _gameInstance;
 
-    public void Initialize(GameInstance gameInstance, UI_GameLevelsMenu ui_gameLevelsMenu)
+    public void Initialize(GameInstance gameInstance, UI_GameLevelsMenu ui_gameLevelsMenu, UI_CharacterUpgradeMenu ui_characterUpgradeMenu)
     {
         _gameInstance = gameInstance;
         
@@ -24,6 +25,9 @@ public class UI_CharactersMenu : UI_Panel
         
         ui_chooseGameLevelButton.onClick.RemoveAllListeners();
         ui_chooseGameLevelButton.onClick.AddListener(() => ui_gameLevelsMenu.Show());
+
+        ui_upgradeButton.onClick.RemoveAllListeners();
+        ui_upgradeButton.onClick.AddListener(() => ui_characterUpgradeMenu.Show());
     }
 
 

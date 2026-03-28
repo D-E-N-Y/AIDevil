@@ -7,8 +7,8 @@ public class Profile
     private string _name;
     public string Name => _name;
 
-    private string _playerCharacterName;
-    public string PlayerCharacterName => _playerCharacterName;
+    private string _playerCharacter_id;
+    public string PlayerCharacter_ID => _playerCharacter_id;
 
     private List<SSesionResult> _sessionResults;
     public IReadOnlyList<SSesionResult> SesionResults => _sessionResults;
@@ -22,7 +22,7 @@ public class Profile
     public Profile()
     {
         _name = null;
-        _playerCharacterName = null;
+        _playerCharacter_id = null;
         _sessionResults = new List<SSesionResult>();
         _bestiaryData = new BestiarySaveData(new List<string>());
         
@@ -36,7 +36,7 @@ public class Profile
     public Profile(string name)
     {
         _name = name;
-        _playerCharacterName = null;
+        _playerCharacter_id = null;
         _sessionResults = new List<SSesionResult>();
         _bestiaryData = new BestiarySaveData(new List<string>());
 
@@ -52,9 +52,9 @@ public class Profile
         _sessionResults.Add(sessionResult);
     }
 
-    public void SetPlayerCharacterName(string pc_name)
+    public void SetPlayerCharacterID(string pc_id)
     {
-        _playerCharacterName = pc_name;
+        _playerCharacter_id = pc_id;
     }
 
     public void SetResources(Dictionary<ResourceType, int> resources)

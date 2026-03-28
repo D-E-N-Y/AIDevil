@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "RarityColors", menuName = "Item/RarityColors", order = 0)]
+[CreateAssetMenu(fileName = "Rarity Colors", menuName = "UI/Item/RarityColors", order = 0)]
 public class RarityColors : ScriptableObject 
 {
     [System.Serializable]

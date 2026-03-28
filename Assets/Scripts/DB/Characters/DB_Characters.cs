@@ -12,4 +12,9 @@ public class DB_Characters : ScriptableObject
     {
         return _characters.Find(character => character.GetName() == name);
     }
+
+    public PlayerCharacter GetCharacterByID(string id)
+    {
+        return _characters.Find(character => character.ID == id);
+    }
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Start Items", menuName = "StartItems")]
+[CreateAssetMenu(fileName = "Start Items", menuName = "Item/StartItems")]
 public class StartItems : ScriptableObject 
 {
     [SerializeField] private List<Item> _items;
@@ -16,7 +16,7 @@ public class StartItems : ScriptableObject
         {
             if (item is SpellItem spellItem)
             {
-                spells.Add(spellItem.Spell);
+                spells.Add(spellItem.Spell); 
             }
         }
 
