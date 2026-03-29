@@ -15,6 +15,7 @@ public class PlayerCharacter : MonoBehaviour, IUnit
 
     [SerializeField, Range(1, 10)] private int _maxSpellsCount = 4;
 
+    private UpgradesManager _upgradesManager;
     private UnitHealth _health;
     private Inventory _inventory;
     private Wallet _wallet;
@@ -31,7 +32,10 @@ public class PlayerCharacter : MonoBehaviour, IUnit
         _unitFaction = UnitFaction.Player;
         gameObject.layer = LayerMask.NameToLayer(_unitFaction.ToString());
 
+        _stats = Instantiate(_stats);
         _stats.Initialize();
+        
+        _upgradesManager = new UpgradesManager(_stats);
 
         _health = new UnitHealth(_stats);
         _spellController = new SpellController(_unitFaction, _stats, _spellContainer);
@@ -69,5 +73,6 @@ public class PlayerCharacter : MonoBehaviour, IUnit
     public ItemContext GetItemContext() => _itemContext;
 
     public SpellController GetSpellController() => _spellController;
+    public UpgradesManager GetUpgradesManager() => _upgradesManager;
     public PlayerCharacterMovement GetMovement() => _movement;
 }

@@ -7,6 +7,8 @@ public class UI_Wallet : UI_Panel
     [SerializeField] private UI_ResourceValue ui_resourceValuePrefab;
     private Dictionary<ResourceType, UI_ResourceValue> ui_resources;
 
+    [SerializeField] private List<ResourceType> _resourcesToShow;
+
     [SerializeField] private RectTransform _containerUIResources;
 
     private Wallet _wallet;
@@ -35,7 +37,7 @@ public class UI_Wallet : UI_Panel
 
         ui_resources = new Dictionary<ResourceType, UI_ResourceValue>();
 
-        foreach (ResourceType resource in _types)
+        foreach (ResourceType resource in _resourcesToShow)
         {
             UI_ResourceValue ui_resourceValue = Instantiate(ui_resourceValuePrefab, _containerUIResources);
             ui_resourceValue.Initialize(resource);
@@ -46,7 +48,7 @@ public class UI_Wallet : UI_Panel
 
     public void UpdateData()
     {
-        foreach (ResourceType resource in _types)
+        foreach (ResourceType resource in _resourcesToShow)
         {
             ui_resources[resource].SetValue(_wallet.GetAmountByResource(resource));
         }

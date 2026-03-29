@@ -69,4 +69,9 @@ public class UpgradeContainer
     {
         return _upgradesID.Contains(upgrade.ID);
     }
+
+    public int GetUpgradesCount()
+    {
+        return _upgradesID.Count;
+    }
 }

@@ -54,7 +54,13 @@ public class GameBootstraper : MonoBehaviour
             )
         );
         playerCharacter.transform.position = new Vector3(0f, 1f, 0f);
+        
         playerCharacter.Initialize(gameUICanvas.UIGameplay.UIJoystick); 
+        
+        playerCharacter.GetUpgradesManager().ApplyUpgrades(
+            _gameInstance.ProfileManager.CurrentProfile.CharacterManager.UpgradeContainer.Upgrades_ID, 
+            _gameInstance.DataBase.UpgradeTrees
+        );
 
         cameraOrigin.Initialize(playerCharacter.transform);
     }

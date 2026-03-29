@@ -46,4 +46,9 @@ public class CharacterManager
     public string Character_ID => _characterID;
     public UpgradeContainer UpgradeContainer => _upgradeContainer;
     public UpgradeProgress UpgradeProgress => _upgradeProgress;
+
+    public int GetCharacterLevel()
+    {
+        return _upgradeContainer.GetUpgradesCount() + 1;
+    }
 }
