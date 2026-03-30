@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class MainMenuBootstraper : MonoBehaviour
@@ -16,14 +15,6 @@ public class MainMenuBootstraper : MonoBehaviour
         if(!_gameInstance.ProfileManager.IsValidProfile())
         {
             ui_mainMenuCanvas.ShowProfiliesMenu();
-        }
-
-        foreach (ResourceType resource in Enum.GetValues(typeof(ResourceType)))
-        {
-            if (_gameInstance.ProfileManager.CurrentProfile.Wallet.Resources.ContainsKey(resource))
-            {
-                Debug.Log($"{resource} {_gameInstance.ProfileManager.CurrentProfile.Wallet.Resources[resource]}");
-            }
         }
     }
 

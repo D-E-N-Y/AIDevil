@@ -9,11 +9,11 @@ public class Profile
     private CharacterManager _characterManager;
     private SessionResultsProgress _sessionResultsProgress;
 
-    public Profile()
+    public Profile(StartResources startResources)
     {
         _data = new ProfileData();
         _characterManager = new CharacterManager();
-        _wallet = new Wallet();
+        _wallet = new Wallet(startResources.StartResourcesList);
         _sessionResultsProgress = new SessionResultsProgress();
         _bestiaryProgress = new BestiaryProgress();
     }
@@ -21,7 +21,7 @@ public class Profile
     public Profile(ProfileData data)
     {
         _data = data;
-        _characterManager = new CharacterManager(_data.Character_ID, _data.UpgradeProgress);
+        _characterManager = new CharacterManager(_data.Character_ID, _data.UnlockedCharacters, _data.UpgradeProgress);
         _wallet = new Wallet(_data.Resources);
         _sessionResultsProgress = new SessionResultsProgress(_data.SesionResults);
         _bestiaryProgress = new BestiaryProgress(_data.DiscoveredEnemiesNames);
@@ -39,6 +39,7 @@ public class Profile
         ProfileData profileData = new ProfileData(
             _data.Name,
             _characterManager.Character_ID,
+            _characterManager.CharacterProgress.UnlockedCharacters,
             new Dictionary<string, HashSet<string>>(_characterManager.UpgradeProgress.Progress),
             new List<SSesionResult>(_sessionResultsProgress.SesionResults),
             new List<string>(_bestiaryProgress.DiscoveredEnemiesNames),

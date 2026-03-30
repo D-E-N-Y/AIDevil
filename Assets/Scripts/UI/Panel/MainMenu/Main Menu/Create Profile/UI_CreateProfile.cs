@@ -47,13 +47,7 @@ public class UI_CreateProfile : UI_Panel
 
     private void CreateProfile()
     {
-        ProfileData profileData = new ProfileData(
-            ui_nameInputField.text
-        );
-
-        Profile newProfile = new Profile(profileData);
-
-        _gameInstance.ProfileManager.AddProfile(newProfile);
+        _gameInstance.ProfileManager.AddProfile(ui_nameInputField.text);
 
         ui_nameInputField.text = string.Empty;
         OnValidName("");

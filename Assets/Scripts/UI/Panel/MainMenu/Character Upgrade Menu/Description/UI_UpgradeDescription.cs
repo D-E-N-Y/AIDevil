@@ -21,12 +21,12 @@ public class UI_UpgradeDescription : UI_Panel
 
     [SerializeField] private RectTransform _containerUIResourceValues;
 
+    [Header("Content panel")]
+    [SerializeField] private RectTransform _contentPanel;
 
     // [Header("Require Upgrades")]
     // [SerializeField] private GameObject requireUpgrade;
 
-
-    // [SerializeField] private Button ui_buyButton;
 
     public void Initialize()
     {
@@ -35,6 +35,8 @@ public class UI_UpgradeDescription : UI_Panel
 
         HideAllObjectInContainer(_containerUIResourceValues);
         CreateUIResources();
+
+        HideContent();
     }
 
     private void HideAllObjectInContainer(RectTransform container)
@@ -111,4 +113,7 @@ public class UI_UpgradeDescription : UI_Panel
             ui_resourceValues[cost.resource].Show();
         }
     }
+
+    public void HideContent() => _contentPanel.gameObject.SetActive(false);
+    public void ShowContent() => _contentPanel.gameObject.SetActive(true);
 }

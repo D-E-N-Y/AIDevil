@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour, IUnit
 {
     [SerializeField] private string _id;
     public string ID => _id;
+
+    [SerializeField] private List<Cost> _cost;
+    public IReadOnlyList<Cost> Cost => _cost;
 
     [SerializeField] private string _name;
     [SerializeField] private PlayerCharacterStats _stats;

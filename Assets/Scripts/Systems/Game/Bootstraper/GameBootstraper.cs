@@ -24,8 +24,6 @@ public class GameBootstraper : MonoBehaviour
         _gameInstance = GameInstance.current;
         
         Time.timeScale = 1f;
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 120;
 
         InitializePlayer();
 

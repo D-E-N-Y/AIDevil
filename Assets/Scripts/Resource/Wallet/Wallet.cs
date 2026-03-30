@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wallet
 {
-    public event Action OnMoneyAmountChanged;
+    public event Action OnResourceAmountChanged;
 
     private Dictionary<ResourceType, int> _resources;
     public IReadOnlyDictionary<ResourceType, int> Resources => _resources;
@@ -29,7 +29,24 @@ public class Wallet
 
         foreach (ResourceType resource in resourceTypes)
         {
-            _resources[resource] = resources.ContainsKey(resource) ? resources[resource] : 0;
+            int amount = resources.ContainsKey(resource) ? resources[resource] : 0;
+            _resources[resource] = amount;
+        }
+    }
+
+    public Wallet(IReadOnlyList<Cost> costs)
+    {
+        resourceTypes = (ResourceType[])Enum.GetValues(typeof(ResourceType));
+        _resources = new Dictionary<ResourceType, int>();
+
+        foreach (ResourceType resource in resourceTypes)
+        {
+            _resources[resource] = 0;
+        }
+
+        foreach (Cost cost in costs)
+        {
+            AddResource(cost.resource, cost.amount);
         }
     }
 
@@ -38,7 +55,9 @@ public class Wallet
         amount = Mathf.Max(0, amount);
         _resources[resource] += amount;
 
-        OnMoneyAmountChanged?.Invoke();
+        Debug.Log($"Add {resource} {amount} to Wallet");
+
+        OnResourceAmountChanged?.Invoke();
     }
 
     public void AddResources(Dictionary<ResourceType, int> resources)
@@ -49,8 +68,6 @@ public class Wallet
         {
             if (resources.ContainsKey(resource))
             {
-                Debug.Log($"{resource} {resources[resource]}");
-
                 AddResource(resource, resources[resource]);
             }
         }
@@ -61,7 +78,7 @@ public class Wallet
         amount = Mathf.Max(0, amount);
         _resources[resource] -= amount;
 
-        OnMoneyAmountChanged?.Invoke();
+        OnResourceAmountChanged?.Invoke();
     }
 
     public void RemoveResources(IReadOnlyList<Cost> costs)
@@ -76,6 +93,19 @@ public class Wallet
     {
         amount = Mathf.Max(0, amount);
         return _resources[resource] >= amount;
+    }
+
+    public bool HasEnoughResources(IReadOnlyList<Cost> costs)
+    {
+        foreach (Cost cost in costs)
+        {
+            if (!HasEnoughResource(cost.resource, cost.amount))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public bool HasResources(ResourceType resource)

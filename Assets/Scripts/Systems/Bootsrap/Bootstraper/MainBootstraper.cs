@@ -8,6 +8,9 @@ public class MainBootstraper : MonoBehaviour
 
     private void Start()
     {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 120;
+        
         dataBase.Initialize();
         gameInstance.Initialize(dataBase);
 

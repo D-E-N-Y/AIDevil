@@ -150,6 +150,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: player_character_1
+  _cost:
+  - resource: 1
+    amount: 100
+  - resource: 2
+    amount: 100
   _name: Test 2
   _stats: {fileID: 11400000, guid: 2e15781ac81243c449e651a6f7fcbcc6, type: 2}
   _movement: {fileID: 8768770807541341721}

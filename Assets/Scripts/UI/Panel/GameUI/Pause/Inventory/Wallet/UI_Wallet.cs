@@ -17,10 +17,23 @@ public class UI_Wallet : UI_Panel
 
     public void Initialize(Wallet wallet)
     {
-        _wallet = wallet;
-        
         DisableObjectInContainer();
         InitializeUIResources();
+
+        UpdateWallet(wallet);
+    }
+
+    public void UpdateWallet(Wallet wallet)
+    {
+        if (_wallet != null)
+        {
+            _wallet.OnResourceAmountChanged -= UpdateData;
+        }
+        
+        _wallet = wallet;
+        _wallet.OnResourceAmountChanged += UpdateData;
+
+        UpdateData();
     }
 
     private void DisableObjectInContainer()
@@ -52,10 +65,5 @@ public class UI_Wallet : UI_Panel
         {
             ui_resources[resource].SetValue(_wallet.GetAmountByResource(resource));
         }
-    }
-
-    private void OnEnable()
-    {
-        UpdateData();
     }
 }

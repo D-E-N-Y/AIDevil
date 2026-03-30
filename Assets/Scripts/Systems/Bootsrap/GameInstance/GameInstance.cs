@@ -4,6 +4,8 @@ public class GameInstance : MonoBehaviour
 {
     public static GameInstance current;
 
+    [SerializeField] private StartResources _startResources;
+
     private ProfileManager _profileManager;
     private GameLevelsManager _gameLevelsManager;
     private SaveLoadSystem _saveLoadSystem;
@@ -29,11 +31,11 @@ public class GameInstance : MonoBehaviour
 
         if (data == null)
         {
-            _profileManager = new ProfileManager();
+            _profileManager = new ProfileManager(_startResources);
         }
         else
         {
-            _profileManager = new ProfileManager(data.profiles, data.currentProfile);
+            _profileManager = new ProfileManager(_startResources, data.profiles, data.currentProfile);
         }
     }
 

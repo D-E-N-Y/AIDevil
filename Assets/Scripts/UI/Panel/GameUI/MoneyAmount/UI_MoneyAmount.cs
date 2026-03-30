@@ -26,13 +26,13 @@ public class UI_MoneyAmount : UI_Panel
     {
         base.ClearSubscriptions();
 
-        _wallet.OnMoneyAmountChanged += UpdateMoneyAmountText;
+        _wallet.OnResourceAmountChanged += UpdateMoneyAmountText;
     }
 
     protected override void ClearSubscriptions()
     {
         base.ClearSubscriptions();
 
-        _wallet.OnMoneyAmountChanged -= UpdateMoneyAmountText;
+        _wallet.OnResourceAmountChanged -= UpdateMoneyAmountText;
     }
 }

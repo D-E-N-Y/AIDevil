@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_CharacterUpgradeMenu : UI_Panel 
 {
+    [Header("Title")]
+    [SerializeField] private TextMeshProUGUI ui_nameCharacterText;
+    
     [Header("Buttons")]
     [SerializeField] private Button ui_closeButton;
-    [SerializeField] private Button ui_purchaseButton;
 
     [Header("Upgrade Trees")] 
     [SerializeField] private List<UI_UpgradeTree> ui_upgradeTrees;
@@ -15,6 +18,13 @@ public class UI_CharacterUpgradeMenu : UI_Panel
 
     [Header("Description")] 
     [SerializeField] private UI_UpgradeDescription ui_upgradeDescription;
+
+    [Header("Wallet")]
+    [SerializeField] private UI_Wallet ui_wallet;
+
+    [Header("Purchase Section")]
+    [SerializeField] private RectTransform _purchasePanel;
+    [SerializeField] private Button ui_purchaseButton;
 
     private PurchaseUpgrade _purchaseUpgrade;
     private GameInstance _gameInstance;
@@ -25,6 +35,8 @@ public class UI_CharacterUpgradeMenu : UI_Panel
         _purchaseUpgrade = new PurchaseUpgrade(_gameInstance.ProfileManager, _gameInstance.DataBase.UpgradeTrees);
 
         ui_upgradeDescription.Initialize();
+
+        ui_wallet.Initialize(_gameInstance.ProfileManager.CurrentProfile.Wallet);
 
         ui_closeButton.onClick.RemoveAllListeners();
         ui_closeButton.onClick.AddListener(() => Hide());
@@ -45,8 +57,16 @@ public class UI_CharacterUpgradeMenu : UI_Panel
         }
     }
 
+    private void RefreshProfileUI()
+    {
+        ui_wallet.UpdateWallet(_gameInstance.ProfileManager.CurrentProfile.Wallet);
+    }
+
     private void UpdateTree()
     {
+        string characterName = _gameInstance.DataBase.Characters.GetCharacterByID(_gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID).GetName();
+        ui_nameCharacterText.text = characterName;
+        
         if (_selectUIUpgradeTree != null)
         {
             _selectUIUpgradeTree.Hide();
@@ -57,13 +77,17 @@ public class UI_CharacterUpgradeMenu : UI_Panel
         {
             _selectUIUpgradeTree = ui_upgradeTreesChash[_gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID];
             _selectUIUpgradeTree.UpdateTree(_gameInstance.ProfileManager.CurrentProfile.CharacterManager.UpgradeContainer);
+            _selectUIUpgradeTree.UnSelectUpgrade();
             _selectUIUpgradeTree.Show();
+
+            ui_upgradeDescription.HideContent();
         }
         else
         {
             Debug.LogWarning($"Upgrade Tree for {_gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID} not found!!!");
         }
 
+        _purchasePanel.gameObject.SetActive(false);
         DisablePurchaseButton();
     }
 
@@ -83,7 +107,10 @@ public class UI_CharacterUpgradeMenu : UI_Panel
 
     private void SelectUpgrade(string upgrade_id)
     {
+        ui_upgradeDescription.ShowContent();
         ui_upgradeDescription.SetInfo(_selectUIUpgradeTree.UpgradeTree.GetUpgradeByID(upgrade_id));
+        
+        _purchasePanel.gameObject.SetActive(true);
         UpdatePurchaseButton(upgrade_id);
     }
 
@@ -96,6 +123,8 @@ public class UI_CharacterUpgradeMenu : UI_Panel
         {
             ui_upgradeTree.OnSelectUpgrade += SelectUpgrade;
         }
+
+        _gameInstance.ProfileManager.onCurrentProfileChanged += RefreshProfileUI;
     }
 
     protected override void ClearSubscriptions()
@@ -107,6 +136,8 @@ public class UI_CharacterUpgradeMenu : UI_Panel
         {
             ui_upgradeTree.OnSelectUpgrade -= SelectUpgrade;
         }
+
+        _gameInstance.ProfileManager.onCurrentProfileChanged -= RefreshProfileUI;
     }
 
     public override void Show()

@@ -253,7 +253,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 20
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -570,7 +570,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui_gameLevelPrefab: {fileID: -3241745078442376333, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
-  _selectGameLevel: {fileID: 0}
   _containerUIGameLveles: {fileID: 2435578260508896569}
 --- !u!1 &8987297634263757434
 GameObject:
@@ -792,51 +791,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7234689061793017489, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7234689061793017489, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7234689061793017489, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 238.82
       objectReference: {fileID: 0}
     - target: {fileID: 7234689061793017489, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 7234689061793017489, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 209.41
       objectReference: {fileID: 0}
     - target: {fileID: 7234689061793017489, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 8671772834691904044, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8671772834691904044, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8671772834691904044, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 8671772834691904044, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 8671772834691904044, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 8671772834691904044, guid: fee623d17e88f909ca95da144ae6da63, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
