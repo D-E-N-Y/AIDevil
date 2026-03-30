@@ -10,6 +10,7 @@ public class ProfileData
     public Dictionary<string, HashSet<string>> UpgradeProgress;
     public List<SSesionResult> SesionResults;
     public List<string> DiscoveredEnemiesNames;
+    public HashSet<string> GameLevelsProgress;
     public Dictionary<ResourceType, int> Resources;
 
     public ProfileData()
@@ -20,6 +21,7 @@ public class ProfileData
         UpgradeProgress = new Dictionary<string, HashSet<string>>();
         SesionResults = new List<SSesionResult>();
         DiscoveredEnemiesNames = new List<string>();
+        GameLevelsProgress = new HashSet<string>();
         Resources = new Dictionary<ResourceType, int>();
     }
 
@@ -31,7 +33,8 @@ public class ProfileData
         UpgradeProgress = new Dictionary<string, HashSet<string>>();
         SesionResults = new List<SSesionResult>();
         DiscoveredEnemiesNames = new List<string>();
-        
+        GameLevelsProgress = new HashSet<string>();
+
         Resources = new Dictionary<ResourceType, int>();
         foreach (Cost cost in startResources.StartResourcesList)
         {
@@ -46,6 +49,7 @@ public class ProfileData
         Dictionary<string, HashSet<string>> upgradeProgress, 
         List<SSesionResult> sesionResults, 
         List<string> bestiaryProgress, 
+        HashSet<string> gameLevelsProgress,
         Dictionary<ResourceType, int> resources)
     {
         Name = name;
@@ -54,6 +58,7 @@ public class ProfileData
         UpgradeProgress = upgradeProgress;
         SesionResults = sesionResults;
         DiscoveredEnemiesNames = bestiaryProgress;
+        GameLevelsProgress = gameLevelsProgress;
         Resources = resources;
     }
 }

@@ -19,4 +19,17 @@ public class DB_GameLevels : ScriptableObject
 
         return null;
     }
+
+    public GameLevel GetGameLevelByID(string id)
+    {
+        foreach (GameLevel level in _gameLevels)
+        {
+            if (level.ID == id)
+            {
+                return level;
+            }
+        }
+
+        return null;
+    }
 }

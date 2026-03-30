@@ -12,7 +12,7 @@ public class EndGame : MonoBehaviour
 
         _finishSession.onYes += () => 
         {
-            sessionSystem.CompleteSession(ESessionResult.WIN);
+            sessionSystem.WinFinish();
             Despawn();
         };
 

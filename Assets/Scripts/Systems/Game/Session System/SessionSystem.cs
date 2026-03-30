@@ -70,13 +70,21 @@ public class SessionSystem
         CompleteSession(ESessionResult.LOSE);
     }
 
+    public void WinFinish()
+    {
+        string levelID = _gameInstance.GameLevelsManager.CurrentGameLevel.ID;
+        _gameInstance.ProfileManager.CurrentProfile.GameLevelsProgress.AddGameLevel(levelID);
+        
+        CompleteSession(ESessionResult.WIN);
+    }
+
     private void SetResults(SCompleteWaveInfo waveInfo)
     {
         _sesionResult.defeatEnemies = waveInfo.defeatEnemies;
         _sesionResult.completedWaves = waveInfo.completedWaves;
     }
 
-    public void CompleteSession(ESessionResult result)
+    private void CompleteSession(ESessionResult result)
     {
         _endTimeSession = Time.unscaledTime;
 

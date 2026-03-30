@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.Barracuda;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -35,7 +37,32 @@ public class UI_GameLevelsMenu : UI_Panel
 
     private void UpdateFightButton(string nameGameLevel)
     {
+        IReadOnlyList<GameLevel> requiredLevels = _gameInstance.DataBase.GameLevels.GetGameLevelByName(nameGameLevel).RequiredLevels;
+
         ui_fightButton.onClick.RemoveAllListeners();
         ui_fightButton.onClick.AddListener(() => SceneManager.LoadScene(nameGameLevel));
+        ui_fightButton.interactable = IsLevelAvailable(requiredLevels);
+    }
+
+    private bool IsLevelAvailable(IReadOnlyList<GameLevel> requiredLevels)
+    {
+        if (requiredLevels.Count > 0)
+        {
+            foreach (GameLevel level in requiredLevels)
+            {
+                if (!_gameInstance.ProfileManager.CurrentProfile.GameLevelsProgress.IsGameLevelCompleted(level.ID))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public override void Show()
+    {
+        base.Show();
+        ui_gameLevelsList.UpdateData();
     }
 }

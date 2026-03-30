@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Profile
 {
@@ -8,6 +9,7 @@ public class Profile
     private BestiaryProgress _bestiaryProgress;
     private CharacterManager _characterManager;
     private SessionResultsProgress _sessionResultsProgress;
+    private GameLevelsProgress _gameLevelsProgress;
 
     public Profile(StartResources startResources)
     {
@@ -16,6 +18,7 @@ public class Profile
         _wallet = new Wallet(startResources.StartResourcesList);
         _sessionResultsProgress = new SessionResultsProgress();
         _bestiaryProgress = new BestiaryProgress();
+        _gameLevelsProgress = new GameLevelsProgress();
     }
 
     public Profile(ProfileData data)
@@ -25,6 +28,7 @@ public class Profile
         _wallet = new Wallet(_data.Resources);
         _sessionResultsProgress = new SessionResultsProgress(_data.SesionResults);
         _bestiaryProgress = new BestiaryProgress(_data.DiscoveredEnemiesNames);
+        _gameLevelsProgress = new GameLevelsProgress(_data.GameLevelsProgress);
     }
 
     public string Name => _data.Name;
@@ -33,6 +37,7 @@ public class Profile
     public BestiaryProgress BestiaryProgress => _bestiaryProgress;
     public CharacterManager CharacterManager => _characterManager;
     public SessionResultsProgress SessionResultsProgress => _sessionResultsProgress;
+    public GameLevelsProgress GameLevelsProgress => _gameLevelsProgress;
 
     public ProfileData GetData()
     {
@@ -43,6 +48,7 @@ public class Profile
             new Dictionary<string, HashSet<string>>(_characterManager.UpgradeProgress.Progress),
             new List<SSesionResult>(_sessionResultsProgress.SesionResults),
             new List<string>(_bestiaryProgress.DiscoveredEnemiesNames),
+            _gameLevelsProgress.CompletedLevels,
             new Dictionary<ResourceType, int>(_wallet.Resources)
         );
         

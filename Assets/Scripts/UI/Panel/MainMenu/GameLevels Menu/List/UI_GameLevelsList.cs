@@ -44,8 +44,6 @@ public class UI_GameLevelsList : UI_Panel
             ui_gameLevels[i].onSelect -= SelectGameLevel;
             ui_gameLevels[i].onSelect += SelectGameLevel;
         }
-
-        ui_gameLevels.First().Select();
     }
 
     private void SelectGameLevel(UI_GameLevel ui_gameLevel)
@@ -59,5 +57,13 @@ public class UI_GameLevelsList : UI_Panel
         _selectGameLevel = ui_gameLevel;
 
         onSelectGameLevel?.Invoke(_selectGameLevel.NameGameLevel);
+    }
+
+    public void UpdateData()
+    {
+        if (ui_gameLevels.Count > 0)
+        {
+            ui_gameLevels[0].Select();
+        }
     }
 }

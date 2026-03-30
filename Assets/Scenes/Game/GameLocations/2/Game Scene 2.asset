@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cadf5d11e03b0324800354e1dd4487b, type: 3}
   m_Name: Game Scene 2
   m_EditorClassIdentifier: 
+  _id: game_level_GameScene_2
   _name: GameScene 2
   _resources: 0200000003000000
   _waveConfig: {fileID: 11400000, guid: 5c6a0865bd5c35f4281daf71d46296bc, type: 2}
+  _requiredLevels:
+  - {fileID: 11400000, guid: 1b69ded6ecde2f9e2b136c860869702f, type: 2}
