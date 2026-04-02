@@ -79,8 +79,6 @@ public class UI_CharacterUpgradeMenu : UI_Panel
             _selectUIUpgradeTree.UpdateTree(_gameInstance.ProfileManager.CurrentProfile.CharacterManager.UpgradeContainer);
             _selectUIUpgradeTree.UnSelectUpgrade();
             _selectUIUpgradeTree.Show();
-
-            ui_upgradeDescription.HideContent();
         }
         else
         {
@@ -89,6 +87,8 @@ public class UI_CharacterUpgradeMenu : UI_Panel
 
         _purchasePanel.gameObject.SetActive(false);
         DisablePurchaseButton();
+
+        ui_upgradeDescription.HideContent();
     }
 
     private void UpdatePurchaseButton(string upgrade_id)

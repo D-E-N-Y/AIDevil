@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class UI_CharacterDescription : UI_Panel 
 {
+    [Header("Panels")]
+    [SerializeField] private RectTransform _content;
+    [SerializeField] private RectTransform _characterInfo;
+    [SerializeField] private RectTransform _lockedInfo;
+
+    [Header("Character Info")]
     [Header("Tittle")]
     [SerializeField] private TextMeshProUGUI ui_nameText;
     [SerializeField] private TextMeshProUGUI ui_levelText;
@@ -11,8 +17,9 @@ public class UI_CharacterDescription : UI_Panel
     [SerializeField] private UI_Stats ui_stats;
     [SerializeField] private UI_SpellsList ui_spellsList;
 
-    [Header("Content")]
-    [SerializeField] private RectTransform _content;
+    [Header("Locked Info")]
+    [Header("Cost")]
+    [SerializeField] private UI_Cost ui_cost;
 
     ProfileManager _profileManager;
 
@@ -20,13 +27,30 @@ public class UI_CharacterDescription : UI_Panel
     {
         _profileManager = profileManager;
         
-        ui_spellsList.Initialize();
-        ui_stats.Initialize();
+        InitCharacterInfo();
+        InitLockedInfo();        
 
         HideContent();
     }
 
-    public void SetCharacterInfo(PlayerCharacter playerCharacter)
+    private void InitCharacterInfo()
+    {
+        ui_spellsList.Initialize();
+        ui_stats.Initialize();
+    }
+
+    private void InitLockedInfo()
+    {
+        ui_cost.Initialize();
+    }
+
+    public void SetCharacterInfo(PlayerCharacter playerCharacter, bool isLocked)
+    {
+        UpdateCharacterInfo(playerCharacter);
+        UpdateLockedInfo(playerCharacter, isLocked);
+    }
+
+    private void UpdateCharacterInfo(PlayerCharacter playerCharacter)
     {
         ui_nameText.text = playerCharacter.GetName();
         ui_levelText.text = _profileManager.CurrentProfile.CharacterManager.GetCharacterLevel().ToString();
@@ -35,6 +59,15 @@ public class UI_CharacterDescription : UI_Panel
         ui_stats.UpdateUI();
 
         ui_spellsList.SetInfo(playerCharacter.GetStartItems().GetStartSpells());
+    }
+
+    private void UpdateLockedInfo(PlayerCharacter playerCharacter, bool isLocked)
+    {
+        _lockedInfo.gameObject.SetActive(isLocked);
+        if (isLocked)
+        {
+            ui_cost.UpdateUICost(playerCharacter.Cost);
+        }
     }
 
     public void ShowContent() => _content.gameObject.SetActive(true);

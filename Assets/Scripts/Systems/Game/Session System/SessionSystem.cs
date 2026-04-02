@@ -18,6 +18,8 @@ public class SessionSystem
 
     GameInstance _gameInstance;
 
+    private ESessionResult _result;
+
     public SessionSystem(GameInstance gameInstance, PlayerCharacter playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, UI_Pause ui_pause, WaveSystem waveSystem, TradeZone tradeZone)
     {
         _gameInstance = gameInstance;
@@ -67,7 +69,14 @@ public class SessionSystem
         _waveSystem.StopWave();
         _waveSystem.SendWaveResults();
 
-        CompleteSession(ESessionResult.LOSE);
+        if (_waveSystem.IsInfinityWaves)
+        {
+            WinFinish();
+        }
+        else
+        {
+            CompleteSession(ESessionResult.LOSE);
+        }
     }
 
     public void WinFinish()

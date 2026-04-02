@@ -56,22 +56,25 @@ public class UI_CharactersMenu : UI_Panel
     {
         _gameInstance.ProfileManager.CurrentProfile.CharacterManager.SetCharacter(character.ID);
 
-        ui_characterDescription.SetCharacterInfo(character);
-        ui_characterDescription.ShowContent();
-
         bool isCharacterUnlocked = _gameInstance.ProfileManager.CurrentProfile.CharacterManager.CharacterProgress.IsCharacterUnlocked(character.ID);
         
+        ui_characterDescription.SetCharacterInfo(character, !isCharacterUnlocked);
+        ui_characterDescription.ShowContent();
+
         UpdatePurchaseSection(!isCharacterUnlocked, character.ID);
         UpdateCharacterControlSection(isCharacterUnlocked);
     }
 
     private void UpdateData()
     {
-        string characterID = _gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID;
+        PlayerCharacter character = _gameInstance.DataBase.Characters.GetCharacterByID(_gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID);
+        string characterID = character.ID;
         bool isCharacterUnlocked = _gameInstance.ProfileManager.CurrentProfile.CharacterManager.CharacterProgress.IsCharacterUnlocked(characterID);
-        
+
         UpdatePurchaseSection(!isCharacterUnlocked, characterID);
         UpdateCharacterControlSection(isCharacterUnlocked);
+
+        ui_characterDescription.SetCharacterInfo(character, !isCharacterUnlocked);
     }
 
     private void RefreshProfileUI()
