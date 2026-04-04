@@ -1,11 +1,14 @@
+using Unity.Barracuda;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerCharacterMovement : MonoBehaviour 
 {
+    [SerializeField] private Transform _model;
+    [SerializeField] private Animator _animator;
+    
     private Rigidbody _rigidbody;
     private FixedJoystick _joystick;
-
 
     private UnitStats _stats;
 
@@ -43,10 +46,39 @@ public class PlayerCharacterMovement : MonoBehaviour
     {
         if (_joystick == null || _rigidbody == null) return;
 
+        CalcVelocity();
+        CalcRotation();
+
+        AnimateMovement();
+    }
+
+    private void CalcVelocity()
+    {
         _rigidbody.velocity = new Vector3(
             _joystick.Horizontal * _moveSpeed,
             _rigidbody.velocity.y,
             _joystick.Vertical * _moveSpeed
         );
+    }
+
+    private void CalcRotation()
+    {
+        if (_model == null) return;       
+
+        Vector3 direction = _rigidbody.velocity.normalized;
+        direction.y = 0f;
+
+        if (direction.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            _model.rotation = Quaternion.Slerp(_model.rotation, targetRotation, Time.deltaTime * 10f);
+        }
+    }
+
+    private void AnimateMovement()
+    {
+        if (_animator == null) return;
+
+        _animator.SetFloat("Speed", _rigidbody.velocity.magnitude);
     }
 }

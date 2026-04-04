@@ -4,10 +4,10 @@ using UnityEngine;
 [Serializable, CreateAssetMenu(fileName = "Player Character Stats", menuName = "UnitStats/PlayerCharacter")]
 public class PlayerCharacterStats : UnitStats 
 {
-    [SerializeField, Range(0f, 1f)] private float pickUpRangeModifier;
+    [SerializeField, Range(0f, 2f)] private float pickUpRangeModifier;
     public float PickUpRangeModifier => pickUpRangeModifier;
 
-    [SerializeField, Range(0f, 1f)] private float moneyModifier;
+    [SerializeField, Range(0f, 2f)] private float moneyModifier;
     public float MoneyModifier => moneyModifier;
 
     public override void Initialize()

@@ -14,31 +14,31 @@ public class UnitStats : ScriptableObject
     [SerializeField, Range(1f, 10f)] private float baseMoveSpeed;
     public float BaseMoveSpeed => baseMoveSpeed;
 
-    [SerializeField, Range(0.1f, 1f)] private float moveSpeedModifier;
+    [SerializeField, Range(0.1f, 2f)] private float moveSpeedModifier;
     public float MoveSpeedModifier => moveSpeedModifier;
     
     [SerializeField, Range(1, 1000)] private float armor;
     public float Armor => armor;
     
-    [SerializeField, Range(0f, 1f)] private float damageModifier;
+    [SerializeField, Range(0f, 2f)] private float damageModifier;
     public float DamageModifier => damageModifier;
 
-    [SerializeField, Range(0f, 1f)] private float speedAttackModifier;
+    [SerializeField, Range(0f, 2f)] private float speedAttackModifier;
     public float SpeedAttackModifier => speedAttackModifier;
 
-    [SerializeField, Range(0f, 1f)] private float criticalDamageChance;
+    [SerializeField, Range(0f, 2f)] private float criticalDamageChance;
     public float CriticalDamageChance => criticalDamageChance;
 
-    [SerializeField, Range(0f, 1f)] private float criticalDamageModifier;
+    [SerializeField, Range(0f, 2f)] private float criticalDamageModifier;
     public float CriticalDamageModifier => criticalDamageModifier;
 
-    [SerializeField, Range(0f, 1f)] private float multiattackChance;
+    [SerializeField, Range(0f, 2f)] private float multiattackChance;
     public float MultiattackChance => multiattackChance;
 
-    [SerializeField, Range(0f, 1f)] private float areaModifier;
+    [SerializeField, Range(0f, 2f)] private float areaModifier;
     public float AreaModifier => areaModifier;
 
-    [SerializeField, Range(0f, 1f)] private float dodgeChance;
+    [SerializeField, Range(0f, 2f)] private float dodgeChance;
     public float DodgeChance => dodgeChance;
 
     protected Dictionary<StatType, Action<float>> _modifyStat;
