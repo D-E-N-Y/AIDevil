@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class UnitHealth : IHealth
 {
@@ -12,10 +13,15 @@ public class UnitHealth : IHealth
 
     private Dictionary<StatType, Action> _updateStats;
 
+    private bool _isInvulnerable;
+    public bool IsInvulnerable => _isInvulnerable;
+
     public UnitHealth(UnitStats stats)
     {
         _stats = stats;
         
+        _isInvulnerable = false;
+
         _updateStats = new Dictionary<StatType, Action>()
         {
             {StatType.MaxHP, SetMaxHP},
@@ -80,7 +86,9 @@ public class UnitHealth : IHealth
     }
 
     public void TakeDamage(float value)
-    {
+    { 
+        if (_isInvulnerable) return;
+
         // dodge damage
         float dodgeRoll = UnityEngine.Random.Range(0f, 1f);
         if (dodgeRoll < _dodgeChance) return;
@@ -97,5 +105,10 @@ public class UnitHealth : IHealth
         {
             OnDead?.Invoke();
         }
+    }
+
+    public void SetInvulnerability(bool value)
+    {
+        _isInvulnerable = value;
     }
 }

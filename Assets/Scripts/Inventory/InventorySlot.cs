@@ -10,10 +10,10 @@ public class InventorySlot
     private int _count;
     public int Count => _count;
 
-    private ItemContext _context;
-    public ItemContext Context => _context;
+    private UnitContext _context;
+    public UnitContext Context => _context;
 
-    public InventorySlot(ItemContext context)
+    public InventorySlot(UnitContext context)
     {
         _context = context;
 
@@ -21,14 +21,14 @@ public class InventorySlot
         _count = 0;
     }
 
-    public InventorySlot(ItemContext context, Item item)
+    public InventorySlot(UnitContext context, Item item)
     {
         _context = context;
 
         SetItem(item);
     }
 
-    public InventorySlot(ItemContext context, Item item, int count)
+    public InventorySlot(UnitContext context, Item item, int count)
     {
         _context = context;
         

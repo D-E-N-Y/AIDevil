@@ -7,7 +7,7 @@ public class HealItem : ConsumableItem
 
     public override ConsumableEffect Effect => ConsumableEffect.Heal;
 
-    public override void Apply(ItemContext context)
+    public override void Apply(UnitContext context)
     {
         context.UnitHealth.Heal(healAmount);
     }

@@ -29,7 +29,7 @@ public class WorldItem : WorldPickup
         gameObject.SetActive(true);
     }
 
-    public override void PickUp(ItemContext context)
+    public override void PickUp(UnitContext context)
     {
         if (!_canPickUp) return;
         

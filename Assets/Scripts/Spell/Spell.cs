@@ -18,7 +18,6 @@ public abstract class Spell : MonoBehaviour
 
     [SerializeField, Range(0.1f, 100f)] protected float rangeAttack;
 
-    protected UnitFaction _unitFaction;
     [SerializeField, Range(0.1f, 15f)] protected float cooldown;
     
     [SerializeField] protected Weapon _weapon;
@@ -43,19 +42,19 @@ public abstract class Spell : MonoBehaviour
 
     [SerializeField] private Sprite icon;
 
-    protected UnitStats _stats;
+    protected SpellContext _spellContext;
 
-    public virtual void Initialize(UnitFaction unitFaction, UnitStats stats)
+    public virtual void Initialize(SpellContext spellContext)
     {
         RemoveSubsriptions();
         
         attacking = null;
-        _unitFaction = unitFaction;
+        
+        _spellContext = spellContext;
 
-        _stats = stats;
         SetStats();
 
-        _weapon.Initialize(unitFaction);
+        _weapon.Initialize(_spellContext.UnitFaction);
         
         SetSubsriptions();
     }
@@ -75,12 +74,12 @@ public abstract class Spell : MonoBehaviour
 
     protected virtual void SetStats()
     {
-        _damageModifier = _stats.DamageModifier;
-        _speedAttackModifier = _stats.SpeedAttackModifier;
-        _criticalDamageChance = _stats.CriticalDamageChance;
-        _criticalDamageModifier = _stats.CriticalDamageModifier;
-        _multiattackChance = _stats.MultiattackChance;
-        _areaModifier = _stats.AreaModifier;
+        _damageModifier = _spellContext.Stats.DamageModifier;
+        _speedAttackModifier = _spellContext.Stats.SpeedAttackModifier;
+        _criticalDamageChance = _spellContext.Stats.CriticalDamageChance;
+        _criticalDamageModifier = _spellContext.Stats.CriticalDamageModifier;
+        _multiattackChance = _spellContext.Stats.MultiattackChance;
+        _areaModifier = _spellContext.Stats.AreaModifier;
     }
 
     public abstract void Cast();
@@ -91,7 +90,7 @@ public abstract class Spell : MonoBehaviour
         onStartCooldown?.Invoke();
 
         float timer = 0f;
-        float _cooldown = MathF.Max(0.1f, cooldown - cooldown * (_stats.SpeedAttackModifier - 1f));
+        float _cooldown = MathF.Max(0.1f, cooldown - cooldown * (_speedAttackModifier - 1f));
 
         while (timer < _cooldown)
         {
@@ -105,9 +104,15 @@ public abstract class Spell : MonoBehaviour
         onStopCooldown?.Invoke();
     }
 
+    protected bool IsMultiattack()
+    {
+        float roll = UnityEngine.Random.Range(0f, 1f);
+        return roll < _multiattackChance;
+    }
+
     protected virtual void SetSubsriptions()
     {
-        _stats.OnStatChanged += UpdateStats;
+        _spellContext.Stats.OnStatChanged += UpdateStats;
         
         _weaponHandler = () => onSuccessfulAttack?.Invoke();
         _weapon.onSuccessfulAttack += _weaponHandler;
@@ -115,9 +120,9 @@ public abstract class Spell : MonoBehaviour
 
     protected virtual void RemoveSubsriptions()
     {
-        if (_stats != null)
+        if (_spellContext != null)
         {
-            _stats.OnStatChanged -= UpdateStats;
+            _spellContext.Stats.OnStatChanged -= UpdateStats;
         }
 
         if (_weaponHandler != null)

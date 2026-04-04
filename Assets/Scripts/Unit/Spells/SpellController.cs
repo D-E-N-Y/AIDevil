@@ -9,15 +9,13 @@ public class SpellController
     private List<SpellMelee> _meleeSpells;
     private List<SpellRange> _rangeSpells;
 
-    protected UnitFaction _unitFaction;
-    protected UnitStats _stats;
-
     protected SpellContainer _spellContainer;
 
-    public SpellController(UnitFaction faction, UnitStats stats, SpellContainer spellContainer)
+    private SpellContext _spellContext;
+
+    public SpellController(SpellContext spellContext, SpellContainer spellContainer)
     {
-        _unitFaction = faction;
-        _stats = stats;
+        _spellContext = spellContext;
         _spellContainer = spellContainer;
 
         spellContainer.Initialize();
@@ -29,7 +27,7 @@ public class SpellController
 
     private void OrderBySpell(Spell spell)
     {
-        spell.Initialize(_unitFaction, _stats);
+        spell.Initialize(_spellContext);
         
         if (spell is SpellMelee _meleeSpell)
         {

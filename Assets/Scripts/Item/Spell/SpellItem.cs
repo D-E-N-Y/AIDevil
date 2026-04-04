@@ -8,12 +8,12 @@ public class SpellItem : Item
 
     public override ItemType Type => ItemType.Spell;
 
-    public override void Apply(ItemContext context)
+    public override void Apply(UnitContext context)
     {
         context.SpellController.AddSpell(_spell);
     }
 
-    public override void Remove(ItemContext context)
+    public override void Remove(UnitContext context)
     {
         context.SpellController.RemoveSpell(_spell);
     }

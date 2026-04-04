@@ -21,8 +21,8 @@ public class Inventory
 
     public bool IsSpellSlotsFull => _currentSpellsCount >= _maxSpellsCount;
 
-    private ItemContext _context;
-    public ItemContext Context => _context;
+    private UnitContext _context;
+    public UnitContext Context => _context;
 
     public Inventory(int maxSpellsCount = 4)
     {
@@ -36,7 +36,7 @@ public class Inventory
         };
     }
 
-    public void SetContext(ItemContext context)
+    public void SetContext(UnitContext context)
     {
         _context = context;
     }

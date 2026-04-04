@@ -28,6 +28,9 @@ public class Enemy : MonoBehaviour, IUnit
     [SerializeField] protected WorldResource worldResource;
 
     protected UnitFaction _unitFaction;
+    protected SpellContext _spellContext;
+
+     public string ID => _name;
 
     public virtual void Initialize()
     {
@@ -39,7 +42,9 @@ public class Enemy : MonoBehaviour, IUnit
 
         ui_hpIndicator.Initialize(_health);
 
-        spells.ForEach(x => x.Initialize(_unitFaction, _stats));
+        _spellContext = new SpellContext(_unitFaction, _stats, _health, null);
+
+        spells.ForEach(x => x.Initialize(_spellContext));
         ui_worldSpellCooldown.Initialize(spells[0]);
 
         _isDead = false;

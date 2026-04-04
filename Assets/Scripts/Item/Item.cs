@@ -17,6 +17,6 @@ public abstract class Item : ScriptableObject
 
     public abstract ItemType Type { get; }
 
-    public abstract void Apply(ItemContext context);
-    public virtual void Remove(ItemContext context) { }
+    public abstract void Apply(UnitContext context);
+    public virtual void Remove(UnitContext context) { }
 }

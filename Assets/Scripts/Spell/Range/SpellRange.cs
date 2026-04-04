@@ -14,14 +14,14 @@ public abstract class SpellRange : Spell
 
     public bool IsCanAttack { get; protected set; }
 
-    public override void Initialize(UnitFaction unitFaction, UnitStats stats)
+    public override void Initialize(SpellContext spellContext)
     {
-        base.Initialize(unitFaction, stats);
+        base.Initialize(spellContext);
 
         _projectile = _weapon as Projectile;
         _projectiles = new List<Projectile>();
 
-        _sensor.Initialize(_unitFaction, rangeAttack);
+        _sensor.Initialize(_spellContext.UnitFaction, rangeAttack);
     }
 
     public override void Cast()
@@ -50,12 +50,20 @@ public abstract class SpellRange : Spell
         {
             _targetPosition = _sensor.GetNearestTarget().position;
 
-            if (_unitFaction == UnitFaction.Enemy) yield return Cooldown();
+            if (_spellContext.UnitFaction == UnitFaction.Enemy) yield return Cooldown();
 
             yield return Attack();
             onAttack?.Invoke();
 
-            if (_unitFaction == UnitFaction.Player) yield return Cooldown();
+            if (IsMultiattack())
+            {
+                yield return new WaitForSeconds(0.1f);
+
+                yield return Attack();
+                onAttack?.Invoke();
+            }
+
+            if (_spellContext.UnitFaction == UnitFaction.Player) yield return Cooldown();
         }
 
         attacking = null;
@@ -79,7 +87,7 @@ public abstract class SpellRange : Spell
     {
         IsCanAttack = _sensor.IsHasUnits();
 
-        if (IsCanAttack && _unitFaction == UnitFaction.Player)
+        if (IsCanAttack && _spellContext.UnitFaction == UnitFaction.Player)
         {
             Cast();
         }

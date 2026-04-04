@@ -24,12 +24,14 @@ public class PlayerCharacter : MonoBehaviour, IUnit
     private Inventory _inventory;
     private Wallet _wallet;
     private SpellController _spellController;
-    private ItemContext _itemContext;
+    private UnitContext _unitContext;
 
     public event Action<IUnit> OnDead;
 
     protected UnitFaction _unitFaction;
     public UnitFaction UnitFaction => _unitFaction;
+
+    private SpellContext _spellContext;
 
     public virtual void Initialize(FixedJoystick joystick) 
     {
@@ -42,7 +44,6 @@ public class PlayerCharacter : MonoBehaviour, IUnit
         _upgradesManager = new UpgradesManager(_stats);
 
         _health = new UnitHealth(_stats);
-        _spellController = new SpellController(_unitFaction, _stats, _spellContainer);
         
         _movement.Initialize(_stats);
         _movement.SetControlers(joystick);
@@ -52,12 +53,17 @@ public class PlayerCharacter : MonoBehaviour, IUnit
         _inventory = new Inventory(_maxSpellsCount);
         _wallet = new Wallet();
 
-        _itemContext = new ItemContext(_stats, _inventory, _spellController, _health, _wallet);
+        _spellContext = new SpellContext(_unitFaction, _stats, _health, _movement);
+        _spellController = new SpellController(_spellContext, _spellContainer);
 
-        _pickupSensor.Initialize(_itemContext);
+        _unitContext = new UnitContext(_stats, _inventory, _spellController, _health, _wallet, _movement);
 
-        _inventory.SetContext(_itemContext);
+        _pickupSensor.Initialize(_unitContext);
+
+        _inventory.SetContext(_unitContext);
         _inventory.AddItems(_startItems.GetStartItems());
+
+        
 
         gameObject.SetActive(true);
     }
@@ -74,7 +80,7 @@ public class PlayerCharacter : MonoBehaviour, IUnit
     public Inventory GetInventory() => _inventory;
     public Wallet GetWallet() => _wallet;
     public StartItems GetStartItems() => _startItems;
-    public ItemContext GetItemContext() => _itemContext;
+    public UnitContext GetUnitContext() => _unitContext;
 
     public SpellController GetSpellController() => _spellController;
     public UpgradesManager GetUpgradesManager() => _upgradesManager;

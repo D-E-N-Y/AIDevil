@@ -13,7 +13,7 @@ public class UI_Pause : UI_Panel
     [SerializeField] private UI_InventoryMenu ui_inventoryMenu;
     [SerializeField] private UI_Settings ui_settings;
 
-    public void Initialize(ItemContext context, UI_Gameplay ui_gameplay)
+    public void Initialize(UnitContext context, UI_Gameplay ui_gameplay)
     {
         ui_pauseButton = ui_gameplay.UIPauseButton;
         ui_pauseButton.onClick.RemoveAllListeners();

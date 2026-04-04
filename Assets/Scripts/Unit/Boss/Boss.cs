@@ -35,17 +35,17 @@ public class Boss : Agent, IUnit
 
         ui_hpIndicator.Initialize(_health);
 
-        meleeSpells = new List<SpellMelee>();
-        foreach (Spell spell in spells)
-        {
-            spell.Initialize(_unitFaction, _stats);
-            spell.onSuccessfulAttack += SuccessfulAttack;
+        // meleeSpells = new List<SpellMelee>();
+        // foreach (Spell spell in spells)
+        // {
+        //     spell.Initialize(_unitFaction, _stats);
+        //     spell.onSuccessfulAttack += SuccessfulAttack;
 
-            if (spell is SpellMelee _meleeSpell)
-            {
-                meleeSpells.Add(_meleeSpell);
-            }
-        }
+        //     if (spell is SpellMelee _meleeSpell)
+        //     {
+        //         meleeSpells.Add(_meleeSpell);
+        //     }
+        // }
 
         playerCharacterTarget.OnDead += SuccessfulKill;
     }

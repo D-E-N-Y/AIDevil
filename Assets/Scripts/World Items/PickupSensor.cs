@@ -11,9 +11,9 @@ public class PickupSensor : MonoBehaviour
     
     private SphereCollider _sphereCollider;
 
-    private ItemContext _context;
+    private UnitContext _context;
 
-    public void Initialize(ItemContext context)
+    public void Initialize(UnitContext context)
     {
         if(_context != null) 
         {

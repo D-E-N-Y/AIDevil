@@ -9,7 +9,7 @@ public class EquipmentItem : Item
 
     public override ItemType Type => ItemType.Equipment;
 
-    public override void Apply(ItemContext context)
+    public override void Apply(UnitContext context)
     {
         foreach(StatModifier modifier in _modifiers)
         {
@@ -17,7 +17,7 @@ public class EquipmentItem : Item
         }
     }
 
-    public override void Remove(ItemContext context)
+    public override void Remove(UnitContext context)
     {
         foreach(StatModifier modifier in _modifiers)
         {

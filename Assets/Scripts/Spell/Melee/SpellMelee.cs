@@ -1,13 +1,13 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class SpellMelee : Spell
 {
     protected MeleeWeapon _meleeWeapon;
 
-    public override void Initialize(UnitFaction unitFaction, UnitStats stats)
+    public override void Initialize(SpellContext spellContext)
     {
-        base.Initialize(unitFaction, stats);
+        base.Initialize(spellContext);
 
         _meleeWeapon = (MeleeWeapon)_weapon;
     }
@@ -18,5 +18,27 @@ public abstract class SpellMelee : Spell
         {
             attacking = StartCoroutine(nameof(Attacking));
         }
+    }
+
+    protected override IEnumerator Attacking()
+    {
+        IsAttacking = true;
+
+        if(_spellContext.UnitFaction == UnitFaction.Enemy) yield return Cooldown();
+
+        _weapon.PrepareAttack(_damageModifier, _criticalDamageChance, _criticalDamageModifier, _areaModifier);
+
+        yield return Attack();
+
+        if (IsMultiattack())
+        {
+            yield return new WaitForSeconds(0.1f);
+            yield return Attack();
+        }
+
+        if(_spellContext.UnitFaction == UnitFaction.Player) yield return Cooldown();
+
+        attacking = null;
+        IsAttacking = false;
     }
 }
