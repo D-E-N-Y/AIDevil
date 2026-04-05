@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
-public class MW_Blown : MeleeWeapon
+public class MW_Slam : MeleeWeapon
 {
     [SerializeField, Range(0.1f, 10f)] private float _radiusAttack;
     

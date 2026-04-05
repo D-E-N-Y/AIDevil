@@ -222,8 +222,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.5667556, b: 0.2028302, a: 1}
-      maxColor: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
+      minColor: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
+      maxColor: {r: 0.8066038, g: 1, b: 0.97036654, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -295,29 +295,29 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 2
-          outSlope: 2
-          tangentMode: 0
+          inSlope: 0.4297841
+          outSlope: 0.4297841
+          tangentMode: 34
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
+          outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.7956718
-          value: 0.5563861
-          inSlope: -0.06447962
-          outSlope: -0.06447962
-          tangentMode: 0
+          time: 0.48360044
+          value: 0.20784378
+          inSlope: 0.013648868
+          outSlope: 0.013648868
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.19082807
+          inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
+          inSlope: -0.40248635
+          outSlope: -0.40248635
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.33333334
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -674,7 +674,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 45
+    angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -760,7 +760,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.5
+      value: 0.25
       mode: 0
       spread: 0
       speed:
@@ -4857,9 +4857,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 248661860163366008}
-  - component: {fileID: 6849256301532455083}
+  - component: {fileID: 1062620282272428584}
   m_Layer: 0
-  m_Name: Cannon
+  m_Name: Tracking Auto Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4882,7 +4882,7 @@ Transform:
   - {fileID: 3428536383758383905}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6849256301532455083
+--- !u!114 &1062620282272428584
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4891,16 +4891,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1897113657980337140}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2f8d30af9c5fb9ea8202cc07efa493e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2eee2160bae4eddb3979c22142cf2cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeAttack: 7
-  cooldown: 1
-  _weapon: {fileID: 7980223027102659843, guid: 667fc7431e6c9cbb29f169475112b28b, type: 3}
-  icon: {fileID: 21300000, guid: 300abdf8cbdd5c742a05b6506767fd64, type: 3}
+  rangeAttack: 5
+  cooldown: 5
+  _weapon: {fileID: 6297950456124276069, guid: a9ced9853e6737ea7959a3d236a39930, type: 3}
+  icon: {fileID: 21300000, guid: 0825dfa25de4551469e65496af7b3c71, type: 3}
   _sensor: {fileID: 5654604996673151132}
   firePosition: {fileID: 3367101345421821970}
-  cannonFireEffect: {fileID: 9138945288956301045}
+  shootCount: 3
+  fireEffect: {fileID: 9138945288956301045}
 --- !u!1 &3764797736590851702
 GameObject:
   m_ObjectHideFlags: 0
@@ -4953,7 +4954,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5654604996673151132
 MonoBehaviour:

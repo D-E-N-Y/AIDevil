@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SM_Blown : SpellMelee
+public class SM_GroundSlam : SpellMelee
 {
     [SerializeField, Range(0.1f, 2f)] float timeAttacking;
 

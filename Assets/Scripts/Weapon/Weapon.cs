@@ -52,9 +52,7 @@ public abstract class Weapon : MonoBehaviour
         {
             finalDamage = finalDamage + Mathf.RoundToInt(finalDamage * _criticalDamageModifier);
         }
-
-        Debug.Log($"Applying damage: {finalDamage} (Critical Hit: {IsCriticalHit()}) (Damage Modifier: {_damageModifier}) (Damage: {damage})");
-
+        
         targetUnit.TakeDamage(finalDamage);
         onSuccessfulAttack?.Invoke();
     }

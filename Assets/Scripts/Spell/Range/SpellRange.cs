@@ -10,6 +10,8 @@ public abstract class SpellRange : Spell
 
     [SerializeField] protected Sensor _sensor;
 
+    [SerializeField] protected Transform firePosition;
+
     protected Vector3 _targetPosition;
 
     public bool IsCanAttack { get; protected set; }
@@ -38,10 +40,33 @@ public abstract class SpellRange : Spell
             .Where(x => x.isAvaliable)
             .FirstOrDefault();
 
+        if (_avaliableProjectile == null)
+        {
+            return CreateNewProjectile();
+        }
+
         return _avaliableProjectile;
     }
 
-    protected override IEnumerator Attacking()
+    protected Projectile CreateNewProjectile()
+    {
+        Projectile newProjectile = Instantiate(_projectile, firePosition.position, Quaternion.identity);
+        _projectiles.Add(newProjectile);
+        newProjectile.Initialize(_spellContext.UnitFaction);
+
+        newProjectile.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
+
+        return newProjectile;
+    }
+
+    protected override IEnumerator Cooldown()
+    {
+        RotateToTarget(_targetPosition);
+
+        return base.Cooldown();
+    }
+
+    protected override IEnumerator Attacking() 
     {
         IsAttacking = true;
         onStartAttack?.Invoke();
@@ -93,13 +118,13 @@ public abstract class SpellRange : Spell
         }
     }
 
-    // protected void RotateToTarget(Vector3 targetPosition)
-    // {
-    //     Vector3 direction = targetPosition - transform.position;
-    //     direction.y = 0;
-    //     direction.Normalize();
+    protected void RotateToTarget(Vector3 targetPosition)
+    {
+        Vector3 direction = targetPosition - transform.position;
+        direction.y = 0;
+        direction.Normalize();
 
-    //     Quaternion rotation = Quaternion.LookRotation(direction);
-    //     transform.rotation = rotation * Quaternion.Euler(0, -90, 0);
-    // }
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = rotation * Quaternion.Euler(0, -90, 0);
+    }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Projectile : Weapon
+public abstract class Projectile : Weapon
 {
     [SerializeField] protected Transform mesh;
     [SerializeField] private ParticleSystem impactEffect;
@@ -11,7 +11,7 @@ public class Projectile : Weapon
 
     protected Vector3 _targetPosition;
 
-    public bool isCanAttack;
+    public bool isCanAttack { get; protected set; }
     public bool isAvaliable { get; protected set; }
 
     protected override string WeaponType => "Projectile";
@@ -27,6 +27,7 @@ public class Projectile : Weapon
     {
         isCanAttack = true;
         transform.position = position;
+        transform.rotation = Quaternion.identity;
     }
 
     public virtual void Fire(Vector3 targetPosition)
@@ -49,27 +50,12 @@ public class Projectile : Weapon
         transform.rotation = rotation;
     }
 
-    private float _timeToLive = 5f;
-    private float _timeAlive = 0f;
-
-    private void Update()
+    private void FixedUpdate()
     {
-        if (_targetPosition == Vector3.zero) return;
-
-        transform.position += transform.forward * moveSpeed * Time.deltaTime;
-
-        _timeAlive += Time.deltaTime;
-        if (_timeAlive >= _timeToLive)
-        {
-            _timeAlive = 0f;
-            
-            _targetPosition = Vector3.zero;
-            mesh.gameObject.SetActive(false);
-
-            isAvaliable = true;
-            gameObject.SetActive(false);
-        }
+        Move();
     }
+
+    protected abstract void Move();
 
     protected virtual void OnTriggerEnter(Collider other)
     {

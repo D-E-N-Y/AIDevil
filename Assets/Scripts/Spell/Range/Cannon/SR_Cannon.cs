@@ -3,20 +3,12 @@ using UnityEngine;
 
 public class SR_Cannon : SpellRange
 {
-    [SerializeField] private Transform firePosition;
     [SerializeField] private ParticleSystem cannonFireEffect;
 
     public override void Initialize(SpellContext spellContext)
     {
         base.Initialize(spellContext);
         cannonFireEffect.Stop();
-    }
-
-    protected override IEnumerator Cooldown()
-    {
-        RotateToTarget(_targetPosition);
-
-        return base.Cooldown();
     }
 
     protected override IEnumerator Attack()
@@ -41,15 +33,5 @@ public class SR_Cannon : SpellRange
         _avaliableProjectile.Fire(_targetPosition);
 
         yield return null;
-    }
-
-    protected void RotateToTarget(Vector3 targetPosition)
-    {
-        Vector3 direction = targetPosition - transform.position;
-        direction.y = 0;
-        direction.Normalize();
-
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = rotation * Quaternion.Euler(0, -90, 0);
     }
 }

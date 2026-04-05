@@ -83,6 +83,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dash
       objectReference: {fileID: 0}
+    - target: {fileID: 1446254802971399633, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
+      propertyPath: m_LengthScale
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1489121398293211550, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -93,7 +97,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1489121398293211550, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.16
       objectReference: {fileID: 0}
     - target: {fileID: 1489121398293211550, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
       propertyPath: m_LocalRotation.w
@@ -122,6 +126,42 @@ PrefabInstance:
     - target: {fileID: 1489121398293211550, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944625679866766646, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
+      propertyPath: ShapeModule.type
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944625679866766646, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944625679866766646, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944625679866766646, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944625679866766646, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944625679866766646, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944625679866766646, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944625679866766646, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944625679866766646, guid: 170273f6238d3d7c2b5e793694e92882, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
