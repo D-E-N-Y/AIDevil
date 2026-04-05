@@ -47,7 +47,7 @@ public class Boss : Agent, IUnit
         //     }
         // }
 
-        playerCharacterTarget.OnDead += SuccessfulKill;
+        // playerCharacterTarget.OnDead += SuccessfulKill;
     }
 
     public virtual void Death()

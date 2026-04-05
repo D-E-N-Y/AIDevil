@@ -22,13 +22,9 @@ public abstract class MeleeWeapon : Weapon
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<IUnit>(out IUnit unit))
+        if (other.gameObject.TryGetComponent<IDamagable>(out IDamagable damagable))
         {
-            ApplyDamage(unit.GetHealth());
-        }
-        else if (other.gameObject.TryGetComponent<IHealth>(out IHealth actor))
-        {
-            ApplyDamage(actor);
+            ApplyDamage(damagable.GetHealth());
         }
     }
 }

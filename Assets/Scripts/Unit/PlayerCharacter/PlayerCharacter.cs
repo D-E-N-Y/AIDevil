@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCharacter : MonoBehaviour, IUnit
+public class PlayerCharacter : MonoBehaviour, IUnit, IDamagable
 {
     [SerializeField] private string _id;
     public string ID => _id;
@@ -26,12 +26,12 @@ public class PlayerCharacter : MonoBehaviour, IUnit
     private SpellController _spellController;
     private UnitContext _unitContext;
 
-    public event Action<IUnit> OnDead;
-
     protected UnitFaction _unitFaction;
     public UnitFaction UnitFaction => _unitFaction;
 
     private SpellContext _spellContext;
+
+    public event Action<IDamagable> OnDead;
 
     public virtual void Initialize(FixedJoystick joystick) 
     {
@@ -85,4 +85,6 @@ public class PlayerCharacter : MonoBehaviour, IUnit
     public SpellController GetSpellController() => _spellController;
     public UpgradesManager GetUpgradesManager() => _upgradesManager;
     public PlayerCharacterMovement GetMovement() => _movement;
+
+    IHealth IDamagable.GetHealth() => _health;
 }

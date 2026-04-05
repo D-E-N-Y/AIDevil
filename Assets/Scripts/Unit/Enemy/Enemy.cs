@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IUnit
+public class Enemy : MonoBehaviour, IUnit, IDamagable
 {
     [SerializeField] protected EnemyType _type;
     public EnemyType Type => _type;
@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour, IUnit
     [SerializeField] protected EnemyStats _stats;
 
     protected UnitHealth _health;
-    public event Action<IUnit> OnDead;
+    public event Action<IDamagable> OnDead;
 
     protected bool _isDead;
     public bool IsDead => _isDead;
@@ -82,4 +82,6 @@ public class Enemy : MonoBehaviour, IUnit
     public UnitHealth GetHealth() => _health;
 
     public List<Spell> GetSpells() => spells;
+
+    IHealth IDamagable.GetHealth() => _health;
 }

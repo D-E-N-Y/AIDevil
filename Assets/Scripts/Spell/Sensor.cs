@@ -8,10 +8,10 @@ public class Sensor : MonoBehaviour
 {
     private string _originLayer;
 
-    public event Action<IUnit> OnUnitEnter;
-    public event Action<IUnit> OnUnitExit;
+    public event Action<IDamagable> OnUnitEnter;
+    public event Action<IDamagable> OnUnitExit;
 
-    private List<IUnit> _units;
+    private List<IDamagable> _units;
 
     private SphereCollider _sphereCollider;
 
@@ -20,7 +20,7 @@ public class Sensor : MonoBehaviour
         _originLayer = unitFaction + "Sensor";
         gameObject.layer = LayerMask.NameToLayer(_originLayer);
 
-        _units = new List<IUnit>();
+        _units = new List<IDamagable>();
 
         _sphereCollider = GetComponent<SphereCollider>();
         _sphereCollider.radius = radius;
@@ -29,7 +29,7 @@ public class Sensor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.TryGetComponent(out IUnit unit)) return;
+        if (!other.TryGetComponent(out IDamagable unit)) return;
         if (_units.Contains(unit)) return;
 
         _units.Add(unit);
@@ -40,17 +40,17 @@ public class Sensor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.TryGetComponent(out IUnit unit)) return;
+        if (!other.TryGetComponent(out IDamagable unit)) return;
             
         RemoveUnit(unit);
     }
 
-    void OnUnitDead(IUnit unit)
+    void OnUnitDead(IDamagable unit)
     {
         RemoveUnit(unit);
     }
 
-    private void RemoveUnit(IUnit unit)
+    private void RemoveUnit(IDamagable unit)
     {
         if (!_units.Remove(unit)) return;
 

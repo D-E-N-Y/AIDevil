@@ -9,6 +9,9 @@ public abstract class Projectile : Weapon
 
     [SerializeField, Range(1f, 100f)] protected float moveSpeed;
 
+    [SerializeField, Range(0, 10)] protected int maxPenetrationCount;
+    protected int _currentPenetrationCount; 
+
     protected Vector3 _targetPosition;
 
     public bool isCanAttack { get; protected set; }
@@ -26,8 +29,11 @@ public abstract class Projectile : Weapon
     public virtual void SetToFire(Vector3 position)
     {
         isCanAttack = true;
+        
         transform.position = position;
         transform.rotation = Quaternion.identity;
+        
+        _currentPenetrationCount = 0;
     }
 
     public virtual void Fire(Vector3 targetPosition)
@@ -57,29 +63,32 @@ public abstract class Projectile : Weapon
 
     protected abstract void Move();
 
-    protected virtual void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<IUnit>(out IUnit unit))
-        {
-            if(!isCanAttack) return;
-            
-            ApplyDamage(unit.GetHealth());
+        Hit(other);
+    }
 
-            isCanAttack = false;
-        }
-        else if (other.gameObject.TryGetComponent<IHealth>(out IHealth actor))
-        {
-            if(!isCanAttack) return;
-            
-            ApplyDamage(actor);
+    protected virtual void Hit(Collider collider)
+    {
+        if(!isCanAttack) return;
 
+        if (collider.gameObject.TryGetComponent<IDamagable>(out IDamagable damagable))
+        {
+            ApplyDamage(damagable.GetHealth());
             isCanAttack = false;
         }
 
-        _targetPosition = Vector3.zero;
-        mesh.gameObject.SetActive(false);
+        if (_currentPenetrationCount >= maxPenetrationCount)
+        {
+            _targetPosition = Vector3.zero;
+            mesh.gameObject.SetActive(false);
 
-        StartCoroutine(nameof(ImpactEffect));
+            StartCoroutine(nameof(ImpactEffect));
+        }
+        else
+        {
+            Penetration();
+        }
     }
     
     private IEnumerator ImpactEffect()
@@ -89,5 +98,10 @@ public abstract class Projectile : Weapon
         isAvaliable = true;
 
         gameObject.SetActive(false);
+    }
+
+    protected virtual void Penetration()
+    {
+        _currentPenetrationCount++;
     }
 }
