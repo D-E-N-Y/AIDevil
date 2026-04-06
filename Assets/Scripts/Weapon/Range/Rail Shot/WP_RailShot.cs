@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
-public class CannonBall : Projectile
+public class WP_RailShot : Projectile
 {
+    [SerializeField, Range(0f, 50f)] private float lessDamage = 10; 
+    
     protected override void Move()
     {
         if (_targetPosition == Vector3.zero) return;
@@ -19,5 +22,12 @@ public class CannonBall : Projectile
             isAvaliable = true;
             gameObject.SetActive(false);
         }
+    }
+
+    protected override void Penetration()
+    {
+        base.Penetration();
+
+        _damageModifier -= lessDamage / 100f;
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class Projectile : Weapon
 {
+    [SerializeField, Range(1f, 10f)] protected float _timeToLive = 5f;
+    protected float _timeAlive = 0f;
+    
     [SerializeField] protected Transform mesh;
     [SerializeField] private ParticleSystem impactEffect;
 
@@ -88,6 +91,7 @@ public abstract class Projectile : Weapon
         else
         {
             Penetration();
+            isCanAttack = true;
         }
     }
     

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TrackingAutoLaser : Projectile
 {
-    [SerializeField, Range(1f, 10f)] private float trackingStrength;
+    [SerializeField, Range(0.1f, 5f)] private float trackingStrength;
     
     [Header("Sensor")]
     [SerializeField] private Sensor sensor;
@@ -27,9 +27,6 @@ public class TrackingAutoLaser : Projectile
 
         return directionToTarget;
     }
-
-    private float _timeToLive = 5f;
-    private float _timeAlive = 0f;
 
     protected override void Move()
     {
