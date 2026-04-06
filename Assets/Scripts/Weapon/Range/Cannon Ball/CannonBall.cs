@@ -4,7 +4,7 @@ public class CannonBall : Projectile
 {
     protected override void Move()
     {
-        if (_targetPosition == Vector3.zero) return;
+        if (!_isMove) return;
 
         transform.position += transform.forward * moveSpeed * Time.fixedDeltaTime;
 

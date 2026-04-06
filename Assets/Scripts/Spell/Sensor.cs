@@ -11,7 +11,8 @@ public class Sensor : MonoBehaviour
     public event Action<IDamagable> OnUnitEnter;
     public event Action<IDamagable> OnUnitExit;
 
-    private List<IDamagable> _units;
+    private List<IDamagable> _damagables;
+    public IReadOnlyList<IDamagable> Damagables => _damagables;
 
     private SphereCollider _sphereCollider;
 
@@ -20,22 +21,39 @@ public class Sensor : MonoBehaviour
         _originLayer = unitFaction + "Sensor";
         gameObject.layer = LayerMask.NameToLayer(_originLayer);
 
-        _units = new List<IDamagable>();
+        _damagables = new List<IDamagable>();
 
         _sphereCollider = GetComponent<SphereCollider>();
         _sphereCollider.radius = radius;
         _sphereCollider.isTrigger = true;
     }
 
+    public void SearchInCollision()
+    {
+        int mask = 1 << LayerMask.NameToLayer(_originLayer);
+        Collider[] hits = Physics.OverlapSphere(transform.position, _sphereCollider.radius, mask);
+
+        foreach (var hit in hits)
+        {
+            if (hit.TryGetComponent(out IDamagable damagable) && !_damagables.Contains(damagable))
+            {
+                _damagables.Add(damagable);
+                damagable.OnDead += OnUnitDead;
+
+                OnUnitEnter?.Invoke(damagable);
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.TryGetComponent(out IDamagable unit)) return;
-        if (_units.Contains(unit)) return;
+        if (!other.TryGetComponent(out IDamagable damagable)) return;
+        if (_damagables.Contains(damagable)) return;
 
-        _units.Add(unit);
-        unit.OnDead += OnUnitDead;
+        _damagables.Add(damagable);
+        damagable.OnDead += OnUnitDead;
 
-        OnUnitEnter?.Invoke(unit);
+        OnUnitEnter?.Invoke(damagable);
     }
 
     private void OnTriggerExit(Collider other)
@@ -50,22 +68,35 @@ public class Sensor : MonoBehaviour
         RemoveUnit(unit);
     }
 
-    private void RemoveUnit(IDamagable unit)
+    private void RemoveUnit(IDamagable damagable)
     {
-        if (!_units.Remove(unit)) return;
+        if (!_damagables.Remove(damagable)) return;
 
-        unit.OnDead -= OnUnitDead;
-        OnUnitExit?.Invoke(unit);
+        damagable.OnDead -= OnUnitDead;
+        OnUnitExit?.Invoke(damagable);
+    }
+
+    public void Clear()
+    {
+        if (IsHasUnits())
+        {
+            for (int i = _damagables.Count - 1; i >= 0; i--)
+            {
+                RemoveUnit(_damagables[i]);
+            }
+        }
+
+        _damagables.Clear();
     }
 
     public Transform GetNearestTarget()
     {
-        return _units
+        return _damagables
             .OfType<MonoBehaviour>()
             .OrderBy(u => Vector3.Distance(transform.position, u.transform.position))
             .FirstOrDefault()
             ?.transform;
     }
 
-    public bool IsHasUnits() => _units.Count > 0;
+    public bool IsHasUnits() => _damagables.Count > 0;
 }

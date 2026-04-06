@@ -20,6 +20,9 @@ public abstract class Projectile : Weapon
     public bool isCanAttack { get; protected set; }
     public bool isAvaliable { get; protected set; }
 
+    protected bool _isMove;
+    public bool IsMove => _isMove; 
+
     protected override string WeaponType => "Projectile";
 
     public override void Initialize(UnitFaction unitFaction)
@@ -37,6 +40,7 @@ public abstract class Projectile : Weapon
         transform.rotation = Quaternion.identity;
         
         _currentPenetrationCount = 0;
+        _timeAlive = 0f;
     }
 
     public virtual void Fire(Vector3 targetPosition)
@@ -47,6 +51,8 @@ public abstract class Projectile : Weapon
         isAvaliable = false;
         mesh.gameObject.SetActive(true);
         gameObject.SetActive(true);
+
+        _isMove = true;
     }
 
     protected void RotateToTarget(Vector3 targetPosition)
@@ -83,10 +89,7 @@ public abstract class Projectile : Weapon
 
         if (_currentPenetrationCount >= maxPenetrationCount)
         {
-            _targetPosition = Vector3.zero;
-            mesh.gameObject.SetActive(false);
-
-            StartCoroutine(nameof(ImpactEffect));
+            FinishProjectile();
         }
         else
         {
@@ -102,6 +105,14 @@ public abstract class Projectile : Weapon
         isAvaliable = true;
 
         gameObject.SetActive(false);
+    }
+
+    protected virtual void FinishProjectile()
+    {
+        _targetPosition = Vector3.zero;
+        mesh.gameObject.SetActive(false);
+
+        StartCoroutine(nameof(ImpactEffect));
     }
 
     protected virtual void Penetration()

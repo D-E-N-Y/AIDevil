@@ -30,7 +30,7 @@ public class TrackingAutoLaser : Projectile
 
     protected override void Move()
     {
-        if (_targetPosition == Vector3.zero) return;
+        if (!_isMove) return;
 
         Vector3 currentDirection = CalculateTrackingDirection();
         
