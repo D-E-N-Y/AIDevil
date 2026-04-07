@@ -19,15 +19,6 @@ public class SR_Cannon : SpellRange
 
         Projectile _avaliableProjectile = GetAvaliableProjectile();
 
-        if (_avaliableProjectile == null)
-        {
-            _avaliableProjectile = Instantiate(_projectile);
-            _projectiles.Add(_avaliableProjectile);
-            _avaliableProjectile.Initialize(_spellContext.UnitFaction);
-
-            _avaliableProjectile.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
-        }
-
         _avaliableProjectile.PrepareAttack(_damageModifier, _criticalDamageChance, _criticalDamageModifier, _areaModifier);
         _avaliableProjectile.SetToFire(firePosition.position);
         _avaliableProjectile.Fire(_targetPosition);

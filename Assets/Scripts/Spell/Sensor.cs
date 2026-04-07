@@ -7,6 +7,7 @@ using UnityEngine;
 public class Sensor : MonoBehaviour
 {
     private string _originLayer;
+    private LayerMask _interactLayers;
 
     public event Action<IDamagable> OnUnitEnter;
     public event Action<IDamagable> OnUnitExit;
@@ -19,6 +20,8 @@ public class Sensor : MonoBehaviour
     public void Initialize(UnitFaction unitFaction, float radius)
     {
         _originLayer = unitFaction + "Sensor";
+        _interactLayers = GetInteractingLayers(_originLayer);
+
         gameObject.layer = LayerMask.NameToLayer(_originLayer);
 
         _damagables = new List<IDamagable>();
@@ -28,10 +31,25 @@ public class Sensor : MonoBehaviour
         _sphereCollider.isTrigger = true;
     }
 
+    private LayerMask GetInteractingLayers(string layerName)
+    {
+        int layer = LayerMask.NameToLayer(layerName);
+        LayerMask mask = 0;
+
+        for (int i = 0; i < 32; i++)
+        {
+            if (!Physics.GetIgnoreLayerCollision(layer, i))
+            {
+                mask |= 1 << i;
+            }
+        }
+
+        return mask;
+    }
+
     public void SearchInCollision()
     {
-        int mask = 1 << LayerMask.NameToLayer(_originLayer);
-        Collider[] hits = Physics.OverlapSphere(transform.position, _sphereCollider.radius, mask);
+        Collider[] hits = Physics.OverlapSphere(transform.position, _sphereCollider.radius, _interactLayers);
 
         foreach (var hit in hits)
         {

@@ -42,10 +42,13 @@ public class Enemy : MonoBehaviour, IUnit, IDamagable
 
         ui_hpIndicator.Initialize(_health);
 
-        _spellContext = new SpellContext(_unitFaction, _stats, _health, null);
+        if (_spellContext == null)
+        {
+            _spellContext = new SpellContext(_unitFaction, _stats, _health, null);
 
-        spells.ForEach(x => x.Initialize(_spellContext));
-        ui_worldSpellCooldown.Initialize(spells[0]);
+            spells.ForEach(x => x.Initialize(_spellContext));
+            ui_worldSpellCooldown.Initialize(spells[0]);
+        }
 
         _isDead = false;
         gameObject.SetActive(true);

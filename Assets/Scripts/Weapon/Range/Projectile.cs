@@ -52,10 +52,12 @@ public abstract class Projectile : Weapon
         mesh.gameObject.SetActive(true);
         gameObject.SetActive(true);
 
+        impactEffect.Stop();
+
         _isMove = true;
     }
 
-    protected void RotateToTarget(Vector3 targetPosition)
+    protected virtual void RotateToTarget(Vector3 targetPosition)
     {
         Vector3 direction = targetPosition - transform.position;
         direction.y = 0;
@@ -67,10 +69,28 @@ public abstract class Projectile : Weapon
 
     private void FixedUpdate()
     {
-        Move();
+        if (_isMove)
+        {
+            Move();
+            Living();
+        }
     }
 
     protected abstract void Move();
+    protected virtual void Living()
+    {
+        _timeAlive += Time.fixedDeltaTime;
+        if (_timeAlive >= _timeToLive)
+        {
+            _timeAlive = 0f;
+            
+            _targetPosition = Vector3.zero;
+            mesh.gameObject.SetActive(false);
+
+            isAvaliable = true;
+            gameObject.SetActive(false);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

@@ -9,7 +9,9 @@ public abstract class Weapon : MonoBehaviour
     public int Damage => damage;
 
     protected float _rangeAttack;
+
     protected string _originLayer;
+    protected LayerMask _interactLayers { private set; get; }
 
     protected abstract string WeaponType { get; }
 
@@ -21,11 +23,26 @@ public abstract class Weapon : MonoBehaviour
     public virtual void Initialize(UnitFaction unitFaction)
     {
         _originLayer = unitFaction.ToString() + WeaponType;
+        _interactLayers = GetInteractingLayers(_originLayer);
+
         gameObject.layer = LayerMask.NameToLayer(_originLayer);
-
-        // _rangeAttack = rangeAttack;
-
         gameObject.SetActive(false);
+    }
+
+    private LayerMask GetInteractingLayers(string layerName)
+    {
+        int layer = LayerMask.NameToLayer(layerName);
+        LayerMask mask = 0;
+
+        for (int i = 0; i < 32; i++)
+        {
+            if (!Physics.GetIgnoreLayerCollision(layer, i))
+            {
+                mask |= 1 << i;
+            }
+        }
+
+        return mask;
     }
 
     public virtual void PrepareAttack(float damageModifier = 1f, float criticalDamageChance = 0f, float criticalDamageModifier = 1f, float areaModifier = 1f)

@@ -30,24 +30,10 @@ public class TrackingAutoLaser : Projectile
 
     protected override void Move()
     {
-        if (!_isMove) return;
-
         Vector3 currentDirection = CalculateTrackingDirection();
-        
         RotatePorjectile(currentDirection);
-        transform.position += currentDirection * moveSpeed * Time.fixedDeltaTime;
-
-        _timeAlive += Time.fixedDeltaTime;
-        if (_timeAlive >= _timeToLive)
-        {
-            _timeAlive = 0f;
-            
-            _targetPosition = Vector3.zero;
-            mesh.gameObject.SetActive(false);
-
-            isAvaliable = true;
-            gameObject.SetActive(false);
-        }
+        
+        transform.position += transform.forward * moveSpeed * Time.fixedDeltaTime;
     }
 
     private void RotatePorjectile(Vector3 direction)
@@ -56,7 +42,7 @@ public class TrackingAutoLaser : Projectile
         transform.rotation = Quaternion.RotateTowards(
             transform.rotation,
             targetRotation,
-            trackingStrength * trackingStrength * Time.fixedDeltaTime
+            trackingStrength * Time.fixedDeltaTime
         );
     }
 }

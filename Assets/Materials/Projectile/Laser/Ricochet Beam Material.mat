@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_RailShot
+  m_Name: Ricochet Beam Material
   m_Shader: {fileID: -6465566751694194690, guid: 2565c0d7af19b364db0270aa03be6db7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -45,7 +45,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.8156863, g: 0.64705884, b: 1, a: 1}
+    - _Color: {r: 0.5254902, g: 0.5350667, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &3568598016243227976
 MonoBehaviour:
