@@ -87,4 +87,5 @@ public class PlayerCharacter : MonoBehaviour, IUnit, IDamagable
     public PlayerCharacterMovement GetMovement() => _movement;
 
     IHealth IDamagable.GetHealth() => _health;
+    public Transform GetTransform() => transform;
 }

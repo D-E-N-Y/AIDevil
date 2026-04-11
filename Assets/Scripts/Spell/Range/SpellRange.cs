@@ -5,12 +5,15 @@ using UnityEngine;
 
 public abstract class SpellRange : Spell
 {
-    protected Projectile _projectile;
-    protected List<Projectile> _projectiles;
+    protected List<Weapon> _weapons;
 
     [SerializeField] protected Sensor _sensor;
 
     [SerializeField] protected Transform firePosition;
+
+    [SerializeField] protected ParticleSystem fireEffect;
+
+    [SerializeField, Range(1, 10)] protected int shootCount = 1;
 
     protected Vector3 _targetPosition;
 
@@ -20,10 +23,14 @@ public abstract class SpellRange : Spell
     {
         base.Initialize(spellContext);
 
-        _projectile = _weapon as Projectile;
-        _projectiles = new List<Projectile>();
+        if (_weapons == null)
+        {
+            _weapons = new List<Weapon>();
+        }
 
         _sensor.Initialize(_spellContext.UnitFaction, rangeAttack);
+
+        fireEffect.Stop();
     }
 
     public override void Cast()
@@ -34,9 +41,9 @@ public abstract class SpellRange : Spell
         }
     }
 
-    protected Projectile GetAvaliableProjectile()
+    protected Weapon GetAvaliableWeapons()
     {
-        Projectile _avaliableProjectile = _projectiles
+        Weapon _avaliableProjectile = _weapons
             .Where(x => x.isAvaliable)
             .FirstOrDefault();
 
@@ -48,15 +55,15 @@ public abstract class SpellRange : Spell
         return _avaliableProjectile;
     }
 
-    protected Projectile CreateNewProjectile()
+    protected Weapon CreateNewProjectile()
     {
-        Projectile newProjectile = Instantiate(_projectile, firePosition.position, Quaternion.identity);
-        _projectiles.Add(newProjectile);
-        newProjectile.Initialize(_spellContext.UnitFaction);
+        Weapon newWeapon = Instantiate(_weapon, firePosition.position, Quaternion.identity);
+        _weapons.Add(newWeapon);
+        newWeapon.Initialize(_spellContext.UnitFaction);
 
-        newProjectile.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
+        newWeapon.onSuccessfulAttack += () => onSuccessfulAttack?.Invoke();
 
-        return newProjectile;
+        return newWeapon;
     }
 
     protected override IEnumerator Cooldown()
@@ -94,6 +101,25 @@ public abstract class SpellRange : Spell
         attacking = null;
         IsAttacking = false;
         onStopAttack?.Invoke();
+    }
+
+    protected override IEnumerator Attack()
+    {
+        RotateToTarget(_targetPosition);
+        
+        for (int i = 0; i < shootCount; i++)
+        {
+            fireEffect.Play();
+
+            Weapon _avaliableWeapon = GetAvaliableWeapons();
+            _avaliableWeapon.SetParameters(_damageModifier, _criticalDamageChance, _criticalDamageModifier, _areaModifier);
+            _avaliableWeapon.PrepareAttack(firePosition, _targetPosition);
+            _avaliableWeapon.StartAttack();
+            
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        yield return null;
     }
 
     protected override void SetSubsriptions()

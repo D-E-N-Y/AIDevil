@@ -72,12 +72,12 @@ public class WP_PlasmaNode : Projectile
             _timer += intevalAttack;
         }
 
-        FinishProjectile();
+        FinishAttack();
     }
 
-    protected override void FinishProjectile()
+    public override void FinishAttack()
     {
-        base.FinishProjectile();
+        base.FinishAttack();
         
         sensor.Clear();
         sensor.gameObject.SetActive(false);

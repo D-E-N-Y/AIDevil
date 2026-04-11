@@ -26,7 +26,7 @@ public class WP_RicochetBeam : Projectile
 
         if (_currentPenetrationCount >= maxPenetrationCount)
         {
-            FinishProjectile();
+            FinishAttack();
         }
         else
         {

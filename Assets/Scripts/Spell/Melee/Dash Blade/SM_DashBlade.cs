@@ -9,7 +9,7 @@ public class SM_DashBlade : SpellMelee
     {
         _spellContext.UnitHealth.SetInvulnerability(true);
 
-        _meleeWeapon.StartAttack();
+        _weapon.StartAttack();
 
         _spellContext.Movement.Dash(rangeAttack, dashSpeed);
 
@@ -18,7 +18,7 @@ public class SM_DashBlade : SpellMelee
             yield return null;
         }
         
-        _meleeWeapon.FinishAttack();
+        _weapon.FinishAttack();
 
         _spellContext.UnitHealth.SetInvulnerability(false);
     }

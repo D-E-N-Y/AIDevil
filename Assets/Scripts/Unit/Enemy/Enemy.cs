@@ -42,13 +42,9 @@ public class Enemy : MonoBehaviour, IUnit, IDamagable
 
         ui_hpIndicator.Initialize(_health);
 
-        if (_spellContext == null)
-        {
-            _spellContext = new SpellContext(_unitFaction, _stats, _health, null);
-
-            spells.ForEach(x => x.Initialize(_spellContext));
-            ui_worldSpellCooldown.Initialize(spells[0]);
-        }
+        _spellContext = new SpellContext(_unitFaction, _stats, _health, null);
+        spells.ForEach(x => x.Initialize(_spellContext));
+        ui_worldSpellCooldown.Initialize(spells[0]);
 
         _isDead = false;
         gameObject.SetActive(true);
@@ -56,8 +52,12 @@ public class Enemy : MonoBehaviour, IUnit, IDamagable
 
     protected virtual void Attacking()
     {
-        Spell _spells = spells[UnityEngine.Random.Range(0, spells.Count)];
-        _spells.Cast();
+        Spell _spell = spells[UnityEngine.Random.Range(0, spells.Count)];
+        
+        if (_spell != null)
+        {
+            _spell.Cast();
+        }
     } 
 
     public virtual void Death()
@@ -87,4 +87,5 @@ public class Enemy : MonoBehaviour, IUnit, IDamagable
     public List<Spell> GetSpells() => spells;
 
     IHealth IDamagable.GetHealth() => _health;
+    public Transform GetTransform() => transform;
 }

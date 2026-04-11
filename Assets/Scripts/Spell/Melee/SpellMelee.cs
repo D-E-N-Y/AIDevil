@@ -3,13 +3,9 @@ using UnityEngine;
 
 public abstract class SpellMelee : Spell
 {
-    protected MeleeWeapon _meleeWeapon;
-
     public override void Initialize(SpellContext spellContext)
     {
         base.Initialize(spellContext);
-
-        _meleeWeapon = (MeleeWeapon)_weapon;
     }
 
     public override void Cast()
@@ -26,7 +22,7 @@ public abstract class SpellMelee : Spell
 
         if(_spellContext.UnitFaction == UnitFaction.Enemy) yield return Cooldown();
 
-        _weapon.PrepareAttack(_damageModifier, _criticalDamageChance, _criticalDamageModifier, _areaModifier);
+        _weapon.SetParameters(_damageModifier, _criticalDamageChance, _criticalDamageModifier, _areaModifier);
 
         yield return Attack();
 

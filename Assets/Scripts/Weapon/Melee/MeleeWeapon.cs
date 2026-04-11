@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public abstract class MeleeWeapon : Weapon
@@ -10,12 +9,17 @@ public abstract class MeleeWeapon : Weapon
         base.Initialize(unitFaction);
     }
 
-    public virtual void StartAttack()
+    public override void PrepareAttack(Transform transform, Vector3 target)
+    {
+        
+    }
+
+    public override void StartAttack()
     {
         gameObject.SetActive(true);
     }
 
-    public virtual void FinishAttack()
+    public override void FinishAttack()
     {
         gameObject.SetActive(false);
     }

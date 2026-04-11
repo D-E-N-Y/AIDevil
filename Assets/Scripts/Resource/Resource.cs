@@ -47,5 +47,5 @@ public class Resource : MonoBehaviour, IDamagable
     }
 
     public IHealth GetHealth() => _health;
-
+    public Transform GetTransform() => transform;    
 }

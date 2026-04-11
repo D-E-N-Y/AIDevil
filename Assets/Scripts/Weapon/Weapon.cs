@@ -5,10 +5,12 @@ public abstract class Weapon : MonoBehaviour
 {
     public event Action onSuccessfulAttack;
 
+    [Header("Main")]
     [SerializeField, Range(1, 100)] protected int damage;
     public int Damage => damage;
 
-    protected float _rangeAttack;
+    public bool isCanAttack { get; protected set; }
+    public bool isAvaliable { get; protected set; }
 
     protected string _originLayer;
     protected LayerMask _interactLayers { private set; get; }
@@ -45,7 +47,7 @@ public abstract class Weapon : MonoBehaviour
         return mask;
     }
 
-    public virtual void PrepareAttack(float damageModifier = 1f, float criticalDamageChance = 0f, float criticalDamageModifier = 1f, float areaModifier = 1f)
+    public virtual void SetParameters(float damageModifier = 1f, float criticalDamageChance = 0f, float criticalDamageModifier = 1f, float areaModifier = 1f)
     {
         _damageModifier = damageModifier;
         _criticalDamageChance = criticalDamageChance;
@@ -54,6 +56,11 @@ public abstract class Weapon : MonoBehaviour
 
         transform.localScale = new Vector3(1f * areaModifier, 1f * areaModifier, 1f * areaModifier);
     }
+
+    public abstract void PrepareAttack(Transform fireTransfrom, Vector3 target);
+
+    public abstract void StartAttack();
+    public abstract void FinishAttack();
 
     protected bool IsCriticalHit()
     {

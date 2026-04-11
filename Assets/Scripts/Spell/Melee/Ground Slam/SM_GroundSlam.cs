@@ -7,10 +7,10 @@ public class SM_GroundSlam : SpellMelee
 
     protected override IEnumerator Attack()
     {
-        _meleeWeapon.PrepareAttack(_damageModifier, _criticalDamageChance, _criticalDamageModifier, _areaModifier);
+        _weapon.SetParameters(_damageModifier, _criticalDamageChance, _criticalDamageModifier, _areaModifier);
 
-        _meleeWeapon.StartAttack();
+        _weapon.StartAttack();
         yield return new WaitForSeconds(timeAttacking);
-        _meleeWeapon.FinishAttack();
+        _weapon.FinishAttack();
     }
 }

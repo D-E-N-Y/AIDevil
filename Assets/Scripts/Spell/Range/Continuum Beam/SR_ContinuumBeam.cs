@@ -1,7 +1,4 @@
-using System.Collections;
-using UnityEngine;
-
-public class SR_SidearmLX : SpellRange
+public class SR_ContinuumBeam : SpellRange
 {
     public override void Initialize(SpellContext spellContext)
     {

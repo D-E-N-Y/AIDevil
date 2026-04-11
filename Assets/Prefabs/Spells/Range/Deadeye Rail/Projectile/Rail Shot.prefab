@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7107369187649492154
 Transform:
   m_ObjectHideFlags: 0
@@ -74,8 +74,8 @@ MonoBehaviour:
   _timeToLive: 5
   mesh: {fileID: 7825983549736071321}
   impactEffect: {fileID: 8070395117558027211}
-  moveSpeed: 40
   maxPenetrationCount: 3
+  moveSpeed: 40
   lessDamage: 10
 --- !u!1 &2346492406564241348
 GameObject:
