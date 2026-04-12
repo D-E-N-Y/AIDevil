@@ -15,7 +15,8 @@ public class WP_RicochetBeam : Projectile
     protected override void Hit(Collider collider)
     {
         if(!isCanAttack) return;
-
+        if (_ignoreTargets.Contains(collider)) return;
+        
         if (collider.gameObject.TryGetComponent<IDamagable>(out IDamagable damagable))
         {
             currentDamagable = damagable;

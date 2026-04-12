@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
@@ -9,9 +10,12 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField, Range(1, 100)] protected int damage;
     public int Damage => damage;
 
+    protected HashSet<Collider> _ignoreTargets;
+
     public bool isCanAttack { get; protected set; }
     public bool isAvaliable { get; protected set; }
 
+    protected UnitFaction _unitFaction;
     protected string _originLayer;
     protected LayerMask _interactLayers { private set; get; }
 
@@ -24,8 +28,11 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void Initialize(UnitFaction unitFaction)
     {
-        _originLayer = unitFaction.ToString() + WeaponType;
+        _unitFaction = unitFaction;
+        _originLayer = _unitFaction.ToString() + WeaponType;
         _interactLayers = GetInteractingLayers(_originLayer);
+
+        _ignoreTargets = new HashSet<Collider>();
 
         gameObject.layer = LayerMask.NameToLayer(_originLayer);
         gameObject.SetActive(false);
@@ -79,5 +86,10 @@ public abstract class Weapon : MonoBehaviour
         
         targetUnit.TakeDamage(finalDamage);
         onSuccessfulAttack?.Invoke();
+    }
+
+    public void SetIgnoreTargets(HashSet<Collider> targets)
+    {
+        _ignoreTargets = targets;
     }
 }

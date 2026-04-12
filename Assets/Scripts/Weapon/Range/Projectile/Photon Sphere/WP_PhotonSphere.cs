@@ -13,7 +13,8 @@ public class WP_PhotonSphere : Projectile
     protected override void Hit(Collider collider)
     {
         if(!isCanAttack) return;
-        
+        if (_ignoreTargets.Contains(collider)) return;
+
         if (_currentPenetrationCount >= maxPenetrationCount)
         {
             isCanAttack = false;

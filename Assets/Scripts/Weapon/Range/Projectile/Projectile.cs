@@ -21,6 +21,8 @@ public abstract class Projectile : RangeWeapon
         _currentPenetrationCount = 0;
         _timeAlive = 0f;
 
+        _ignoreTargets.Clear();
+
         RotateToTarget(target);
     }
 
@@ -47,7 +49,7 @@ public abstract class Projectile : RangeWeapon
         StartCoroutine(nameof(ImpactEffect));
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         if (_isMove)
         {
@@ -67,6 +69,7 @@ public abstract class Projectile : RangeWeapon
     protected virtual void Hit(Collider collider)
     {
         if(!isCanAttack) return;
+        if (_ignoreTargets.Contains(collider)) return;
 
         if (collider.gameObject.TryGetComponent<IDamagable>(out IDamagable damagable))
         {

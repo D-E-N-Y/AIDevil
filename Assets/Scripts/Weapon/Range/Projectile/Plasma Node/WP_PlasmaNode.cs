@@ -31,6 +31,7 @@ public class WP_PlasmaNode : Projectile
     protected override void Hit(Collider collider)
     {
         if(!isCanAttack) return;
+        if (_ignoreTargets.Contains(collider)) return;
         
         if (_currentPenetrationCount >= maxPenetrationCount)
         {

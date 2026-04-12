@@ -74,6 +74,8 @@ public class WP_EnergyBeam : Beam
         
             foreach (var hit in hits)
             {
+                if (_ignoreTargets.Contains(hit.collider)) continue;
+                
                 if (!_hits.ContainsKey(hit.collider))                
                     _hits.Add(hit.collider, hit.distance);
             }
