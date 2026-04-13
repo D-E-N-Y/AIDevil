@@ -10,6 +10,11 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField, Range(1, 100)] protected int damage;
     public int Damage => damage;
 
+    [SerializeField, Range(0.01f, 10f)] protected float _timeToLive = 5f;
+    public float TimeToLive => _timeToLive;
+    protected float _timeAlive = 0f;
+    public bool isAlive { get; protected set; }
+
     protected HashSet<Collider> _ignoreTargets;
 
     public bool isCanAttack { get; protected set; }

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.MLAgents.Integrations.Match3;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -18,6 +19,8 @@ public class PlayerCharacterMovement : MonoBehaviour, IUnitMovement
 
     private bool _isDashing;
     public bool IsDashing => _isDashing;
+
+    public Vector3 Direction => _model.forward;
 
     public void Initialize(UnitStats stats)
     {

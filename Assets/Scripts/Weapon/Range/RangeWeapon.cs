@@ -4,10 +4,6 @@ public abstract class RangeWeapon : Weapon
 {
     [SerializeField, Range(0, 10)] protected int maxPenetrationCount;
     protected int _currentPenetrationCount;
-    
-    [SerializeField, Range(1f, 10f)] protected float _timeToLive = 5f;
-    protected float _timeAlive = 0f;
-    public bool isAlive { get; protected set; }
 
     [Header("Visual")]
     [SerializeField] protected Transform mesh;
