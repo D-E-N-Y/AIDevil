@@ -57,6 +57,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 479394356324222372}
     m_Modifications:
+    - target: {fileID: -8982846091787598736, guid: b2d8e9005960905e8891b0448d897971, type: 3}
+      propertyPath: slashAngle
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: -8982846091787598736, guid: b2d8e9005960905e8891b0448d897971, type: 3}
+      propertyPath: _timeToLive
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8982846091787598736, guid: b2d8e9005960905e8891b0448d897971, type: 3}
+      propertyPath: distanceFromOrigin
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6751460295317509174, guid: b2d8e9005960905e8891b0448d897971, type: 3}
       propertyPath: m_Name
       value: Mono Dagger
@@ -104,6 +116,10 @@ PrefabInstance:
     - target: {fileID: 7385479989273016251, guid: b2d8e9005960905e8891b0448d897971, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7540416823468829337, guid: b2d8e9005960905e8891b0448d897971, type: 3}
+      propertyPath: m_Height
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
