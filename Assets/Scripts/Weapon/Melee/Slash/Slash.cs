@@ -59,7 +59,7 @@ public abstract class Slash : MeleeWeapon
 
             if (hit.gameObject.TryGetComponent<IDamagable>(out IDamagable damagable))
             {
-                ApplyDamage(damagable.GetHealth());
+                ApplyDamage(damagable.IHealth);
                 _ignoreTargets.Add(hit);
             }
         }

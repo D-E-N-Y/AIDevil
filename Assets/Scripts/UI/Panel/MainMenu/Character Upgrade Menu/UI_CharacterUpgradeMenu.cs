@@ -64,7 +64,7 @@ public class UI_CharacterUpgradeMenu : UI_Panel
 
     private void UpdateTree()
     {
-        string characterName = _gameInstance.DataBase.Characters.GetCharacterByID(_gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID).GetName();
+        string characterName = _gameInstance.DataBase.Characters.GetCharacterByID(_gameInstance.ProfileManager.CurrentProfile.CharacterManager.Character_ID).Name;
         ui_nameCharacterText.text = characterName;
         
         if (_selectUIUpgradeTree != null)

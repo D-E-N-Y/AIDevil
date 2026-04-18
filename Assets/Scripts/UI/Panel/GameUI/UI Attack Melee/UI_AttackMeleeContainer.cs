@@ -10,7 +10,7 @@ public class UI_AttackMeleeContainer : UI_Panel
     public void Initialize(PlayerCharacter playerCharacter)
     {
         _playerCharacter = playerCharacter;
-        _playerCharacter.GetSpellController().updateSpells += UpdateUI;
+        _playerCharacter.SpellController.updateSpells += UpdateUI;
 
         UpdateUI();
     }
@@ -19,7 +19,7 @@ public class UI_AttackMeleeContainer : UI_Panel
     {
         ui_spells.ForEach(x => x.Hide());
 
-        List<SpellMelee> _spellMelles = _playerCharacter.GetSpellController().GetSpellMelees();
+        List<SpellMelee> _spellMelles = _playerCharacter.SpellController.GetSpellMelees();
 
         for (int i = 0; i < _spellMelles.Count; i++)
         {

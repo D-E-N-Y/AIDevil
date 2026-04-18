@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7107369187649492154}
   - component: {fileID: 8872097804905923041}
   - component: {fileID: 3925664036077139029}
-  m_Layer: 7
+  m_Layer: 18
   m_Name: Photon Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,10 +72,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 30
   _timeToLive: 5
+  maxPenetrationCount: 0
   mesh: {fileID: 7825983549736071321}
   impactEffect: {fileID: 8070395117558027211}
   moveSpeed: 4
-  maxPenetrationCount: 0
   exploseRadius: 2
 --- !u!1 &2346492406564241348
 GameObject:

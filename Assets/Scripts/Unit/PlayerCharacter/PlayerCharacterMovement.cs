@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.MLAgents.Integrations.Match3;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]

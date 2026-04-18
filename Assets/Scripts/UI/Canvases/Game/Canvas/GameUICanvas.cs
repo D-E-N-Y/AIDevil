@@ -10,7 +10,7 @@ public class GameUICanvas : MonoBehaviour
     {
         ui_gameplay.Initialize(playerCharacter, waveSystem);
         ui_resultsSession.Initialize(ui_gameplay);
-        ui_pause.Initialize(playerCharacter.GetUnitContext(), ui_gameplay);
+        ui_pause.Initialize(playerCharacter.UnitContext, ui_gameplay);
 
         ui_gameplay.Show();
 

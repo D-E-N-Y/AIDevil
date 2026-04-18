@@ -15,7 +15,7 @@ public class UI_Wave : UI_Panel
         _waveSystem = waveSystem;
 
         _waveSystem.updateNumberWave += UpdateWave;
-        _waveSystem.EnemyController.updateCountEnemies += UpdateEnemies;
+        _waveSystem.EnemyManager.updateCountEnemies += UpdateEnemies;
     }
 
     private void UpdateWave(int number) => ui_waveNumberText.text = number.ToString();

@@ -2,7 +2,7 @@ public class UnitContext
 {
     public UnitStats Stats;
     public Inventory Inventory;
-    public SpellController SpellController;
+    public ISpellController SpellController;
     public UnitHealth UnitHealth;
     public Wallet Wallet;
     public IUnitMovement Movement;
@@ -10,7 +10,7 @@ public class UnitContext
     public UnitContext(
         UnitStats stats, 
         Inventory inventory, 
-        SpellController spellController, 
+        ISpellController spellController, 
         UnitHealth unitHealth, 
         Wallet wallet,
         IUnitMovement movement)

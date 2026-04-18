@@ -1,91 +1,134 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyMovement), typeof(EnemySpellController))]
 public class Enemy : MonoBehaviour, IUnit, IDamagable
 {
+    [Header("Enemy Info")]
     [SerializeField] protected EnemyType _type;
-    public EnemyType Type => _type;
-    
+    [SerializeField] protected string _id;
     [SerializeField] protected string _name;
     [SerializeField] protected EnemyStats _stats;
 
     protected UnitHealth _health;
+    protected bool _isDead;
     public event Action<IDamagable> OnDead;
 
-    protected bool _isDead;
-    public bool IsDead => _isDead;
+    protected EnemySpellController _spellController;
+    protected EnemyMovement _movement;
 
+    [Header("Visual")]
     [SerializeField] UI_HPIndicator ui_hpIndicator;
 
-    [SerializeField] protected PlayerCharacter playerCharacterTarget;
-
-    [SerializeField] protected List<Spell> spells;
-    [SerializeField] protected UI_WorldSpellCooldown ui_worldSpellCooldown;
-
-    [SerializeField, Range(1f, 20f)] protected float attackRange;
-
-    [SerializeField] protected WorldResource worldResource;
+    [Header("Target")]
+    [SerializeField] protected Transform _target;
 
     protected UnitFaction _unitFaction;
     protected SpellContext _spellContext;
 
-     public string ID => _name;
+    private EnemyState _state;
 
     public virtual void Initialize()
     {
         _unitFaction = UnitFaction.Enemy;
         gameObject.layer = LayerMask.NameToLayer(_unitFaction.ToString());
 
+        _stats.Initialize();
+
         _health = new UnitHealth(_stats);
-        _health.OnDead += Death;
-
+        _health.OnDead += Die; 
         ui_hpIndicator.Initialize(_health);
-
-        _spellContext = new SpellContext(_unitFaction, _stats, _health, null);
-        spells.ForEach(x => x.Initialize(_spellContext));
-        ui_worldSpellCooldown.Initialize(spells[0]);
-
         _isDead = false;
+
+        _movement = GetComponent<EnemyMovement>();
+        _movement.Initialize(_stats);
+
+        _spellContext = new SpellContext(_unitFaction, _stats, _health, _movement);
+        _spellController = GetComponent<EnemySpellController>();
+        _spellController.Initialize(_spellContext);
+
+        _movement.SetStopDistance(_spellController.OptimalAttackRange);
+
+        _state = EnemyState.Idle;
         gameObject.SetActive(true);
     }
 
-    protected virtual void Attacking()
+    public virtual void SetTarget(Transform target)
     {
-        Spell _spell = spells[UnityEngine.Random.Range(0, spells.Count)];
-        
-        if (_spell != null)
+        _target = target;
+    }
+
+    private void Update()
+    {
+        switch (_state)
         {
-            _spell.Cast();
+            case EnemyState.Idle:
+                Idle();
+                break;
+
+            case EnemyState.Moving:
+                Move();
+                break;
+
+            case EnemyState.Attacking:
+                Attack();
+                break;
         }
-    } 
+    }
 
-    public virtual void Death()
+    private void Idle()
     {
-        GameInstance.current.ProfileManager.CurrentProfile.BestiaryProgress.AddEnemy(_name);
+        if (!_target) return;
         
-        DropMoney();
-
-        _isDead = true;
-
-        gameObject.SetActive(false);
-        OnDead?.Invoke(this);
+        _state = EnemyState.Moving;
     }
 
-    protected void DropMoney()
+    private void Attack()
     {
-        WorldResource _worldResource = Instantiate(worldResource, transform.position, Quaternion.identity);
-        _worldResource.Initialize(ResourceType.Credits, _stats.DropMoney);
+        if (!_target) return;
+
+        if (IsInRange())
+        {
+            _spellController.CastRandomSpell();
+        }
+        else if(!_spellController.IsAnySpellAttacking())
+        {
+            _state = EnemyState.Moving;
+        }
     }
 
-    public virtual void SetPlayerTarget(PlayerCharacter playerTarget) => this.playerCharacterTarget = playerTarget;
+    private void Move()
+    {
+        if (!_target) return;
 
-    public string GetName() => _name;
-    public UnitStats GetStats() => _stats;
-    public UnitHealth GetHealth() => _health;
+        _movement.MoveTo(_target.position);
 
-    public List<Spell> GetSpells() => spells;
+        if (IsInRange())
+        {
+            _movement.Stop();
+            _state = EnemyState.Attacking;
+        }
+    }
 
-    IHealth IDamagable.GetHealth() => _health;
-    public Transform GetTransform() => transform;
+    private bool IsInRange()
+    {
+        float sqrDist = (transform.position - _target.position).sqrMagnitude;
+        return sqrDist <= _spellController.OptimalAttackRange * _spellController.OptimalAttackRange;
+    }
+
+    private void Die()
+    {
+        _isDead = true;
+        OnDead?.Invoke(this);
+        gameObject.SetActive(false);
+    }
+
+    public string Name => _name;
+    public string ID => _id;
+    public EnemyType Type => _type;
+    public UnitStats Stats => _stats;
+    public UnitHealth Health => _health;
+    public IHealth IHealth => _health;
+    public bool IsDead => _isDead;
+    public EnemyState State => _state;
 }

@@ -144,7 +144,7 @@ public class WP_EnergyBeam : Beam
             
             for (int i = _damagables.Count - 1; i >= 0; i--)
             {
-                ApplyDamage(_damagables[i].GetHealth());
+                ApplyDamage(_damagables[i].IHealth);
             }
 
             yield return new WaitForSeconds(intervalDamage);

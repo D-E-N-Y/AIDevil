@@ -8,7 +8,7 @@ public class DB_Enemies : ScriptableObject
     
     public Enemy GetEnemyByName(string name)
     {
-        return enemies.Find(enemy => enemy.GetName() == name);
+        return enemies.Find(enemy => enemy.Name == name);
     }
 
     public List<Enemy> GetAllEnemies()

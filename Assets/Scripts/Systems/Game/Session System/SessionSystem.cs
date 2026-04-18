@@ -26,13 +26,13 @@ public class SessionSystem
         
         _sesionResult = new SSesionResult();
 
-        _sesionResult.namePlayerCharacter = playerCharacter.GetName();
-        _sesionResult.name = $"{playerCharacter.GetName()} - {DateTime.Now}";
+        _sesionResult.namePlayerCharacter = playerCharacter.Name;
+        _sesionResult.name = $"{playerCharacter.Name} - {DateTime.Now}";
 
-        playerCharacter.GetHealth().OnDead += LoseFinish;
+        playerCharacter.Health.OnDead += LoseFinish;
         ui_pause.onExitSession += LoseFinish;
 
-        _wallet = playerCharacter.GetWallet();
+        _wallet = playerCharacter.Wallet;
 
         _ui_sessionResultsGame = ui_sessionResultsGame;
 

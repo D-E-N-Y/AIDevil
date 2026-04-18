@@ -21,7 +21,7 @@ public class WP_RicochetBeam : Projectile
         {
             currentDamagable = damagable;
             
-            ApplyDamage(damagable.GetHealth());
+            ApplyDamage(damagable.IHealth);
             isCanAttack = false;
         }
 

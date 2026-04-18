@@ -65,7 +65,7 @@ public class ItemStand : MonoBehaviour
     {
         if(_isTradeItem) return;
 
-        _itemContext = other.gameObject.GetComponent<PlayerCharacter>().GetUnitContext();
+        _itemContext = other.gameObject.GetComponent<PlayerCharacter>().UnitContext;
 
         bool enoughMoney = _itemContext.Wallet.HasEnoughResource(ResourceType.Credits, _item.Price);
         bool maxSpellsCount = true;

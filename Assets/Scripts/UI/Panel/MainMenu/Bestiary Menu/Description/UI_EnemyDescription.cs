@@ -15,11 +15,11 @@ public class UI_EnemyDescription : UI_Panel
 
     public void SetUnitInfo(Enemy enemy)
     {
-        ui_nameText.text = enemy.GetName();
+        ui_nameText.text = enemy.Name;
 
-        ui_stats.SetStats(enemy.GetStats());
+        ui_stats.SetStats(enemy.Stats);
         ui_stats.UpdateUI();
 
-        ui_spellsList.SetInfo(enemy.GetSpells());
+        // ui_spellsList.SetInfo(enemy.Spells);
     }
 }

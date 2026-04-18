@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 7107369187649492154}
   - component: {fileID: 5144783469343879550}
   - component: {fileID: -686538448657507773}
-  m_Layer: 7
+  m_Layer: 18
   m_Name: Rapid Laser Stream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7107369187649492154
 Transform:
   m_ObjectHideFlags: 0
@@ -69,8 +69,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 12
-  maxPenetrationCount: 0
   _timeToLive: 5
+  maxPenetrationCount: 0
   mesh: {fileID: 7825983549736071321}
   impactEffect: {fileID: 8070395117558027211}
   moveSpeed: 7

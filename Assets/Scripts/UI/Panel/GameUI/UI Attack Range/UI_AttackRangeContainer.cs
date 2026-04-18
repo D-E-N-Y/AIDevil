@@ -10,14 +10,14 @@ public class UI_AttackRangeContainer : UI_Panel
     public void Initialize(PlayerCharacter playerCharacter)
     {
         _playerCharacter = playerCharacter;
-        _playerCharacter.GetSpellController().updateSpells += UpdateUI;
+        _playerCharacter.SpellController.updateSpells += UpdateUI;
 
         UpdateUI();
     }
 
     private void UpdateUI()
     {
-        List<SpellRange> _spellRanges = _playerCharacter.GetSpellController().GetSpellRanges();
+        List<SpellRange> _spellRanges = _playerCharacter.SpellController.GetSpellRanges();
         
         if (_spellRanges.Count <= 0)
         {

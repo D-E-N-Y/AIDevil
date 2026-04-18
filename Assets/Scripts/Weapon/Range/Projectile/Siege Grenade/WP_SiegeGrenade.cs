@@ -59,7 +59,7 @@ public class WP_SiegeGrenade : Projectile
         {
             if (hit.TryGetComponent(out IDamagable damagable))
             {
-                ApplyDamage(damagable.GetHealth());
+                ApplyDamage(damagable.IHealth);
             }
         }
 

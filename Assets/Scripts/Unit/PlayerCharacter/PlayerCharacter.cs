@@ -23,7 +23,7 @@ public class PlayerCharacter : MonoBehaviour, IUnit, IDamagable
     private UnitHealth _health;
     private Inventory _inventory;
     private Wallet _wallet;
-    private SpellController _spellController;
+    private ISpellController _spellController;
     private UnitContext _unitContext;
 
     protected UnitFaction _unitFaction;
@@ -54,7 +54,7 @@ public class PlayerCharacter : MonoBehaviour, IUnit, IDamagable
         _wallet = new Wallet();
 
         _spellContext = new SpellContext(_unitFaction, _stats, _health, _movement);
-        _spellController = new SpellController(_spellContext, _spellContainer);
+        _spellController = new PlayerCharacterSpellController(_spellContext, _spellContainer);
 
         _unitContext = new UnitContext(_stats, _inventory, _spellController, _health, _wallet, _movement);
 
@@ -74,18 +74,15 @@ public class PlayerCharacter : MonoBehaviour, IUnit, IDamagable
         gameObject.SetActive(false);
     }
 
-    public string GetName() => _name;
-    public UnitStats GetStats() => _stats;
-    public UnitHealth GetHealth() => _health;
-    public Inventory GetInventory() => _inventory;
-    public Wallet GetWallet() => _wallet;
-    public StartItems GetStartItems() => _startItems;
-    public UnitContext GetUnitContext() => _unitContext;
-
-    public SpellController GetSpellController() => _spellController;
-    public UpgradesManager GetUpgradesManager() => _upgradesManager;
-    public PlayerCharacterMovement GetMovement() => _movement;
-
-    IHealth IDamagable.GetHealth() => _health;
-    public Transform GetTransform() => transform;
+    public string Name => _name;
+    public UnitStats Stats => _stats;
+    public UnitHealth Health => _health;
+    public IHealth IHealth => _health;
+    public Inventory Inventory => _inventory;
+    public Wallet Wallet => _wallet;
+    public StartItems StartItems => _startItems;
+    public UnitContext UnitContext => _unitContext;
+    public ISpellController SpellController => _spellController;
+    public UpgradesManager UpgradesManager => _upgradesManager;
+    public PlayerCharacterMovement Movement => _movement;
 }

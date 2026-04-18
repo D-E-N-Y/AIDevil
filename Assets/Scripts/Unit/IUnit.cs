@@ -2,7 +2,7 @@ using System;
 
 public interface IUnit
 {
-    string GetName();
-    UnitStats GetStats();
-    UnitHealth GetHealth();
+    string Name { get; }
+    UnitStats Stats { get; }
+    UnitHealth Health { get; }
 }

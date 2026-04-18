@@ -79,7 +79,7 @@ public class Boss : Agent, IUnit
 
     public void SetPlayerTarget(PlayerCharacter playerTarget) => this.playerCharacterTarget = playerTarget;
     
-    public string GetName() => _name;
-    public UnitStats GetStats() => _stats;
-    public UnitHealth GetHealth() => _health;
+    public string Name => _name;
+    public UnitStats Stats => _stats;
+    public UnitHealth Health => _health;
 }

@@ -25,8 +25,8 @@ public class UI_Gameplay : UI_Panel
     {
         ui_attackRangeContainer.Initialize(playerCharacter);
         ui_attackMeleeContainer.Initialize(playerCharacter);
-        ui_healthBar.Initialize(playerCharacter.GetHealth());
-        ui_moneyAmount.Initialize(playerCharacter.GetWallet());
+        ui_healthBar.Initialize(playerCharacter.Health);
+        ui_moneyAmount.Initialize(playerCharacter.Wallet);
         ui_wave.Initialize(waveSystem);
 
         ui_trade.Hide();

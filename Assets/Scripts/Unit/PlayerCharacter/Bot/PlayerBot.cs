@@ -52,7 +52,7 @@ public class PlayerBot : MonoBehaviour
 
         if (meleeSensor.IsHasUnits())
         {
-            _playerCharacter.GetSpellController().CastRandomMeleeSpell();
+            _playerCharacter.SpellController.CastRandomMeleeSpell();
         }
     }
 

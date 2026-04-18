@@ -55,7 +55,7 @@ public class GameBootstraper : MonoBehaviour
         
         playerCharacter.Initialize(gameUICanvas.UIGameplay.UIJoystick); 
         
-        playerCharacter.GetUpgradesManager().ApplyUpgrades(
+        playerCharacter.UpgradesManager.ApplyUpgrades(
             _gameInstance.ProfileManager.CurrentProfile.CharacterManager.UpgradeContainer.Upgrades_ID, 
             _gameInstance.DataBase.UpgradeTrees
         );

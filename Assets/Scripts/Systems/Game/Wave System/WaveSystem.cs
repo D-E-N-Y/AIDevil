@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyController))]
+[RequireComponent(typeof(EnemyManager))]
 public class WaveSystem : MonoBehaviour
 {
     public System.Action<SCompleteWaveInfo> sendResults;
@@ -18,8 +18,8 @@ public class WaveSystem : MonoBehaviour
     private bool _isInfinityWaves;
     public bool IsInfinityWaves => _isInfinityWaves;
 
-    private EnemyController _enemyController;
-    public EnemyController EnemyController => _enemyController;
+    private EnemyManager _enemyManager;
+    public EnemyManager EnemyManager => _enemyManager;
 
     private WaveGenerator _waveGenerator;
 
@@ -27,9 +27,9 @@ public class WaveSystem : MonoBehaviour
     {
         _waves = waves.ToList();
         
-        _enemyController = GetComponent<EnemyController>();
-        _enemyController.Initialize(playerTarget);
-        _enemyController.onAllEnemiesDead += CompleteWave;
+        _enemyManager = GetComponent<EnemyManager>();
+        _enemyManager.Initialize(playerTarget.transform);
+        _enemyManager.onAllEnemiesDead += CompleteWave;
 
         _waveGenerator = new WaveGenerator();
 
@@ -39,7 +39,7 @@ public class WaveSystem : MonoBehaviour
     public void StartWave()
     {
         updateNumberWave?.Invoke(currentWave + 1);
-        _enemyController.StartSpawn(_waves[currentWave]);
+        _enemyManager.StartSpawn(_waves[currentWave]);
     }
 
     public void StartInfinityWaves()
@@ -52,7 +52,7 @@ public class WaveSystem : MonoBehaviour
 
     public void StopWave()
     {
-        _enemyController.StopSpawn();
+        _enemyManager.StopSpawn();
     }
 
     public void CompleteWave()
@@ -82,7 +82,7 @@ public class WaveSystem : MonoBehaviour
     {
         SCompleteWaveInfo _completeWaveInfo = new SCompleteWaveInfo(
             0,
-            _enemyController.DefeatEnemies,
+            _enemyManager.DefeatEnemies,
             currentWave
         );
 

@@ -25,7 +25,7 @@ public class MeleeBossAttack : MonoBehaviour
     {
         if (other.TryGetComponent<PlayerCharacter>(out PlayerCharacter playerCharacter))
         {
-            playerCharacter.GetHealth().TakeDamage(damage);
+            playerCharacter.Health.TakeDamage(damage); 
             isSuccessfulAttack?.Invoke();
         }
     }

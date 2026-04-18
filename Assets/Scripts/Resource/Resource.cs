@@ -46,6 +46,5 @@ public class Resource : MonoBehaviour, IDamagable
         gameObject.SetActive(false);
     }
 
-    public IHealth GetHealth() => _health;
-    public Transform GetTransform() => transform;    
+    public IHealth IHealth => _health;    
 }

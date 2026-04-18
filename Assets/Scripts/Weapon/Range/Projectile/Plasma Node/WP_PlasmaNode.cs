@@ -65,7 +65,7 @@ public class WP_PlasmaNode : Projectile
 
                 foreach (IDamagable damagable in targets)
                 {
-                    ApplyDamage(damagable.GetHealth());
+                    ApplyDamage(damagable.IHealth);
                 }
             }
             

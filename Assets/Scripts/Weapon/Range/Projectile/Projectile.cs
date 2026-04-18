@@ -73,7 +73,7 @@ public abstract class Projectile : RangeWeapon
 
         if (collider.gameObject.TryGetComponent<IDamagable>(out IDamagable damagable))
         {
-            ApplyDamage(damagable.GetHealth());
+            ApplyDamage(damagable.IHealth);
 
             if (_currentPenetrationCount >= maxPenetrationCount)
             {

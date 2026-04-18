@@ -37,7 +37,7 @@ public class WP_PhotonSphere : Projectile
         {
             if (hit.TryGetComponent(out IDamagable damagable))
             {
-                ApplyDamage(damagable.GetHealth());
+                ApplyDamage(damagable.IHealth);
             }
         }
 

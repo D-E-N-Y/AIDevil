@@ -28,7 +28,7 @@ public abstract class MeleeWeapon : Weapon
     {
         if (other.gameObject.TryGetComponent<IDamagable>(out IDamagable damagable))
         {
-            ApplyDamage(damagable.GetHealth());
+            ApplyDamage(damagable.IHealth);
         }
     }
 }

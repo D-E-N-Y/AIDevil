@@ -103,8 +103,8 @@ public class SpawnResoure : MonoBehaviour
         onStartHint?.Invoke(
             HintType.Resource, 
             spawnPosition, 
-            h => resource.GetHealth().OnDead += h,
-            h => resource.GetHealth().OnDead -= h
+            h => resource.IHealth.OnDead += h,
+            h => resource.IHealth.OnDead -= h
         );
     }
 
