@@ -6,9 +6,9 @@ public class GameUICanvas : MonoBehaviour
     [SerializeField] private UI_Pause ui_pause;
     [SerializeField] private UI_SessionResultsGame ui_resultsSession;
 
-    public void Initialize(PlayerCharacter playerCharacter, WaveSystem waveSystem)
+    public void Initialize(PlayerCharacter playerCharacter)
     {
-        ui_gameplay.Initialize(playerCharacter, waveSystem);
+        ui_gameplay.Initialize(playerCharacter);
         ui_resultsSession.Initialize(ui_gameplay);
         ui_pause.Initialize(playerCharacter.UnitContext, ui_gameplay);
 

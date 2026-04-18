@@ -21,13 +21,13 @@ public class UI_Gameplay : UI_Panel
 
     [SerializeField] private Button ui_pauseButton;
 
-    public void Initialize(PlayerCharacter playerCharacter, WaveSystem waveSystem)
+    public void Initialize(PlayerCharacter playerCharacter)
     {
         ui_attackRangeContainer.Initialize(playerCharacter);
         ui_attackMeleeContainer.Initialize(playerCharacter);
         ui_healthBar.Initialize(playerCharacter.Health);
         ui_moneyAmount.Initialize(playerCharacter.Wallet);
-        ui_wave.Initialize(waveSystem);
+        // ui_wave.Initialize(waveSystem);
 
         ui_trade.Hide();
 

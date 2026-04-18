@@ -5,9 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyManager))]
 public class WaveSystem : MonoBehaviour
 {
-    public System.Action<SCompleteWaveInfo> sendResults;
-    public System.Action finishWaves;
-    public System.Action OnCompleteWave;
+    public event System.Action OnFinishWaves;
+    public event System.Action OnCompleteWave;
     
     public System.Action<int> updateNumberWave;
 
@@ -23,12 +22,12 @@ public class WaveSystem : MonoBehaviour
 
     private WaveGenerator _waveGenerator;
 
-    public void Initialize(IReadOnlyList<Wave> waves, PlayerCharacter playerTarget)
+    public void Initialize(IReadOnlyList<Wave> waves, WorldPickupSystem worldPickupSystem, PlayerCharacter playerTarget)
     {
         _waves = waves.ToList();
         
         _enemyManager = GetComponent<EnemyManager>();
-        _enemyManager.Initialize(playerTarget.transform);
+        _enemyManager.Initialize(playerTarget.transform, worldPickupSystem);
         _enemyManager.onAllEnemiesDead += CompleteWave;
 
         _waveGenerator = new WaveGenerator();
@@ -61,8 +60,6 @@ public class WaveSystem : MonoBehaviour
         
         currentWave++;
 
-        SendWaveResults();
-
         if(_isInfinityWaves)
         {
             CreateNewWave();
@@ -70,7 +67,7 @@ public class WaveSystem : MonoBehaviour
 
         if(currentWave >= _waves.Count) 
         {
-            finishWaves?.Invoke();
+            OnFinishWaves?.Invoke();
         }
         else
         {
@@ -78,15 +75,14 @@ public class WaveSystem : MonoBehaviour
         }
     }
 
-    public void SendWaveResults()
+    public SCompleteWaveInfo GetWaveResult()
     {
-        SCompleteWaveInfo _completeWaveInfo = new SCompleteWaveInfo(
-            0,
+        SCompleteWaveInfo _waveResult = new SCompleteWaveInfo(
             _enemyManager.DefeatEnemies,
             currentWave
         );
 
-        sendResults?.Invoke(_completeWaveInfo);
+        return _waveResult;
     }
 
     private void CreateNewWave()

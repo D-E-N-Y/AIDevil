@@ -66,5 +66,17 @@ public class EnemySpellController : MonoBehaviour
     }
 
     public List<Spell> GetSpells() => _spells;
+    public List<Spell> GetWorldSpells()
+    {
+        List<Spell> spellsCopy = new List<Spell>();
+
+        // foreach (WorldSpell worldSpell in _worldSpells)
+        // {
+        //     spellsCopy.Add(worldSpell.spell);
+        // }
+
+        return spellsCopy;
+    }
+
     public float OptimalAttackRange => _optimalAttackRange;
 }

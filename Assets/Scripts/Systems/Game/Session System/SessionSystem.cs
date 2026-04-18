@@ -2,112 +2,121 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SessionSystem
+public class SessionSystem : MonoBehaviour
 {
-    private UI_SessionResultsGame _ui_sessionResultsGame;
-    private WaveSystem _waveSystem;
-    private TradeZone _tradeZone;
+    [SerializeField] private WaveSystem _waveSystem;
+    [SerializeField] private LandSystem _landSystem;
+    [SerializeField] private ResourceSystem _resourceSystem;
+    [SerializeField] private WorldPickupSystem _worldPickupSystem;
+
+    [SerializeField] private TradeZone _tradeZone;
+    [SerializeField] private EndGame _endGame;
     
-    private SSesionResult _sesionResult;
-    
+    private PlayerCharacter _playerCharacter;
+
     private float _startTimeSession;
     private float _endTimeSession;
 
-    // temporary field
-    private Wallet _wallet;
+    private FinishSession _finishSession;
 
-    GameInstance _gameInstance;
-
-    private ESessionResult _result;
-
-    public SessionSystem(GameInstance gameInstance, PlayerCharacter playerCharacter, UI_SessionResultsGame ui_sessionResultsGame, UI_Pause ui_pause, WaveSystem waveSystem, TradeZone tradeZone)
+    public void Initialize(GameInstance gameInstance, GameUICanvas gameUICanvas, PlayerCharacter playerCharacter)
     {
-        _gameInstance = gameInstance;
-        
-        _sesionResult = new SSesionResult();
+        _playerCharacter = playerCharacter;
+        _playerCharacter.Health.OnDead += DeathCharacter;
+        gameUICanvas.UIPause.onExitSession += ExitSession;
 
-        _sesionResult.namePlayerCharacter = playerCharacter.Name;
-        _sesionResult.name = $"{playerCharacter.Name} - {DateTime.Now}";
+        _worldPickupSystem.Initialize();
+        _landSystem.Initialize();
 
-        playerCharacter.Health.OnDead += LoseFinish;
-        ui_pause.onExitSession += LoseFinish;
-
-        _wallet = playerCharacter.Wallet;
-
-        _ui_sessionResultsGame = ui_sessionResultsGame;
-
-        _waveSystem = waveSystem;
-
-        // _waveSystem.finishWaves += CompleteSession;
-
+        _waveSystem.Initialize(gameInstance.GameLevelsManager.CurrentGameLevel.WaveConfig.Waves, _worldPickupSystem, playerCharacter);
         _waveSystem.OnCompleteWave += CompleteWave;
-        _waveSystem.sendResults += SetResults;
+        _waveSystem.OnFinishWaves += FinishWaves;
+        gameUICanvas.UIGameplay.UIWave.Initialize(_waveSystem);
 
-        _tradeZone = tradeZone;
+        _resourceSystem.Initialize(gameInstance.GameLevelsManager.CurrentGameLevel.Resources, _landSystem, _worldPickupSystem, gameUICanvas.UIGameplay.UIHintController);
+
+        _tradeZone.Initialize(gameInstance, gameUICanvas.UIGameplay.UITrade, gameUICanvas.UIGameplay.UIOffer, gameUICanvas.UIGameplay.UIHintController);
         _tradeZone.OnCompleteTrade += CompleteTrade;
+
+        _endGame.Initialize(gameUICanvas.UIGameplay.UIOffer);
+        _endGame.OnFinishSession += FinishSession;
+        _endGame.OnStartInfinityWaves += StartInfinityWaves;
+
+        _finishSession = new FinishSession(gameInstance, gameUICanvas.UIResultsSession);
     }
 
     public void StartSession()
     {
+        Time.timeScale = 1f;
         _startTimeSession = Time.unscaledTime;
 
         _waveSystem.StartWave();
+        _resourceSystem.SpawnResoure.StartSpawn();
     }
 
     private void CompleteWave()
     {
         _tradeZone.Spawn();
+        _resourceSystem.SpawnResoure.StopSpawn();
+    }
+
+    private void FinishWaves()
+    {
+        _finishSession.Win();
+        _endGame.Spawn();
     }
 
     private void CompleteTrade()
     {
         _waveSystem.StartWave();
+        _resourceSystem.SpawnResoure.StartSpawn();
     }
 
-    public void LoseFinish()
+    private void StartInfinityWaves()
     {
-        _waveSystem.StopWave();
-        _waveSystem.SendWaveResults();
-
-        if (_waveSystem.IsInfinityWaves)
-        {
-            WinFinish();
-        }
-        else
-        {
-            CompleteSession(ESessionResult.LOSE);
-        }
+        _waveSystem.StartInfinityWaves();
     }
 
-    public void WinFinish()
+    private void DeathCharacter()
     {
-        string levelID = _gameInstance.GameLevelsManager.CurrentGameLevel.ID;
-        _gameInstance.ProfileManager.CurrentProfile.GameLevelsProgress.AddGameLevel(levelID);
+        if (!_waveSystem.IsInfinityWaves)
+        {
+            _finishSession.Lose();
+        }
         
-        CompleteSession(ESessionResult.WIN);
+        FinishSession();
     }
 
-    private void SetResults(SCompleteWaveInfo waveInfo)
+    private void ExitSession()
     {
-        _sesionResult.defeatEnemies = waveInfo.defeatEnemies;
-        _sesionResult.completedWaves = waveInfo.completedWaves;
+        if (!_waveSystem.IsInfinityWaves)
+        {
+            _finishSession.Lose();
+        }
+        
+        FinishSession();
     }
 
-    private void CompleteSession(ESessionResult result)
+    private void FinishSession()
+    {
+        SetResults();
+        _finishSession.Finish();
+    }
+
+    private void SetResults()
     {
         _endTimeSession = Time.unscaledTime;
-
-        _sesionResult.result = result;
-        _sesionResult.time = new STime((int)(_endTimeSession - _startTimeSession));
-        // _sesionResult.collectCoins = _wallet.AllCollectedMoney;
+        SCompleteWaveInfo waveResult = _waveSystem.GetWaveResult();
         
-        _sesionResult.collectResources = GetColletResources();
+        SSesionResult result = new SSesionResult();
+        result.namePlayerCharacter = _playerCharacter.Name;
+        result.name = $"{_playerCharacter.Name} - {DateTime.Now}";
+        result.time = new STime((int)(_endTimeSession - _startTimeSession));
+        result.defeatEnemies = waveResult.defeatEnemies;
+        result.completedWaves = waveResult.completedWaves;
+        result.collectResources = GetColletResources();
 
-        _gameInstance.ProfileManager.CurrentProfile.SessionResultsProgress.AddSessionResult(_sesionResult);
-        _gameInstance.ProfileManager.CurrentProfile.Wallet.AddResources(GetColletResources());
-
-        _ui_sessionResultsGame.SetResult(_sesionResult);
-        _ui_sessionResultsGame.Show();
+        _finishSession.SetResult(result);
     }
 
     private Dictionary<ResourceType, int> GetColletResources()
@@ -118,9 +127,9 @@ public class SessionSystem
         {
             if (resource == ResourceType.Credits) continue;
 
-            if (_wallet.HasResources(resource))
+            if (_playerCharacter.Wallet.HasResources(resource))
             {
-                resources[resource] = _wallet.Resources[resource];
+                resources[resource] = _playerCharacter.Wallet.Resources[resource];
             }
         }
 

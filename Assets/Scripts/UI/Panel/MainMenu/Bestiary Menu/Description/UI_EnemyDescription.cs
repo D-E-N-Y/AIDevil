@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -20,6 +21,6 @@ public class UI_EnemyDescription : UI_Panel
         ui_stats.SetStats(enemy.Stats);
         ui_stats.UpdateUI();
 
-        // ui_spellsList.SetInfo(enemy.Spells);
+        ui_spellsList.SetInfo(new List<Spell>());
     }
 }

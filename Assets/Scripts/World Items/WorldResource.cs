@@ -10,6 +10,8 @@ public class WorldResource : WorldPickup
     
     [SerializeField] private Image ui_icon;
 
+    public override PickupType Type => PickupType.Resource;
+
     public void Initialize(ResourceType resource, int amout)
     {
         _resource = resource;
@@ -20,6 +22,7 @@ public class WorldResource : WorldPickup
         ui_icon.sprite = resourceIcon.sprite;
         ui_icon.color = resourceIcon.color;
 
+        _isPickedUp = false;
         gameObject.SetActive(true);
     }
 
@@ -35,6 +38,7 @@ public class WorldResource : WorldPickup
 
         context.Wallet.AddResource(_resource, finalAmount);
 
+        _isPickedUp = true;
         gameObject.SetActive(false);
     }
 }

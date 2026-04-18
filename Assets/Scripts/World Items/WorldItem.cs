@@ -11,10 +11,7 @@ public class WorldItem : WorldPickup
 
     [SerializeField] private Image _iconImage;
 
-    // private void Awake() 
-    // {
-    //     Initialize(_item);
-    // }
+    public override PickupType Type => PickupType.Item;
 
     public void Initialize(Item item, int amount = 1, bool canPickUp = true)
     {
@@ -26,6 +23,7 @@ public class WorldItem : WorldPickup
 
         _iconImage.sprite = item.Icon;
 
+        _isPickedUp = false;
         gameObject.SetActive(true);
     }
 
@@ -35,6 +33,7 @@ public class WorldItem : WorldPickup
         
         context.Inventory.AddItem(_item);
 
+        _isPickedUp = true;
         gameObject.SetActive(false);
     }
 }

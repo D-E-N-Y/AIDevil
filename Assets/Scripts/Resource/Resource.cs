@@ -11,20 +11,29 @@ public class Resource : MonoBehaviour, IDamagable
 
     [SerializeField, Range(1, 1000)] private int _maxHP;
 
-    [SerializeField] protected WorldResource worldResourcePrefab;
-
     [SerializeField] private UI_HPIndicator ui_hpIndicator;
 
     public event Action<IDamagable> OnDead;
+    
+    private bool _isDead;
+    public bool IsDead => _isDead;
 
     private ResourceHealth _health;
+
+    public int Amount { get; private set; }
 
     public void Initialize()
     {
         _health = new ResourceHealth(_maxHP);
         _health.OnDead += Death;
 
+        _isDead = false;
+
         ui_hpIndicator.Initialize(_health);
+
+        Amount = GetAmount();
+
+        gameObject.SetActive(true);
     }
 
     private int GetAmount()
@@ -39,9 +48,8 @@ public class Resource : MonoBehaviour, IDamagable
 
     public void Death()
     {
-        WorldResource worldResource = Instantiate(worldResourcePrefab, transform.position, Quaternion.identity);
-        worldResource.Initialize(_type, GetAmount());
-        
+        _isDead = true;
+
         OnDead?.Invoke(this);
         gameObject.SetActive(false);
     }

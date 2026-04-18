@@ -3,18 +3,9 @@ using UnityEngine;
 public class GameBootstraper : MonoBehaviour
 {
     [SerializeField] private GameUICanvas gameUICanvas;
-
-    [SerializeField] private CameraOrigin cameraOrigin;
-
-    [SerializeField] private WaveSystem waveSystem;
-    [SerializeField] private LandSystem landSystem;
-    [SerializeField] private ResourceSystem resourceSystem;
-
-    [SerializeField] private TradeZone _tradeZone;
-    [SerializeField] private EndGame _endGame;
-
-    private SessionSystem sessionSystem;
+    [SerializeField] private SessionSystem sessionSystem;
     
+    [SerializeField] private CameraOrigin cameraOrigin;
     private PlayerCharacter playerCharacter;
 
     private GameInstance _gameInstance;
@@ -22,26 +13,13 @@ public class GameBootstraper : MonoBehaviour
     private void Start()
     {
         _gameInstance = GameInstance.current;
-        
-        Time.timeScale = 1f;
 
         InitializePlayer();
 
-        waveSystem.Initialize(_gameInstance.GameLevelsManager.CurrentGameLevel.WaveConfig.Waves, playerCharacter);
+        gameUICanvas.Initialize(playerCharacter);
 
-        landSystem.Initialize();
-        resourceSystem.Initialize(_gameInstance.GameLevelsManager.CurrentGameLevel.Resources, landSystem, gameUICanvas.UIGameplay.UIHintController);
-
-        gameUICanvas.Initialize(playerCharacter, waveSystem);
-
-        _tradeZone.Initialize(_gameInstance, gameUICanvas.UIGameplay.UITrade, gameUICanvas.UIGameplay.UIOffer, gameUICanvas.UIGameplay.UIHintController);
-
-        sessionSystem = new SessionSystem(_gameInstance, playerCharacter, gameUICanvas.UIResultsSession, gameUICanvas.UIPause, waveSystem, _tradeZone);
-
-        _endGame.Initialize(waveSystem, sessionSystem, gameUICanvas.UIGameplay.UIOffer);
-
+        sessionSystem.Initialize(_gameInstance, gameUICanvas, playerCharacter);
         sessionSystem.StartSession();
-        resourceSystem.SpawnResoure.StartSpawn();
     }
 
     private void InitializePlayer()

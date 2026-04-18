@@ -7,10 +7,13 @@ public class SpawnResoure : MonoBehaviour
 {
     public event Action<HintType, Vector3, Action<Action>, Action<Action>> onStartHint;
     
+    [SerializeField] private Transform _resourceContainer;
     [SerializeField] private List<Resource> _resourcePrefabs;
     private List<Resource> _avaliableResourcePrefabs;
     private IReadOnlyList<ResourceType> _resources;
     
+    private Dictionary<ResourceType, List<Resource>> _resourceByType;
+
     private Coroutine _spawninResources;
 
     private bool _isSpawningResource;
@@ -19,14 +22,18 @@ public class SpawnResoure : MonoBehaviour
     [SerializeField, Range(1, 1000)] private float _timeToSpawn;
     [SerializeField, Range(1, 1000)] private float _spread;
 
-    private LandSystem _landSystem;
+    private float _timer;
 
-    public void Initialize(IReadOnlyList<ResourceType> resources, LandSystem landSystem, UI_HintController ui_hintController)
+    private LandSystem _landSystem;
+    private WorldPickupSystem _worldPickupSystem;
+
+    public void Initialize(IReadOnlyList<ResourceType> resources, LandSystem landSystem, WorldPickupSystem worldPickupSystem, UI_HintController ui_hintController)
     {
         _resources = resources;
         SetAvaliableReources();
 
         _landSystem = landSystem;
+        _worldPickupSystem = worldPickupSystem;
 
         onStartHint += ui_hintController.ShowHint;
     }
@@ -34,6 +41,7 @@ public class SpawnResoure : MonoBehaviour
     private void SetAvaliableReources()
     {
         _avaliableResourcePrefabs = new List<Resource>();
+        _resourceByType = new Dictionary<ResourceType, List<Resource>>();
         
         foreach (Resource resource in _resourcePrefabs)
         {
@@ -42,6 +50,8 @@ public class SpawnResoure : MonoBehaviour
                 if (resource.Type == type)
                 {
                     _avaliableResourcePrefabs.Add(resource);
+
+                    _resourceByType[type] = new List<Resource>();
                 }
             }
         }
@@ -97,8 +107,23 @@ public class SpawnResoure : MonoBehaviour
         Vector3 spawnPosition = _landSystem.GetValidRandomPosition();
         Quaternion spawnRotation = Quaternion.identity;
 
-        Resource resource = Instantiate(randomResource, spawnPosition, spawnRotation);
+        Resource resource = GetAvaliableResource(randomResource.Type);
+
+        if (resource == null)
+        {
+            resource = Instantiate(randomResource, spawnPosition, spawnRotation);
+            resource.transform.SetParent(_resourceContainer);
+            _resourceByType[randomResource.Type].Add(resource);
+        }
+        else
+        {
+            resource.transform.position = spawnPosition;
+            resource.transform.rotation = spawnRotation;
+        }
         resource.Initialize();
+
+        resource.OnDead -= HandleResourceDead;
+        resource.OnDead += HandleResourceDead;
 
         onStartHint?.Invoke(
             HintType.Resource, 
@@ -106,6 +131,24 @@ public class SpawnResoure : MonoBehaviour
             h => resource.IHealth.OnDead += h,
             h => resource.IHealth.OnDead -= h
         );
+    }
+
+    private void HandleResourceDead(IDamagable damagable)
+    {
+        Resource resource = (Resource)damagable;
+        _worldPickupSystem.SpawnResource(resource.Type, resource.transform.position, resource.Amount);
+    }
+
+    private Resource GetAvaliableResource(ResourceType type)
+    {
+        foreach (Resource resource in _resourceByType[type])
+        {
+            if (resource.IsDead)
+            {
+                return resource;
+            }
+        }
+        return null;
     }
 
     private Resource GetRandomResource()

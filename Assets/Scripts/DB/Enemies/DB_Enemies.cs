@@ -16,6 +16,18 @@ public class DB_Enemies : ScriptableObject
         return enemies;
     }
 
+    public bool HasEnemiesByNames(IReadOnlyList<string> names)
+    {
+        foreach (string name in names)
+        {
+            if (GetEnemyByName(name) != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Enemy> GetEnemiesByNames(List<string> names)
     {
         List<Enemy> selectedEnemies = new List<Enemy>();

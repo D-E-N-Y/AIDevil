@@ -22,12 +22,14 @@ public class EnemyManager : MonoBehaviour
     public int DefeatEnemies => _defeatEnemies;
 
     private Transform _target;
+    private WorldPickupSystem _worldPickupSystem;
 
     private Dictionary<EnemyType, List<Enemy>> _enemies;
 
-    public void Initialize(Transform target)
+    public void Initialize(Transform target, WorldPickupSystem worldPickupSystem)
     {
         _target = target;
+        _worldPickupSystem = worldPickupSystem;
 
         _enemies = new Dictionary<EnemyType, List<Enemy>>();
         foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
@@ -94,6 +96,9 @@ public class EnemyManager : MonoBehaviour
         _enemy.Health.OnDead -= DeathEnemy;
         _enemy.Health.OnDead += DeathEnemy;
 
+        _enemy.OnDead -= HandleEnemyDead;
+        _enemy.OnDead += HandleEnemyDead;
+
         _enemy.SetTarget(_target);
 
         _enemies[_enemy.Type].Add(_enemy);
@@ -113,7 +118,18 @@ public class EnemyManager : MonoBehaviour
         enemy.Health.OnDead -= DeathEnemy;
         enemy.Health.OnDead += DeathEnemy;
 
+        enemy.OnDead -= HandleEnemyDead;
+        enemy.OnDead += HandleEnemyDead;
+
         enemy.SetTarget(_target);
+    }
+
+    private void HandleEnemyDead(IDamagable damagable)
+    {
+        Enemy enemy = (Enemy)damagable;
+        _worldPickupSystem.SpawnResource(ResourceType.Credits, enemy.transform.position, enemy.DropMoney);
+
+        GameInstance.current.ProfileManager.CurrentProfile.BestiaryProgress.AddEnemy(enemy.Name);
     }
 
     private Enemy GetEnemy(Enemy enemy)

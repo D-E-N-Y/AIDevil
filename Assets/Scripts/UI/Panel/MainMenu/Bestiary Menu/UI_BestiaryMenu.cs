@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,7 +34,12 @@ public class UI_BestiaryMenu : UI_Panel
     {
         ui_enemyList.UpdateData();
         
-        if(_gameInstance.ProfileManager.CurrentProfile.BestiaryProgress.HasAnyDiscoveredEnemies())
+        DB_Enemies db_enemies = _gameInstance.DataBase.Enemies;
+        IReadOnlyList<string> discoveredEnemiesNames = _gameInstance.ProfileManager.CurrentProfile.BestiaryProgress.DiscoveredEnemiesNames;
+
+        bool hasDiscoveredEnemies = db_enemies.HasEnemiesByNames(discoveredEnemiesNames);
+
+        if(hasDiscoveredEnemies)
         {
             ui_enemyDescription.Show();
         }

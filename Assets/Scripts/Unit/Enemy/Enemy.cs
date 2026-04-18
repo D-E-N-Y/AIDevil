@@ -131,4 +131,8 @@ public class Enemy : MonoBehaviour, IUnit, IDamagable
     public IHealth IHealth => _health;
     public bool IsDead => _isDead;
     public EnemyState State => _state;
+
+    public EnemySpellController SpellController => _spellController;
+
+    public int DropMoney => _stats.DropMoney;
 }
