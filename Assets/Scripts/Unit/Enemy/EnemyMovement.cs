@@ -58,10 +58,10 @@ public class EnemyMovement : MonoBehaviour, IUnitMovement
 
     private void SetStats()
     {
-        _agent.speed = _stats.BaseMoveSpeed * _stats.MoveSpeedModifier;
+        _agent.speed = _stats.BaseMoveSpeed * _stats.MoveSpeedModifier * 2f;
     }
 
-    void FixedUpdate()
+    private void Update()
     {
         AnimateMovement();
     }
