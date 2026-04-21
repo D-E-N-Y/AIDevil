@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06782484ed809ad4190ec4eca8916be5, type: 3}
+  m_Name: Juggernaut Core
+  m_EditorClassIdentifier: 
+  _id: upgrade_Juggernaut_Core
+  _name: Juggernaut Core
+  _modifiers:
+  - stat: 0
+    valueType: 0
+    value: 120
+  - stat: 3
+    valueType: 0
+    value: 5
+  _cost:
+  - resource: 1
+    amount: 120
+  - resource: 3
+    amount: 50
+  _requiredUpgrades:
+  - {fileID: 11400000, guid: 9813007548ef76fe8afbb975a9f45502, type: 2}
+  - {fileID: 11400000, guid: 6489f19a6275504e882ec89db15977b6, type: 2}

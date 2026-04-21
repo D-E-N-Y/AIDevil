@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06782484ed809ad4190ec4eca8916be5, type: 3}
+  m_Name: Reinforced Tissue
+  m_EditorClassIdentifier: 
+  _id: upgrade_Reinforced_Tissue
+  _name: Reinforced Tissue
+  _modifiers:
+  - stat: 0
+    valueType: 0
+    value: 80
+  - stat: 3
+    valueType: 0
+    value: 5
+  _cost:
+  - resource: 1
+    amount: 90
+  - resource: 3
+    amount: 45
+  _requiredUpgrades:
+  - {fileID: 11400000, guid: da4cf517531eb8742829b795b70e0e93, type: 2}
+  - {fileID: 11400000, guid: 16077c41732681c57bf0d418ce271f9f, type: 2}

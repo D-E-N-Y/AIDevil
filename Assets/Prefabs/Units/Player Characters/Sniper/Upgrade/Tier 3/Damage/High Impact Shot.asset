@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06782484ed809ad4190ec4eca8916be5, type: 3}
+  m_Name: High Impact Shot
+  m_EditorClassIdentifier: 
+  _id: upgrade_High_Impact_Shot
+  _name: High Impact Shot
+  _modifiers:
+  - stat: 4
+    valueType: 1
+    value: 0.15
+  _cost:
+  - resource: 1
+    amount: 100
+  - resource: 2
+    amount: 50
+  _requiredUpgrades:
+  - {fileID: 11400000, guid: e1d123b6f8848225889c76e0e62f81dd, type: 2}
+  - {fileID: 11400000, guid: b7c8a703b98d3322baa9e5db8d0e3d83, type: 2}

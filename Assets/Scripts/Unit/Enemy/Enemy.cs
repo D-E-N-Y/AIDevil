@@ -97,11 +97,18 @@ public class Enemy : MonoBehaviour, IUnit, IDamagable
         }
     }
 
+    private float _repathTimer = 0f;
     private void Move()
     {
         if (!_target) return;
 
-        _movement.MoveTo(_target.position);
+        _repathTimer += Time.deltaTime;
+
+        if (_repathTimer >= 0.25f)
+        {
+            _movement.MoveTo(_target.position);
+            _repathTimer = 0f;
+        }
 
         if (IsInRange())
         {

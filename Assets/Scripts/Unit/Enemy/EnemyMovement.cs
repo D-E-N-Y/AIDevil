@@ -66,11 +66,18 @@ public class EnemyMovement : MonoBehaviour, IUnitMovement
         AnimateMovement();
     }
 
+    private float _lastSpeed = 0f;
     private void AnimateMovement()
     {
         if (_animator == null) return;
 
-        _animator.SetFloat("Speed", _agent.velocity.magnitude);
+        float speed = _agent.velocity.magnitude;
+
+        if (Mathf.Abs(speed - _lastSpeed) > 0.1f)
+        {
+            _animator.SetFloat("Speed", speed);
+            _lastSpeed = speed;
+        }
     }
 
     public void Dash(float dashDistance, float dashSpeed)

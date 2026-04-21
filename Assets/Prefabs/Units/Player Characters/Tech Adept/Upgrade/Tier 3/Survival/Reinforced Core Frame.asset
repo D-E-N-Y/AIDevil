@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06782484ed809ad4190ec4eca8916be5, type: 3}
+  m_Name: Reinforced Core Frame
+  m_EditorClassIdentifier: 
+  _id: upgrade_Reinforced_Core_Frame
+  _name: Reinforced Core Frame
+  _modifiers:
+  - stat: 0
+    valueType: 0
+    value: 80
+  - stat: 3
+    valueType: 0
+    value: 5
+  _cost:
+  - resource: 1
+    amount: 100
+  - resource: 3
+    amount: 50
+  _requiredUpgrades:
+  - {fileID: 11400000, guid: 5b28b0a2ab2525c9d8719b475f08b4c9, type: 2}
+  - {fileID: 11400000, guid: ab751bfd2cb9ed8a8909e07d8f369205, type: 2}

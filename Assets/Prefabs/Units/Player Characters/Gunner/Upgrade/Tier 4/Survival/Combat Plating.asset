@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06782484ed809ad4190ec4eca8916be5, type: 3}
+  m_Name: Combat Plating
+  m_EditorClassIdentifier: 
+  _id: upgrade_Combat_Plating
+  _name: Combat Plating
+  _modifiers:
+  - stat: 0
+    valueType: 0
+    value: 120
+  - stat: 3
+    valueType: 0
+    value: 8
+  _cost:
+  - resource: 1
+    amount: 140
+  - resource: 3
+    amount: 70
+  _requiredUpgrades:
+  - {fileID: 11400000, guid: f098928bd155bcb079b7b504517e7a85, type: 2}
