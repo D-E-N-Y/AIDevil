@@ -67,6 +67,12 @@ public class UpgradeContainer
 
     public bool HasUpgrade(Upgrade upgrade)
     {
+        if (upgrade == null)
+        {
+            Debug.LogWarning("Upgrade is NULL!!!");
+            return false;
+        }
+        
         return _upgradesID.Contains(upgrade.ID);
     }
 

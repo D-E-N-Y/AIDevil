@@ -21,7 +21,11 @@ MonoBehaviour:
   - stat: 10
     valueType: 1
     value: 0.08
-  _cost: []
+  _cost:
+  - resource: 1
+    amount: 100
+  - resource: 4
+    amount: 50
   _requiredUpgrades:
   - {fileID: 11400000, guid: 029ac740e3218d7629e0fae7c68e647c, type: 2}
   - {fileID: 11400000, guid: f705c814da40f1d5fbfc99b4efa5f31b, type: 2}

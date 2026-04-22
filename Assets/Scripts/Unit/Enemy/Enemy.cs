@@ -37,8 +37,10 @@ public class Enemy : MonoBehaviour, IUnit, IDamagable
 
         _health = new UnitHealth(_stats);
         _health.OnDead += Die; 
-        ui_hpIndicator.Initialize(_health);
         _isDead = false;
+
+        ui_hpIndicator.Initialize(_health);
+        ui_hpIndicator.gameObject.SetActive(true);
 
         _movement = GetComponent<EnemyMovement>();
         _movement.Initialize(_stats);
@@ -48,6 +50,7 @@ public class Enemy : MonoBehaviour, IUnit, IDamagable
         _spellController.Initialize(_spellContext);
 
         _movement.SetStopDistance(_spellController.OptimalAttackRange);
+        _repathTimer = 0f;
 
         _state = EnemyState.Idle;
         gameObject.SetActive(true);
@@ -97,7 +100,7 @@ public class Enemy : MonoBehaviour, IUnit, IDamagable
         }
     }
 
-    private float _repathTimer = 0f;
+    private float _repathTimer;
     private void Move()
     {
         if (!_target) return;
