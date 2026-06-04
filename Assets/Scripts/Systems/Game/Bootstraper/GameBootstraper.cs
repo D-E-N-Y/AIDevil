@@ -22,6 +22,9 @@ public class GameBootstraper : MonoBehaviour
 
         sessionSystem.Initialize(_gameInstance, gameUICanvas, playerCharacter);
         sessionSystem.StartSession();
+
+        string themeMusicName = _gameInstance.GameLevelsManager.CurrentGameLevel.ThemeMusicName;
+        _gameInstance.AudioSystem.Music.PlayClip(themeMusicName);
     }
 
     private void InitializePlayer()

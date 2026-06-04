@@ -18,4 +18,7 @@ public class GameLevel : ScriptableObject
 
     [SerializeField] private List<GameLevel> _requiredLevels;
     public IReadOnlyList<GameLevel> RequiredLevels => _requiredLevels;
+
+    [SerializeField] private string _themeMusicName;
+    public string ThemeMusicName => _themeMusicName;
 }

@@ -16,6 +16,8 @@ public class MainMenuBootstraper : MonoBehaviour
         {
             ui_mainMenuCanvas.ShowProfiliesMenu();
         }
+
+        _gameInstance.AudioSystem.Music.PlayClip("Infiltrated");
     }
 
     private void OnDestroy()

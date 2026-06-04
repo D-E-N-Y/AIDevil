@@ -1,0 +1,49 @@
+using UnityEngine;
+
+public class GameInstance : MonoBehaviour
+{
+    public static GameInstance current;
+
+    [SerializeField] private StartResources _startResources;
+
+    private ProfileManager _profileManager;
+    private GameLevelsManager _gameLevelsManager;
+    private SaveLoadSystem _saveLoadSystem;
+    private DataBase _dataBase;
+    private AudioSystem _audioSystem;
+
+    public void Initialize(DataBase dataBase, AudioSystem audioSystem)
+    {
+        current = this;
+        DontDestroyOnLoad(this);
+
+        _dataBase = dataBase;
+        _audioSystem = audioSystem;
+        
+        _saveLoadSystem = new SaveLoadSystem(this);
+
+        _gameLevelsManager = new GameLevelsManager(_dataBase.GameLevels);
+
+        InitializeData();
+    }
+
+    private void InitializeData()
+    {
+        SaveData data = _saveLoadSystem.LoadData();
+
+        if (data == null)
+        {
+            _profileManager = new ProfileManager(_startResources);
+        }
+        else
+        {
+            _profileManager = new ProfileManager(_startResources, data.profiles, data.currentProfile);
+        }
+    }
+
+    public SaveLoadSystem SaveLoadSystem => _saveLoadSystem;
+    public ProfileManager ProfileManager => _profileManager;
+    public GameLevelsManager GameLevelsManager => _gameLevelsManager;
+    public DataBase DataBase => _dataBase;
+    public AudioSystem AudioSystem => _audioSystem;
+}

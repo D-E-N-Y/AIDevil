@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class MainBootstraper : MonoBehaviour
 {
     [SerializeField] private DataBase dataBase;
+    [SerializeField] private AudioSystem audioSystem;
     [SerializeField] private GameInstance gameInstance;
 
     private void Start()
@@ -12,7 +13,8 @@ public class MainBootstraper : MonoBehaviour
         Application.targetFrameRate = 120;
         
         dataBase.Initialize();
-        gameInstance.Initialize(dataBase);
+        audioSystem.Initialize();
+        gameInstance.Initialize(dataBase, audioSystem);
 
         SceneManager.LoadScene("MainMenuScene");
     }

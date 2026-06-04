@@ -51,5 +51,21 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "AIDevil.sln"
+    "dotnet.defaultSolution": "AIDevil.sln",
+    "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": "off"
+    },
+    "editor.quickSuggestionsDelay": 0,
+    "editor.suggestOnTriggerCharacters": true,
+
+    "[csharp]": {
+        "editor.quickSuggestions": {
+            "other": "on",
+            "comments": "off",
+            "strings": "off"
+        },
+        "editor.suggestOnTriggerCharacters": true
+    }
 }
