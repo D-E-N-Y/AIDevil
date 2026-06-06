@@ -17,10 +17,11 @@ public class UI_MainMenu : UI_Panel
     private UI_CharactersMenu _ui_charactersMenu;
     private UI_SessionResultsMenu _ui_sessionResultsMenu;
     private UI_BestiaryMenu _ui_bestiaryMenu;
+    private UI_SettingsMenu _ui_settingsMenu;
 
     private GameInstance _gameInstance;
 
-    public void Initialize(GameInstance gameInstance, UI_ProfiliesMenu ui_profiliesMenu, UI_CharactersMenu ui_charactesPanel, UI_SessionResultsMenu ui_sessionResultsMenu, UI_BestiaryMenu ui_bestiaryMenu)
+    public void Initialize(GameInstance gameInstance, UI_ProfiliesMenu ui_profiliesMenu, UI_CharactersMenu ui_charactesPanel, UI_SessionResultsMenu ui_sessionResultsMenu, UI_BestiaryMenu ui_bestiaryMenu, UI_SettingsMenu ui_settingsMenu)
     {
         _gameInstance = gameInstance;
 
@@ -28,6 +29,7 @@ public class UI_MainMenu : UI_Panel
         _ui_charactersMenu = ui_charactesPanel;
         _ui_sessionResultsMenu = ui_sessionResultsMenu;
         _ui_bestiaryMenu = ui_bestiaryMenu;
+        _ui_settingsMenu = ui_settingsMenu;
 
         AddSubscriptions();
 
@@ -44,8 +46,8 @@ public class UI_MainMenu : UI_Panel
         ui_playButton.onClick.RemoveAllListeners();
         ui_playButton.onClick.AddListener(() => _ui_charactersMenu.Show());
 
-        // ui_settingsButton.onClick.RemoveAllListeners();
-        // ui_settingsButton.onClick.AddListener(() => Application.Quit());
+        ui_settingsButton.onClick.RemoveAllListeners();
+        ui_settingsButton.onClick.AddListener(() => _ui_settingsMenu.Show());
 
         ui_bestiaryButton.onClick.RemoveAllListeners();
         ui_bestiaryButton.onClick.AddListener(() => _ui_bestiaryMenu.Show());

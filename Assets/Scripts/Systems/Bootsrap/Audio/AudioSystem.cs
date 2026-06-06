@@ -18,7 +18,7 @@ public class AudioSystem : MonoBehaviour
         _sound = new SoundAudio(_soundSource, _sounds);
     }
 
-    public void ChangeMasterVolume(float volume)
+    public void SetMasterVolume(float volume)
     {
         AudioListener.volume = volume;
     }

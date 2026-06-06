@@ -11,7 +11,7 @@ public class UI_Pause : UI_Panel
     [SerializeField] private UI_PauseMenu ui_menu;
     [SerializeField] private UI_StatsMenu ui_statsMenu;
     [SerializeField] private UI_InventoryMenu ui_inventoryMenu;
-    [SerializeField] private UI_Settings ui_settings;
+    [SerializeField] private UI_SettingsMenu ui_settingsMenu;
 
     public void Initialize(UnitContext context, UI_Gameplay ui_gameplay)
     {
@@ -22,15 +22,15 @@ public class UI_Pause : UI_Panel
             Show();
         });
         
-        ui_menu.Initialize(this, ui_gameplay, ui_statsMenu, ui_inventoryMenu, ui_settings);
+        ui_menu.Initialize(this, ui_gameplay, ui_statsMenu, ui_inventoryMenu, ui_settingsMenu);
         ui_statsMenu.Initialize((PlayerCharacterStats)context.Stats, ui_menu);
         ui_inventoryMenu.Initialize(context.Inventory, context.Wallet, ui_menu);
-        ui_settings.Initialize(ui_menu);
+        ui_settingsMenu.Initialize(ui_menu, GameInstance.current);
 
         ui_menu.Show();
         ui_statsMenu.Hide();
         ui_inventoryMenu.Hide();
-        ui_settings.Hide();
+        ui_settingsMenu.Hide();
     }
 
     public void OnExitSession()
